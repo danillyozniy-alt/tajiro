@@ -139,6 +139,77 @@
     settle = setTimeout(rebase, 140);
   }, { passive: true });
 
+  /* --- Перетаскивание мышью -------------------------------------------------
+     Пальцем лента едет сама: это обычная прокрутка с прилипанием, и
+     трогать её не нужно. Мышью — нет: браузер на зажатую кнопку начинает
+     выделять текст, и лента стоит, будто сломана.
+
+     Поэтому мышь, и только мышь, ведём руками. Проверка на pointerType не
+     перестраховка, а условие: перехватив здесь палец, мы отняли бы у него
+     родную прокрутку с инерцией и прилипанием и подменили её своей, хуже.
+
+     Захвата указателя (setPointerCapture) нет намеренно: он мешает клику
+     по ссылке внутри карточки. Вместо него жест ведётся по документу и
+     заканчивается на pointerup где угодно, хоть за пределами ленты.
+
+     Порог в три точки отделяет перетаскивание от клика: пока курсор не
+     ушёл дальше, ничего не происходит и клик по карточке работает как
+     обычно. Ушёл — гасим выделение и отменяем клик, который иначе
+     сработал бы на отпускании. */
+  var DRAG_MIN = 3;
+  var drag = null;
+
+  track.addEventListener("pointerdown", function (e) {
+    if (e.pointerType !== "mouse" || e.button !== 0) return;
+    drag = { x: e.clientX, from: track.scrollLeft, moved: false };
+  });
+
+  document.addEventListener("pointermove", function (e) {
+    if (!drag) return;
+    var dx = e.clientX - drag.x;
+
+    if (!drag.moved) {
+      if (Math.abs(dx) < DRAG_MIN) return;
+      drag.moved = true;
+      track.classList.add("is-dragging");
+    /* Прилипание снимаем на время жеста: с ним лента дёргается к
+       ближайшей карточке прямо под курсором. Вернём на отпускании — и
+       она доедет до места сама. */
+      track.style.scrollSnapType = "none";
+      var sel = window.getSelection && window.getSelection();
+      if (sel && sel.removeAllRanges) sel.removeAllRanges();
+    }
+
+    track.scrollLeft = drag.from - dx;
+    e.preventDefault();
+  });
+
+  document.addEventListener("pointerup", function (e) {
+    if (!drag) return;
+    var moved = drag.moved;
+    drag = null;
+    if (!moved) return;
+
+    track.classList.remove("is-dragging");
+    track.style.scrollSnapType = "";
+
+  /* Клик после перетаскивания не нужен: иначе жест, закончившийся на
+     карточке, откроет её. Ловим один раз и на фазе перехвата. */
+    var kill = function (ev) { ev.stopPropagation(); ev.preventDefault(); };
+    track.addEventListener("click", kill, { capture: true, once: true });
+    setTimeout(function () {
+      track.removeEventListener("click", kill, { capture: true });
+    }, 0);
+  });
+
+  /* Курсор ушёл в другое окно с зажатой кнопкой — жест закончен. */
+  document.addEventListener("pointercancel", function () {
+    if (!drag) return;
+    drag = null;
+    track.classList.remove("is-dragging");
+    track.style.scrollSnapType = "";
+  });
+
   /* --- Порог --------------------------------------------------------------- */
   var phone = window.matchMedia('(max-width: 600px)');
 
