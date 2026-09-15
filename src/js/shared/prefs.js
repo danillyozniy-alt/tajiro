@@ -37,11 +37,11 @@
   'use strict';
 
   /* --- Рынки ---------------------------------------------------------------- */
-  var CUR   = {AE:'AED', SA:'SAR', QA:'QAR', BH:'BHD', OM:'OMR'};
-  var SUB   = {AE:'AED 149', SA:'SAR 149', QA:'QAR 149', BH:'BHD 19', OM:'OMR 19'};
-  var RATE  = {AE:3.6725, SA:3.75, QA:3.64, BH:0.376, OM:0.3845};
-  var RANGE = {AE:'AED 26–3,669', SA:'SAR 26–3,746', QA:'QAR 26–3,636', BH:'BHD 3–376', OM:'OMR 3–384'};
-  var WEEK  = {AE:'AED 6,760', SA:'SAR 6,900', QA:'QAR 6,700', BH:'BHD 692', OM:'OMR 707'};
+  var CUR   = {AE:'AED', SA:'SAR', QA:'QAR', BH:'BHD', OM:'OMR', KW:'KWD'};
+  var SUB   = {AE:'AED 149', SA:'SAR 149', QA:'QAR 149', BH:'BHD 19', OM:'OMR 19', KW:'KWD 19'};
+  var RATE  = {AE:3.6725, SA:3.75, QA:3.64, BH:0.376, OM:0.3845, KW:0.3065};
+  var RANGE = {AE:'AED 26–3,669', SA:'SAR 26–3,746', QA:'QAR 26–3,636', BH:'BHD 3–376', OM:'OMR 3–384', KW:'KWD 2–306'};
+  var WEEK  = {AE:'AED 6,760', SA:'SAR 6,900', QA:'QAR 6,700', BH:'BHD 692', OM:'OMR 707', KW:'KWD 564'};
 
   var LANG = {en: 'EN', ar: 'AR'};
 
@@ -57,11 +57,12 @@
   var market = 'AE';
   var lang   = 'en';
 
-  /* Динар и риал делятся примерно на три: товар за $8 выходит меньше трёх
-     единиц, и без десятой доли все дешёвые ценники схлопывались в «3». */
+  /* Динары и риал делятся примерно на три: товар за $8 выходит меньше трёх
+     единиц, и без десятой доли все дешёвые ценники схлопывались в «3».
+     У кувейтского динара разрыв ещё больше — тот же товар меньше трёх. */
   function money(usd, cur) {
     var x = usd * RATE[market];
-    if (cur === 'BHD' || cur === 'OMR') return (Math.round(x * 10) / 10).toString();
+    if (cur === 'BHD' || cur === 'OMR' || cur === 'KWD') return (Math.round(x * 10) / 10).toString();
     return Math.round(x).toString();
   }
 
