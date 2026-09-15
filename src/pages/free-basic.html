@@ -103,26 +103,24 @@
    the payment form there is still a stub. See the note at the
    bottom of pages/checkout.html for what has to be wired.
 
-   PRICE MISMATCH TO SETTLE: the amounts below come from this
-   page (VAT-inclusive, per market), while checkout.html carries
-   the prototype numbers — AED/SAR/QAR 149, BHD/OMR/KWD 19.
-   One of the two has to give before launch; the VAT rule below
-   is the one that is not negotiable.
+   PRICING — SETTLED. The subscription is monthly and the amounts
+   are fixed per market, never converted from USD live:
+     AED 149   SAR 149   QAR 149
+     BHD 19    OMR 19    KWD 19
+   Figures on this page stay in USD ($39/mo) as a value anchor for
+   the layout stage; the subscription figure in the FAQ carries
+   [data-sub] and follows the country switcher.
 
-   PRICING: amounts on this page are shown in USD ($39/mo) as a
-   value anchor for the layout stage only.
-   BEFORE going live, the checkout MUST display the local price
-   with VAT per market — this is a legal requirement in the UAE
-   (showing a price without VAT is a finable offence).
-   Fixed VAT-inclusive prices, do NOT convert from USD live:
-     UAE   AED 150 (VAT 5%)
-     Saudi SAR 168 (VAT 15%)
-     Qatar QAR 142
-     Bahrain BHD 16.17 (VAT 10%)
-     Oman  OMR 15.75 (VAT 5%)
-   Implement with Stripe Checkout + Stripe Tax; five Price
-   objects, one per currency. The country switcher in the header
-   is where the market is chosen. */
+   These amounts are VAT-INCLUSIVE and must stay that way. In the
+   UAE a price shown without VAT is a finable offence, so checkout
+   may never display a net figure and add tax on top.
+   Implement with Stripe Checkout + Stripe Tax: one Price object
+   per currency, tax behaviour "inclusive". The country switcher
+   in the header is where the market is chosen.
+
+   The table lives in two places — js/shared/prefs.js for the site
+   and js/checkout/market.js for checkout. Change both. Kuwait is
+   on checkout only; the header switcher does not offer it. */
 </script>
 </body>
 </html>
