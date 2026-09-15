@@ -16,7 +16,8 @@
    текстом значит показать поломку вместо перевода. Когда тексты появятся,
    сюда добавляется строка с dir и подстановка строк.
 
-   ВАЛЮТА. Пересчитывается всё, что зависит от рынка:
+   ВАЛЮТА. Выбор запоминается и действует на всех страницах сразу.
+   Пересчитывается всё, что зависит от рынка:
      [data-sub]    цена подписки за месяц; ровная по рынкам, НЕ считается
                    по курсу: 149 в дирхамах, риалах и риялах, 19 в динарах
                    и оманских риалах. Те же цифры лежат в
@@ -54,8 +55,31 @@
   var labels     = all('[data-prefs-label]');
   if (!marketBtns.length && !langBtns.length) return;
 
-  var market = 'AE';
-  var lang   = 'en';
+  /* ПАМЯТЬ ВЫБОРА. Валюта едет за человеком по всем страницам: переключил
+     на главной — на free-basic и на оплате она уже его. Страница оплаты
+     читает тот же ключ, см. js/checkout/market.js.
+
+     Хранилище может быть закрыто — приватное окно, запрет на данные
+     сайтов, — поэтому оба обращения обёрнуты. Не сохранилось: страница
+     работает как раньше, просто выбор живёт до перехода. */
+  var KEY_MARKET = 'tajiro:market';
+  var KEY_LANG   = 'tajiro:lang';
+
+  function remember(key, value) {
+    try { localStorage.setItem(key, value); } catch (e) {}
+  }
+
+  function recall(key) {
+    try { return localStorage.getItem(key); } catch (e) { return null; }
+  }
+
+  /* Сохранённое значение проверяем по таблице, а не принимаем на веру:
+     в хранилище может лежать рынок, которого у нас больше нет. */
+  var saved  = recall(KEY_MARKET);
+  var market = CUR[saved] ? saved : 'AE';
+
+  var savedLang = recall(KEY_LANG);
+  var lang      = LANG[savedLang] ? savedLang : 'en';
 
   /* Динары и риал делятся примерно на три: товар за $8 выходит меньше трёх
      единиц, и без десятой доли все дешёвые ценники схлопывались в «3».
@@ -96,6 +120,7 @@
       e.textContent = CUR[market] + ' ' + money(parseFloat(e.getAttribute('data-usd')), CUR[market]);
     });
 
+    remember(KEY_MARKET, market);
     paintPressed(marketBtns, 'data-market', market);
     paintLabel();
   }
@@ -104,6 +129,7 @@
     if (!LANG[code]) return;
     lang = code;
     document.documentElement.setAttribute('lang', lang);
+    remember(KEY_LANG, lang);
     paintPressed(langBtns, 'data-lang', lang);
     paintLabel();
   }

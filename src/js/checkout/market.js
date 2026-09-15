@@ -64,9 +64,30 @@
     }
   }
 
+  /* Страну могли выбрать раньше, в шапке сайта. Тот выбор лежит в
+     хранилище под ключом js/shared/prefs.js, и здесь он ПРЕДЛАГАЕТСЯ:
+     селект остаётся за человеком, его же выбор уезжает обратно в
+     хранилище. Значение проверяем по таблице цен — в хранилище может
+     лежать рынок, которого здесь нет. */
+  var KEY = 'tajiro:market';
+
+  function recall() {
+    try { return localStorage.getItem(KEY); } catch (e) { return null; }
+  }
+
+  function remember(value) {
+    try { localStorage.setItem(KEY, value); } catch (e) {}
+  }
+
   var select = document.getElementById('ch-market');
   if (select) {
-    select.addEventListener('change', function () { paint(select.value); });
+    var saved = recall();
+    if (saved && PRICE[saved]) select.value = saved;
+
+    select.addEventListener('change', function () {
+      remember(select.value);
+      paint(select.value);
+    });
     paint(select.value);
   }
 
