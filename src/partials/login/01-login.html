@@ -1,0 +1,86 @@
+<!-- ==========================================================================
+     Вход по ссылке на почту
+
+     Разметка и тексты прототипа Tajiro_Login сохранены слово в слово;
+     менялось только оформление. Раскладка его же: слева форма, справа
+     панель со снимком.
+
+     ПАРОЛЯ НЕТ ПО ЗАМЫСЛУ. Человек вводит почту, на неё уходит одноразовая
+     ссылка. Поэтому здесь нет ни поля пароля, ни «забыли пароль».
+
+     ДВА СОСТОЯНИЯ в одной разметке: форма и подтверждение отправки.
+     Переключает js/login/state.js. Второе состояние лежит в HTML, а не
+     собирается скриптом: так его текст виден в исходнике, а без JS
+     страница остаётся осмысленной.
+     ========================================================================== -->
+<main class="lg">
+
+  <div class="lg__form">
+    <div class="lg__inner">
+
+      <a class="nav-logo lg__logo" href="index.html" aria-label="Tajiro — home">
+        <span aria-hidden="true">Taȷıro</span>
+        <span class="nav-logo__dot nav-logo__dot--green" aria-hidden="true"></span>
+        <span class="nav-logo__dot nav-logo__dot--sand" aria-hidden="true"></span>
+      </a>
+
+      <!-- Состояние 1 — форма -->
+      <div id="login-form">
+        <h1 class="h2 lg__title">Log in to your account</h1>
+        <p class="lead lg__lede">Enter your email address and we will send you a secure login link. No password needed.</p>
+
+        <form class="lg__fields" id="login-send" novalidate>
+          <label class="fld" for="login-email">
+            <span class="fld__label">Email address</span>
+            <input class="fld__input" id="login-email" name="email" type="email"
+                   placeholder="you@example.com" autocomplete="email"
+                   required spellcheck="false" autocapitalize="off" inputmode="email">
+          </label>
+
+          <button class="btn btn--primary btn--block lg__submit" type="submit" data-stub="send-link">
+            Send login link
+          </button>
+        </form>
+
+        <p class="lg__links">
+          New to Tajiro? <a href="checkout.html">Get started</a><br>
+          Need help signing in? <a href="mailto:support@tajiro.com" data-stub="support">Contact support</a>
+        </p>
+
+        <p class="lg__note">
+          <img class="lg__note-icon" src="assets/img/icons/clock-check-bronze.svg" alt="" width="14" height="14">
+          Secure, password-free sign in
+        </p>
+      </div>
+
+      <!-- Состояние 2 — письмо отправлено -->
+      <div id="login-sent" class="lg__sent" hidden>
+        <p class="lg__sent-icon" aria-hidden="true">&#9993;</p>
+        <h1 class="h2 lg__title">Check your email</h1>
+        <p class="lead lg__lede">We sent a login link to <span class="lg__email" id="login-sent-email">your inbox</span>.</p>
+        <p class="lg__lede">Click the link in the email to sign in. It expires in a few minutes for your security.</p>
+        <p class="lg__links">
+          Did not get it? <a href="#" id="login-again">Try another email</a> or check your spam folder.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Панель со снимком. Кадр из 04 главной: женщина с телефоном за
+       столиком — ровно то, о чём просил комментарий в прототипе. Поверх —
+       знак и строка, которая там же и написана. -->
+  <div class="lg__brand" aria-hidden="true">
+    <img class="lg__shot" src="assets/img/people/how-it-works.webp" alt=""
+         width="1100" height="1146" decoding="async">
+    <div class="lg__over">
+      <p class="lg__over-brand">
+        <span aria-hidden="true">Taȷıro</span>
+        <span class="nav-logo__dot nav-logo__dot--green" aria-hidden="true"></span>
+        <span class="nav-logo__dot nav-logo__dot--sand" aria-hidden="true"></span>
+      </p>
+      <p class="lg__over-tag">Your store is running.<br><em>Let&rsquo;s keep it growing.</em></p>
+    </div>
+  </div>
+
+</main>

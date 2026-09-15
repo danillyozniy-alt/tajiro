@@ -1,0 +1,40 @@
+<!-- ==========================================================================
+     Оплата · шапка, обещание и выбор страны
+
+     Разметка и тексты прототипа Tajiro_Checkout сохранены слово в слово;
+     менялось только оформление.
+
+     ШАПКИ НЕТ, только знак. Это страница оплаты: навигация здесь работала
+     бы против неё, уводя человека со страницы, ради которой он сюда
+     пришёл. Знак ведёт на главную — один выход, и тот осознанный.
+     ========================================================================== -->
+<header class="ch__top">
+  <a class="nav-logo" href="index.html" aria-label="Tajiro — home">
+    <span aria-hidden="true">Taȷıro</span>
+    <span class="nav-logo__dot nav-logo__dot--green" aria-hidden="true"></span>
+    <span class="nav-logo__dot nav-logo__dot--sand" aria-hidden="true"></span>
+  </a>
+</header>
+
+<h1 class="h2 ch__title">Get your own ecommerce store with a <em>free trial</em> of Tajiro</h1>
+
+<ul class="ch__perks">
+  <li class="ch__perk"><img class="ch__check" src="assets/img/icons/check-green.svg" alt="" width="16" height="16"> Store with 100 products</li>
+  <li class="ch__perk"><img class="ch__check" src="assets/img/icons/check-green.svg" alt="" width="16" height="16"> Instant digital delivery</li>
+  <li class="ch__perk"><img class="ch__check" src="assets/img/icons/check-green.svg" alt="" width="16" height="16"> Personal Growth Manager</li>
+</ul>
+
+<!-- Страна выбирается здесь, а не в шапке: от неё зависит валюта в счёте
+     ниже. Тот же набор рынков, что в прототипе, вместе с Кувейтом —
+     на лендингах его нет, здесь есть. -->
+<label class="fld ch__market" for="ch-market">
+  <span class="fld__label">Your country</span>
+  <select class="fld__select" id="ch-market" name="market">
+    <option value="AE" selected>United Arab Emirates</option>
+    <option value="SA">Saudi Arabia</option>
+    <option value="QA">Qatar</option>
+    <option value="BH">Bahrain</option>
+    <option value="OM">Oman</option>
+    <option value="KW">Kuwait</option>
+  </select>
+</label>

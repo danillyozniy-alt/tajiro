@@ -1,0 +1,129 @@
+/* ==========================================================================
+   tajiro — поля ввода
+
+   В системе их не было вовсе: на лендингах формы нет, и по всему проекту
+   про них написано ровно одно правило — «button, input, select, textarea
+   { font: inherit }» в базе. Страницы входа и оплаты — первые, где поля
+   появились, поэтому файл общий с самого начала.
+
+   Собрано из токенов, ничего нового не заведено: поверхность --c-surface,
+   кромка --c-line, скругление --r-card (6px — шкала мелких карточек, у
+   кнопок своё, 4), фокус зелёным, как у :focus-visible в базе.
+   ========================================================================== */
+
+.fld { display: block; }
+
+.fld + .fld { margin-top: 14px; }
+
+/* Подпись над полем — прописными в разрядку, теми же значениями, что у
+   подписей показателей. Постоянная, а не плейсхолдер: плейсхолдер исчезает
+   на первом же введённом символе, и человек перестаёт видеть, что вводит. */
+.fld__label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--c-text-muted);
+}
+
+.fld__input,
+.fld__select {
+    width: 100%;
+    height: 52px;
+    padding-inline: 16px;
+    border: 1px solid var(--c-line);
+    border-radius: var(--r-card);
+    background: var(--c-surface);
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--c-text);
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.fld__input::placeholder { color: var(--c-text-muted); }
+
+/* Фокус: кромка зеленеет и вокруг неё мягкое кольцо. Обводку браузера
+   снимаем только потому, что рисуем свою — и только на самих полях. */
+.fld__input:focus,
+.fld__select:focus {
+    outline: none;
+    border-color: var(--c-green);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--c-green) 16%, transparent);
+}
+
+/* Селект: свою стрелку рисуем сами, потому что системная в разных
+   браузерах разного размера и цвета. */
+.fld__select {
+    appearance: none;
+    padding-right: 42px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5'%3E%3Cpath d='M0.536 0.625H7.464L4 4.375L0.536 0.625Z' fill='%236b645a'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 8px 5px;
+    cursor: pointer;
+}
+
+/* Ряд «код страны + телефон»: узкий селект и поле на остаток. */
+.fld__row {
+    display: grid;
+    grid-template-columns: 108px minmax(0, 1fr);
+    gap: 10px;
+}
+
+/* --- Флажок согласия ------------------------------------------------------
+   Родной чекбокс спрятан, но остаётся рабочим: клавиатура, фокус и чтение
+   скринридером идут по нему. Квадрат рисует ::before у подписи. */
+.chk {
+    display: grid;
+    grid-template-columns: 20px minmax(0, 1fr);
+    gap: 12px;
+    align-items: start;
+    cursor: pointer;
+    font-size: 13px;
+    line-height: 20px;
+    color: var(--c-text-body);
+}
+
+.chk + .chk { margin-top: 12px; }
+
+.chk__box {
+    position: absolute;
+    width: 1px; height: 1px;
+    margin: -1px; padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.chk__mark {
+    width: 20px;
+    height: 20px;
+    margin-top: 1px;
+    border: 1px solid var(--c-line);
+    border-radius: 5px;
+    background: var(--c-surface);
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.chk__box:checked + .chk__mark {
+    border-color: var(--c-green);
+    background:
+      url("../../assets/img/icons/check-green.svg") center / 12px no-repeat,
+      var(--c-green-mist);
+}
+
+.chk__box:focus-visible + .chk__mark {
+    outline: 2px solid var(--c-gold);
+    outline-offset: 2px;
+}
+
+.chk a { color: var(--c-green-text); }
+
+/* --- Кнопка во всю ширину ------------------------------------------------- */
+.btn--block {
+    display: flex;
+    width: 100%;
+}

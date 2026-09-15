@@ -27,11 +27,14 @@
       <h2 class="h2 fb-head__title">Three steps. <em>That is it.</em></h2>
       <p class="lead fb-head__lead">No technical skills. No experience. No upfront cost. Your store opens ready — domain, checkout and payments already done for you.</p>
       <div class="fb-actions fb-pillar__actions">
-        <a class="btn btn--primary" href="#" data-stub="checkout">Start now — it is free</a>
+        <a class="btn btn--primary" href="checkout.html">Start now — it is free</a>
       </div>
     </div>
 
-    <ol class="fb-steps reveal-set">
+    <!-- data-steps — крючок для js/free-basic/steps.js: он и ставит очередь
+         появления. Общая система появления на сайте выключена, см.
+         комментарий в самом скрипте. -->
+    <ol class="fb-steps" data-steps>
       <li class="fb-step">
         <span class="fb-step__num" aria-hidden="true">1</span>
         <h3 class="h3 fb-step__title">Sign up free</h3>

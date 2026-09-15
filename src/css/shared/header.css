@@ -62,34 +62,9 @@ html {   scroll-padding-top: var(--nav-h); }
     gap: 28px;
 }
 
-/* --- Логотип -------------------------------------------------------------- */
-/* Буквы без точек + две цветные точки поверх ȷ и ı. Смещения в em — точки
-   едут вместе с кеглем на брейкпоинтах. */
-.nav-logo {
-    position: relative;
-    flex: none;
-    height: 26px;
-    font-family: var(--f-display);
-    font-size: 26px;
-    font-weight: 600;
-    line-height: 26px;
-    letter-spacing: -0.52px;
-    color: var(--c-text-strong);
-}
-
-.nav-logo__dot {
-    position: absolute;
-    top: 0.125em;             /* 4px */
-    width: 0.15625em;         /* 5px */
-    height: 0.15625em;
-    border-radius: 50%;
-}
-
-/* Точка над ȷ — тем же зелёным, что кнопки. Прежний #2a3d2e читался
-   чёрным, и зелёного в логотипе не было видно вовсе. Смещения ниже
-   выставлены под ЗАГЛАВНУЮ T: она шире строчной, и от неё едут обе точки. */
-.nav-logo__dot--green {   left: 1.1em;   background: var(--c-green); }
-.nav-logo__dot--sand {   left: 1.334em;   background: var(--c-sand); }
+/* Логотип переехал в css/shared/logo.css: он нужен четырём страницам, а
+   шапка целиком — двум. То же правило, по которому файлы уходят в shared/,
+   только на уровень глубже. */
 
 /* --- Десктопная навигация ------------------------------------------------- */
 .nav,
@@ -389,9 +364,13 @@ html {   scroll-padding-top: var(--nav-h); }
 .nav-panel--small .nav-panel__foot {   padding: 18px 32px; }
 .nav-panel__foot--end {   justify-content: flex-start; }
 
+/* Вес выписан явно. Без него строка идёт дисплейным на 400, а у Outfit в
+   проект вшиты только 600 и 700 — браузер подставлял 600, то есть
+   объявленное и нарисованное расходились. Пишем то, что и так рисуется. */
 .nav-panel__tagline {
     font-family: var(--f-display);
     font-size: 16px;
+    font-weight: 600;
     line-height: 20px;
     color: var(--c-text);
 }
@@ -596,15 +575,6 @@ body.nav-open {
    последнее подошедшее. Пороги смещены на пиксел (601 вместо 600): при
    max-width граница входила в узкий диапазон, при min-width должна войти
    в широкий. -------------------------------------------------------------- */
-
-@media (min-width: 601px) {
-  .nav-logo {
-    height: 32px;
-    font-size: 32px;
-    line-height: 32px;
-    letter-spacing: -0.64px;
-  }
-}
 
 @media (min-width: 901px) {
   :root {

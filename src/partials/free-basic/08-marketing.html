@@ -17,26 +17,31 @@
      Счётчиков у рейла нет. Иконки стоят без цифр: любые числа лайков
      пришлось бы выдумать, а выдумывать текст на этой странице нельзя.
 
-     Ролика здесь нет намеренно. На главной в телефоне крутится mp4 на семь
-     мегабайт; тащить его на вторую страницу ради того же кадра — удвоить
-     вес письма. Стоит один кадр, и интерфейс поверх него неподвижен.
+     РОЛИК ТОТ ЖЕ, ЧТО НА ГЛАВНОЙ. video и постер скопированы из
+     partials/home/08-pillar-marketing.html как есть, включая атрибуты:
+     autoplay loop muted playsinline и preload="metadata".
 
-     ПРО КАДР. Его здесь пока НЕТ, и это не пропуск. Постер главной
-     (people/ai-team-poster) сюда не подошёл: на нём блондинка у ретро-машины
-     в Гаване. Страница про Залив, и инфлюенсер на ней должен быть оттуда же.
-     Нужный кадр — people/ai-influencer-gulf, промпт под него лежит в
-     tools/genimg.mjs под именем ai-influencer-gulf.
+     Про вес. mp4 семь мегабайт, и в цельный файл он не вшивается — сборка
+     оставляет на него ссылку и говорит об этом строкой «ссылкой, не
+     вшито». В письме вместо ролика будет постер, и это правильное
+     поведение: вшитый mp4 сделал бы письмо неотправляемым. На сайте ролик
+     играет.
 
-     До тех пор экран показывает свою фактуру — тот же градиент с гирихом,
-     каким были прежние заглушки, — а интерфейс лежит поверх неё. Ссылки на
-     будущий файл здесь нет намеренно: сборка ищет пути к ассетам по всему
-     тексту, включая комментарии, и падает на первом отсутствующем.
+     Фактура экрана (градиент с гирихом) остаётся под роликом и видна,
+     пока тот не подъехал, — вместе с постером.
 
-     Когда кадр будет нарисован, первой строкой в .fb-phone__screen встаёт
-     <img class="fb-phone__shot"> на него — ровно такой же, как в 01.
+     ПОДПИСЬ. Ролик склеен из пяти инфлюенсеров подряд, и на главной имя с
+     нишей едут по таймкодам — этим занят js/home/03-ai-team.js. Здесь
+     подпись неподвижная и совпадает только с первым сегментом
+     (@sophia.caldwell, Fashion). Полоса проигрывания тоже стоит. Чтобы
+     они поехали, скрипт надо перенести в js/shared/ и дать этой разметке
+     те же id, что у главной.
      ========================================================================== -->
 <section class="fb-section fb-section--dark fb-pillar" id="pillar-marketing">
-  <div class="container fb-split">
+  <!-- Доля колонок здесь своя: заголовок этого столпа — самый длинный на
+       странице, и в половину контейнера первая строка не встаёт. См.
+       .fb-split--text-wide. -->
+  <div class="container fb-split fb-split--text-wide">
 
     <div class="fb-split__text reveal">
       <p class="fb-numeral" aria-hidden="true">05</p>
@@ -49,14 +54,21 @@
         <li class="fb-check__item"><img class="fb-check__mark" src="assets/img/icons/check-green.svg" alt="" width="16" height="16"> You choose what goes out and when — nothing posts without you</li>
       </ul>
 
-      <ul class="fb-mini">
+      <!-- Модификатор — из-за третьей подписи: она длиннее соседних, и в
+           равной трети колонки ломается надвое. См. .fb-mini--last-wide. -->
+      <ul class="fb-mini fb-mini--last-wide">
         <li class="fb-mini__m"><span class="fb-mini__n">Minutes</span><span class="fb-mini__l">From product to promo</span></li>
         <li class="fb-mini__m"><span class="fb-mini__n">9:16</span><span class="fb-mini__l">Built for vertical video</span></li>
-        <li class="fb-mini__m"><span class="fb-mini__n fb-mini__n--phrase">0 cameras, 0 crews</span><span class="fb-mini__l">Generated for you, ready to post</span></li>
+        <!-- Показатель взят с главной один в один: там значение «0», а
+             смысл несёт подпись. Было «0 cameras, 0 crews» из прототипа —
+             фраза на месте числа, и она не вставала в строку ни при какой
+             раскладке: на общем кегле 28px ей нужно 245px, а доля ряда даёт
+             175. Главная эту же мысль укладывает в один знак. -->
+        <li class="fb-mini__m"><span class="fb-mini__n">0</span><span class="fb-mini__l">Cameras, crews or agencies</span></li>
       </ul>
 
       <div class="fb-actions fb-pillar__actions">
-        <a class="btn btn--primary" href="#" data-stub="checkout">Create your first promo</a>
+        <a class="btn btn--primary" href="checkout.html">Create your first promo</a>
       </div>
     </div>
 
@@ -64,6 +76,14 @@
       <div class="fb-stage__inner">
         <figure class="fb-phone">
           <div class="fb-phone__screen fb-phone__screen--reel">
+
+            <video class="fb-phone__shot" id="aiTeamVideo"
+                   poster="assets/img/people/ai-team-poster.webp"
+                   width="272" height="564"
+                   autoplay loop muted playsinline preload="metadata">
+              <source src="assets/video/ai-team.mp4" type="video/mp4">
+            </video>
+
             <div class="fb-reel">
               <ul class="fb-reel__rail">
                 <li><img src="assets/img/icons/heart-filled.svg" alt="" width="26" height="26"></li>

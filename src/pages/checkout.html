@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--#include partials/checkout/head.html -->
+
+<!--# Порядок тот же, что на остальных страницах: шрифты и токены, потом
+     общие компоненты, потом своё. Шапки здесь нет, поэтому из общего
+     берутся только знак и поля ввода. -->
+<link rel="stylesheet" href="css/core/fonts.css">
+<link rel="stylesheet" href="css/core/base.css">
+<link rel="stylesheet" href="css/shared/logo.css">
+<link rel="stylesheet" href="css/shared/forms.css">
+<link rel="stylesheet" href="css/checkout/00-checkout.css">
+</head>
+<body>
+
+<main class="ch">
+<!--#include partials/checkout/01-intro.html -->
+<!--#include partials/checkout/02-order.html -->
+<!--#include partials/checkout/03-form.html -->
+</main>
+
+<script src="js/checkout/market.js"></script>
+
+<!--
+  ЗАМЕТКА РАЗРАБОТЧИКУ — оплата
+
+  · ПОЛЕЙ КАРТЫ ЗДЕСЬ НЕТ и быть не должно. На их месте стоит плашка с
+    меткой STRIPE ELEMENTS — настоящие поля рисует Stripe в своём iframe,
+    номер карты не должен проходить через нашу страницу вовсе. Подключить:
+    Stripe.js → elements.create('payment') → смонтировать в .ch__stripe
+    вместо заглушки.
+  · [data-stub="submit"] — создать клиента и подписку с trial_period_days: 14,
+    подтвердить SetupIntent, и только после успеха заводить магазин.
+  · [data-stub="wallet"] — Google Pay / Apple Pay идут тем же Payment
+    Element; отдельной интеграции не требуется, кнопка появляется сама,
+    если способ доступен на устройстве.
+  · Согласия: оба флажка обязательны перед отправкой — проверку добавить
+    вместе с настоящей отправкой. Текст второго согласия юридический, его
+    правит юрист, а не разработчик.
+  · Цены по рынкам лежат в js/checkout/market.js. Это ВИТРИНА: настоящую
+    сумму списания определяет прайс в Stripe, и при расхождении правильная
+    та, что в Stripe.
+  · VAT: в ОАЭ и Саудовской Аравии цена указана с налогом («VAT included»).
+    При добавлении рынков без НДС строку согласия придётся разводить.
+  · Дата конца пробного периода считается на клиенте только для показа.
+    В подписке её проставляет Stripe.
+-->
+
+</body>
+</html>

@@ -1,16 +1,16 @@
 <!-- ==========================================================================
      04 · Свои продукты
 
-     Было: панель с двумя зелёными полосками и подписями «Five questions →
-     one finished product» и «Your idea, live in your store the same day».
-     Обещание было написано словами, а показать его было нечем — полоски не
-     показывают ничего.
+     Панель собрана как в прототипе: две карточки, у каждой тёмная обложка
+     сверху и подпись под ней.
 
-     Стало: те же две строки, но набранные шагами конструктора. Первая
-     строка — вопрос и что из него выходит, вторая — что с этим будет
-     дальше; между ними стрелка, как между шагами. Заглушки обложек сняты:
-     под этими строками нет и не было никакого снимка, а серая полоска на
-     их месте обещала картинку, которой не существует.
+     Обложки одно время были сняты — довод был в том, что плашка обещает
+     снимок, которого нет. Довод не подтвердился. Пустой рамки под фото
+     здесь никто не читает: это тёмная плитка того же тона, что секции
+     страницы, и работает она не заглушкой, а телом карточки. Без неё
+     панель садилась в полосу 142px рядом с колонкой вчетверо выше, и блик
+     стекла ложился на эту полосу диагональной кляксой — читалось поломкой,
+     а не панелью.
 
      ТЕКСТ ПРЕЖНИЙ, слово в слово. Подписи «Answer a few prompts, get a
      ready product» и заголовки строк не трогались.
@@ -29,7 +29,7 @@
         <li class="fb-check__item"><img class="fb-check__mark" src="assets/img/icons/check-green.svg" alt="" width="16" height="16"> Yours to price and sell as you like</li>
       </ul>
       <div class="fb-actions fb-pillar__actions">
-        <a class="btn btn--primary" href="#" data-stub="checkout">Start building free</a>
+        <a class="btn btn--primary" href="checkout.html">Start building free</a>
       </div>
     </div>
 
@@ -37,12 +37,36 @@
       <p class="fb-preview__top"><span class="fb-preview__u">Product builder</span> &middot; your own AI tool</p>
 
       <ol class="fb-build__qs">
+        <!-- Первая карточка — сам опрос: пять пилюль, четыре с галочкой,
+             пятая пунктиром с курсором. Ни одной подписи внутри: любой
+             текст в них пришлось бы выдумать, а пять отвеченных строк
+             читаются и без слов. -->
         <li class="fb-build__q">
-          <span class="fb-build__say">Five questions → one finished product</span>
-          <span class="fb-build__ask">Answer a few prompts, get a ready product</span>
+          <span class="fb-build__steps" aria-hidden="true">
+            <i class="fb-build__step"></i>
+            <i class="fb-build__step"></i>
+            <i class="fb-build__step"></i>
+            <i class="fb-build__step"></i>
+            <i class="fb-build__step fb-build__step--now"></i>
+          </span>
+          <span class="fb-build__body">
+            <span class="fb-build__say">Five questions → one finished product</span>
+            <span class="fb-build__ask">Answer a few prompts, get a ready product</span>
+          </span>
         </li>
+
+        <!-- Вторая — то, что из опроса вышло. Кадр настоящий, из библиотеки
+             товаров: sleep-system на фрибейсике больше нигде не стоит, на
+             полке в 03 другие три. Пустая плитка на этом месте обещала
+             снимок; снимок обещание закрывает. -->
         <li class="fb-build__q">
-          <span class="fb-build__say">Your idea, live in your store the same day</span>
+          <span class="fb-build__shot">
+            <img src="assets/img/products/sleep-system.webp" alt=""
+                 width="1024" height="720" loading="lazy" decoding="async">
+          </span>
+          <span class="fb-build__body">
+            <span class="fb-build__say">Your idea, live in your store the same day</span>
+          </span>
         </li>
       </ol>
     </div>

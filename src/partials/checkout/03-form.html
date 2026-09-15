@@ -1,0 +1,96 @@
+<!-- ==========================================================================
+     Оплата · данные, платёж и согласия
+
+     Поля карты — ЗАГЛУШКА, и это видно: на месте настоящего поля стоит
+     плашка с меткой STRIPE ELEMENTS. Так в прототипе, и так правильно —
+     рисовать поддельное поле карты нельзя ни при каких условиях, даже в
+     макете: человек может принять его за настоящее и начать вводить номер.
+
+     Подключение описано в заметке внизу pages/checkout.html.
+     ========================================================================== -->
+<form class="ch__form" id="ch-form" novalidate>
+
+  <h2 class="ch__label">Your information</h2>
+
+  <label class="fld" for="ch-email">
+    <span class="fld__label">Email</span>
+    <input class="fld__input" id="ch-email" name="email" type="email"
+           placeholder="you@example.com" autocomplete="email"
+           required spellcheck="false" autocapitalize="off" inputmode="email">
+  </label>
+
+  <div class="fld">
+    <span class="fld__label" id="ch-phone-label">Phone (optional)</span>
+    <div class="fld__row">
+      <select class="fld__select" id="ch-dial" name="dial" aria-label="Dial code">
+        <option>+971</option>
+        <option>+966</option>
+        <option>+974</option>
+        <option>+973</option>
+        <option>+968</option>
+        <option>+965</option>
+      </select>
+      <input class="fld__input" id="ch-phone" name="phone" type="tel"
+             placeholder="50 123 4567" autocomplete="tel"
+             aria-labelledby="ch-phone-label">
+    </div>
+  </div>
+
+  <h2 class="ch__label ch__label--pay">Your payment info</h2>
+
+  <button class="btn btn--light btn--block ch__wallet" type="button" data-stub="wallet">
+    Proceed with <b>G&nbsp;Pay</b>
+  </button>
+
+  <p class="ch__or">
+    <span class="ch__or-text">Or pay with card</span>
+    <span class="ch__brands">
+      <span class="ch__brand">VISA</span>
+      <span class="ch__brand">MC</span>
+      <span class="ch__brand">AMEX</span>
+      <span class="ch__brand">mada</span>
+      <span class="ch__brand">Tabby</span>
+    </span>
+  </p>
+
+  <div class="ch__stripe" aria-hidden="true">
+    <p class="ch__stub-tag">Stripe Elements</p>
+    <p class="ch__fake">Card number</p>
+    <div class="ch__fake-row">
+      <p class="ch__fake">MM / YY</p>
+      <p class="ch__fake">CVC</p>
+    </div>
+  </div>
+
+  <p class="ch__safe">
+    <img class="ch__safe-icon" src="assets/img/icons/clock-check-bronze.svg" alt="" width="14" height="14">
+    <span><b>Safe &amp; secure</b> checkout — your card is handled by Stripe, never stored by us.</span>
+  </p>
+
+  <button class="btn btn--primary btn--block ch__pay" type="submit" data-stub="submit">
+    Start my free trial
+  </button>
+
+  <div class="ch__consents">
+    <label class="chk" for="ch-terms">
+      <input class="chk__box" id="ch-terms" type="checkbox">
+      <span class="chk__mark" aria-hidden="true"></span>
+      <span>I agree to the <a href="#" data-stub="terms">Terms of Use</a> and <a href="#" data-stub="privacy">Privacy Policy</a>.</span>
+    </label>
+
+    <label class="chk" for="ch-renew">
+      <input class="chk__box" id="ch-renew" type="checkbox">
+      <span class="chk__mark" aria-hidden="true"></span>
+      <span>I agree to auto-renewal: 14-day free trial, then <span data-price>AED&nbsp;149<span class="ch__dec">.00</span></span>/month (VAT included) from <span data-date>the trial end date</span> until canceled. Cancel instantly from your dashboard or contact support@tajiro.com.</span>
+    </label>
+  </div>
+
+</form>
+
+<footer class="ch__foot">
+  <p class="ch__ssl">
+    <img class="ch__safe-icon" src="assets/img/icons/verified-badge.svg" alt="" width="15" height="15">
+    <span><b>SSL Secure payment</b><br>Active SSL 256-bit protection</span>
+  </p>
+  <p class="ch__copy">&copy; 2026 Tajiro &middot; Registered UAE company</p>
+</footer>

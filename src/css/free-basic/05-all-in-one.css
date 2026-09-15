@@ -13,28 +13,58 @@
     margin-top: 32px;
 }
 
+/* Карточка.
+
+   Была плоская белая с серой кромкой, и шесть таких читались таблицей: на
+   всю секцию приходилось ровно одно цветное пятно — галочка в 16px.
+   Добавлены три вещи, все из палитры страницы:
+
+   — подложка не белая, а с уходом в кремовый (--c-bg-plain снизу): белое
+     на кремовом фоне секции выглядит вырезанным из другого материала;
+   — песочный блик в правом верхнем углу, очень слабый (8%) — он и даёт
+     карточке тепло, которого не хватало;
+   — тень глубже прежней, но по-прежнему мягкая: перечень не витрина,
+     поднимать строки над страницей незачем. */
 .fb-incl__row {
     display: flex;
-    gap: 14px;
+  /* Плитка по центру текста, а не по его первой строке: у карточек разной
+     высоты (описание в одну строку или в три) знак иначе висел бы вверху и
+     ряд читался бы разъехавшимся. */
+    align-items: center;
+    gap: 16px;
     padding: 20px;
     border: 1px solid var(--c-line-soft);
     border-radius: 14px;
-    background: var(--c-surface);
-    box-shadow: 0 1px 2px rgba(43, 38, 33, 0.04);
+    background:
+      radial-gradient(120% 140% at 100% 0,
+        color-mix(in srgb, var(--c-sand) 9%, transparent) 0%, transparent 58%),
+      linear-gradient(180deg, var(--c-surface) 0%, var(--c-bg-plain) 100%);
+    box-shadow: 0 1px 2px rgba(43, 38, 33, 0.04),
+                0 12px 26px -20px rgba(43, 38, 33, 0.35);
 }
 
-/* Галочка общая с чек-листами страницы: тот же знак и тот же зелёный */
-.fb-incl__row .fb-check__mark {
-    margin-top: 2px;
-    font-size: 17px;
+/* Знак в плитке, а не сам по себе. Мятный квадрат со скруглением — та же
+   заливка, что у пилюль страницы (--c-green-mist), и он даёт каждой
+   карточке своё цветное пятно вместо одной галочки на всю секцию. */
+.fb-incl__chip {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: var(--c-green-mist);
 }
 
 .fb-incl__body { display: block; }
 
 .fb-incl__title {
     display: block;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
+    font-size: 17px;
+    line-height: 24px;
     font-weight: 700;
+    letter-spacing: -0.2px;
     color: var(--c-text);
 }
 

@@ -12,6 +12,7 @@
      в базе нет. -->
 <link rel="stylesheet" href="css/core/fonts.css">
 <link rel="stylesheet" href="css/core/base.css">
+<link rel="stylesheet" href="css/shared/logo.css">
 <link rel="stylesheet" href="css/shared/header.css">
 <link rel="stylesheet" href="css/core/reveal.css">
 <link rel="stylesheet" href="css/free-basic/00-base.css">
@@ -37,9 +38,9 @@
 <link rel="stylesheet" href="css/shared/pillar-store.css">
 <link rel="stylesheet" href="css/free-basic/04-pillars.css">
 <link rel="stylesheet" href="css/free-basic/05-all-in-one.css">
-<link rel="stylesheet" href="css/free-basic/06-reviews.css">
-<link rel="stylesheet" href="css/free-basic/07-cta.css">
-<link rel="stylesheet" href="css/free-basic/08-trust.css">
+<link rel="stylesheet" href="css/shared/social-proof.css">
+<link rel="stylesheet" href="css/shared/footer-cta.css">
+<link rel="stylesheet" href="css/shared/trust-security.css">
 <link rel="stylesheet" href="css/free-basic/09-faq.css">
 <link rel="stylesheet" href="css/shared/footer.css">
 </head>
@@ -62,8 +63,17 @@
 <!--#include partials/free-basic/07-create.html -->
 <!--#include partials/free-basic/08-marketing.html -->
 <!--#include partials/free-basic/09-all-in-one.html -->
-<!--#include partials/free-basic/10-reviews.html -->
+<!--# Призыв стоит ПЕРЕД отзывами, а не после: он тёмный, и блок доверия
+     следом тоже тёмный — подряд они давали полосу почти в тысячу
+     пикселей. Между ними встали отзывы на креме, и чередование тонов
+     вернулось. -->
 <!--#include partials/free-basic/11-band.html -->
+
+<!--# Отзывы — секция 09 главной целиком: тот же партиал, те же стили и
+     тот же скрипт. Своя копия у страницы была: те же четыре человека и те
+     же снимки, но своя раскладка и свои тексты. Держать рядом два блока
+     одного назначения незачем — расходятся на первой же правке. -->
+<!--#include partials/shared/social-proof.html -->
 <!--#include partials/free-basic/12-trust.html -->
 <!--#include partials/free-basic/13-faq.html -->
 <!--#include partials/free-basic/14-final.html -->
@@ -83,11 +93,21 @@
 <!--# Ведёт едущую полку товаров в 03. Тот же файл, что крутит каталог на
      главной. -->
 <script src="js/shared/roll.js"></script>
+<script src="js/shared/social-proof.js"></script>
+<script src="js/free-basic/steps.js"></script>
 <script src="js/core/reveal.js"></script>
 
 <script>
 /* DEVELOPER NOTE — Stripe is NOT connected yet.
-   Every [data-stub="checkout"] link is a placeholder.
+   Every green button on this page now goes to checkout.html;
+   the payment form there is still a stub. See the note at the
+   bottom of pages/checkout.html for what has to be wired.
+
+   PRICE MISMATCH TO SETTLE: the amounts below come from this
+   page (VAT-inclusive, per market), while checkout.html carries
+   the prototype numbers — AED/SAR/QAR 149, BHD/OMR/KWD 19.
+   One of the two has to give before launch; the VAT rule below
+   is the one that is not negotiable.
 
    PRICING: amounts on this page are shown in USD ($39/mo) as a
    value anchor for the layout stage only.

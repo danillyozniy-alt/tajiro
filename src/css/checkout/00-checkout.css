@@ -1,0 +1,330 @@
+/* ==========================================================================
+   tajiro — Оплата
+
+   Одна узкая колонка, как в прототипе: счёт, поля, платёж, согласия.
+   Оформление системное — токены, типографика и кнопки из базы, поля из
+   css/shared/forms.css.
+
+   ШАПКИ И ПОДВАЛА НЕТ, только знак и строка копирайта внизу. Это страница
+   оплаты: любая навигация здесь уводит человека с неё, а привести его
+   обратно нечем.
+
+   ПОРЯДОК БЛОКОВ — из прототипа и на телефоне тот же: счёт стоит ВЫШЕ
+   полей. Сначала видно, что сегодня не списывают ничего, и только потом
+   просят вводить данные.
+   ========================================================================== */
+
+.ch {
+    max-width: 560px;
+    margin-inline: auto;
+    padding: 24px 20px 40px;
+}
+
+body { background: var(--c-bg); }
+
+.ch__top { margin-bottom: 28px; }
+
+/* Заголовок ступенью ниже секционного: рядом с ним нет ни номера, ни
+   надзаголовка, и держать он должен не секцию, а одну колонку. */
+.ch__title {
+    font-size: 26px;
+    line-height: 34px;
+    letter-spacing: -0.7px;
+    text-wrap: balance;
+}
+
+.ch__title em {
+    font-style: italic;
+    color: var(--c-green-text);
+}
+
+/* --- Строки с галочками ------------------------------------------------------
+   Один компонент на три места: обещание под заголовком, приписки под
+   счётом и всё, что читается списком выгод. -------------------------------- */
+.ch__perks { margin-top: 18px; }
+
+.ch__perk {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 15px;
+    line-height: 24px;
+    color: var(--c-text-body);
+}
+
+.ch__perk + .ch__perk { margin-top: 8px; }
+
+.ch__check {
+    flex: none;
+    margin-top: 4px;
+}
+
+.ch__market { margin-top: 24px; }
+
+/* --- Счёт --------------------------------------------------------------------
+   Плашка на песочном тинте, а не белая: в прототипе счёт тоже выделен
+   заливкой, и это единственный блок страницы, который должен читаться
+   отдельным объектом. Белым он слился бы с полями ниже. -------------------- */
+.ch__order {
+    margin-top: 26px;
+    padding: 20px;
+    border-radius: 18px;
+    background: var(--c-bg-alt);
+    box-shadow: inset 0 0 0 1px var(--c-line-soft);
+}
+
+/* Пилюля предложения — та же мятная заливка, что у меток на лендинге */
+.ch__offer {
+    display: inline-block;
+    margin-bottom: 16px;
+    padding: 5px 12px;
+    border-radius: var(--r-pill);
+    background: var(--c-green-mist);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 15px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--c-green-text);
+}
+
+.ch__line {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding-block: 12px;
+}
+
+.ch__line + .ch__line { border-top: 1px solid var(--c-line-soft); }
+
+.ch__line-name {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 22px;
+    color: var(--c-text);
+}
+
+.ch__line-note {
+    margin-top: 2px;
+    font-size: 13px;
+    line-height: 20px;
+    color: var(--c-text-muted);
+}
+
+.ch__hl { font-weight: 700; color: var(--c-green-text); }
+
+/* Значения строк — дисплейным, как все числа проекта. Зелёным: в каждой
+   строке стоит ноль, и зелёный здесь не украшение, а сам довод. */
+.ch__line-val {
+    flex: none;
+    font-family: var(--f-display);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 22px;
+    letter-spacing: -0.3px;
+    color: var(--c-green-text);
+    white-space: nowrap;
+}
+
+/* Копейки мельче и тише: «AED 0.00» читается как ноль, а не как сумма из
+   четырёх знаков. */
+.ch__dec {
+    font-size: 0.72em;
+    opacity: 0.6;
+}
+
+.ch__today {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 6px;
+    padding-top: 16px;
+    border-top: 1px solid var(--c-line);
+}
+
+.ch__today-label {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--c-text);
+}
+
+.ch__today-sum {
+    font-family: var(--f-display);
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 30px;
+    letter-spacing: -0.6px;
+    color: var(--c-green-text);
+    white-space: nowrap;
+}
+
+.ch__after { margin-top: 16px; }
+
+.ch__after .ch__perk {
+    font-size: 13px;
+    line-height: 21px;
+    color: var(--c-text-muted);
+}
+
+/* --- Подписи разделов --------------------------------------------------------
+   Прописными в разрядку, как надзаголовки секций лендинга, только без
+   штриха: штрих там метит секцию, а здесь это части одной формы. -------- */
+.ch__label {
+    margin-top: 32px;
+    margin-bottom: 14px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: 1.3px;
+    text-transform: uppercase;
+    color: var(--c-text-muted);
+}
+
+.ch__label--pay { margin-top: 34px; }
+
+/* --- Платёж ------------------------------------------------------------------ */
+.ch__wallet {
+    justify-content: center;
+    border: 1px solid var(--c-line);
+}
+
+/* Вес выписан явно. У <b> по умолчанию font-weight: bolder — это НЕ «жирный»,
+   а «на ступень жирнее родителя»: внутри кнопки на 700 он превращался в 900,
+   а такого начертания у Almarai нет, и браузер жирнил его сам. Синтетика
+   рядом с настоящими 700 и 800 видна сразу. */
+.ch__wallet b { font-weight: 800; }
+
+.ch__or {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.ch__or-text {
+    font-size: 13px;
+    color: var(--c-text-muted);
+}
+
+.ch__brands {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.ch__brand {
+    padding: 4px 9px;
+    border: 1px solid var(--c-line-soft);
+    border-radius: 5px;
+    background: var(--c-surface);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 15px;
+    letter-spacing: 0.3px;
+    color: var(--c-text-muted);
+}
+
+/* Поле карты — ЗАГЛУШКА, и выглядеть она обязана заглушкой. Пунктир и
+   метка стоят ровно затем, чтобы никто не принял её за настоящее поле и
+   не начал вводить номер карты. Настоящее поле рисует Stripe. */
+.ch__stripe {
+    margin-top: 16px;
+    padding: 16px;
+    border: 1px dashed var(--c-line-gold);
+    border-radius: var(--r-card);
+    background: var(--c-bg-alt);
+}
+
+.ch__stub-tag {
+    margin-bottom: 12px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--c-gold);
+}
+
+.ch__fake {
+    height: 46px;
+    padding: 12px 14px;
+    border: 1px solid var(--c-line-soft);
+    border-radius: var(--r-card);
+    background: var(--c-surface);
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--c-text-muted);
+}
+
+.ch__fake-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.ch__safe {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 16px;
+    font-size: 13px;
+    line-height: 20px;
+    color: var(--c-text-muted);
+}
+
+.ch__safe b { color: var(--c-text); }
+
+.ch__safe-icon { flex: none; margin-top: 3px; }
+
+.ch__pay {
+    justify-content: center;
+    margin-top: 22px;
+    height: 56px;
+    font-size: 16px;
+}
+
+.ch__consents { margin-top: 18px; }
+
+/* --- Подвал страницы --------------------------------------------------------- */
+.ch__foot {
+    margin-top: 30px;
+    padding-top: 22px;
+    border-top: 1px solid var(--c-line-soft);
+}
+
+.ch__ssl {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--c-text-muted);
+}
+
+.ch__ssl b { color: var(--c-text); }
+
+.ch__copy {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--c-text-muted);
+}
+
+
+/* --- Адаптив ------------------------------------------------------------------
+   Колонка остаётся одна на всех ширинах. Двух колонок у оплаты нет
+   намеренно: счёт сбоку читается справкой, а он здесь главный довод —
+   «сегодня с вас не спишут ничего», — и стоять должен в потоке чтения. */
+@media (min-width: 601px) {
+  .ch { padding: 32px 24px 56px; }
+  .ch__title { font-size: 32px; line-height: 40px; letter-spacing: -0.9px; }
+  .ch__order { padding: 24px; }
+  .ch__today-sum { font-size: 30px; line-height: 34px; }
+}
+
+@media (min-width: 901px) {
+  .ch { padding: 44px 24px 72px; }
+  .ch__title { font-size: 36px; line-height: 44px; letter-spacing: -1px; }
+}
