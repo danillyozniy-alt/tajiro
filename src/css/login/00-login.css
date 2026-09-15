@@ -109,15 +109,80 @@
 .lg__email { font-weight: 700; color: var(--c-text); }
 
 /* --- Панель со снимком ------------------------------------------------------
-   До 901 её нет вовсе: на телефоне она встала бы над формой и отодвинула
-   поле под сгиб, а поле здесь — единственное, зачем сюда приходят. -------- */
-.lg__brand { display: none; }
+   На широком экране она стоит справа во всю высоту, на телефоне — полосой
+   ПОД формой. Порядок разметки для этого и выбран: поле остаётся первым
+   экраном, ради него сюда и приходят, а снимок встречает уже того, кто
+   почту ввёл или спустился глазами ниже.
+
+   Над формой его ставить нельзя: он отодвинул бы поле под сгиб. -------- */
+.lg__brand {
+    position: relative;
+    display: block;
+    overflow: hidden;
+
+  /* Полосой, а не портретом: вертикальный кадр на телефоне занял бы
+     полтора экрана. Кадр от этого не страдает — лицо в нём выше
+     середины, и в широкий вырез попадает целиком. */
+    aspect-ratio: 5 / 4;
+    margin: 0 20px 28px;
+    border-radius: 18px;
+}
+
+.lg__shot {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 42%;
+}
+
+/* Затемнение только снизу, под подпись: верх кадра остаётся чистым. */
+.lg__over {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 28px 22px 20px;
+    background: linear-gradient(180deg,
+              transparent 0%,
+              rgba(26, 23, 20, 0.55) 55%,
+              rgba(26, 23, 20, 0.82) 100%);
+    color: var(--c-on-dark);
+}
+
+/* Знак в подписи — только на широком экране. На телефоне он стоял бы
+   второй раз: первый уже над формой, в двадцати сантиметрах выше. */
+.lg__over-brand { display: none; }
+
+.lg__over-tag {
+    font-size: 20px;
+    line-height: 27px;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+    color: var(--c-on-dark);
+}
+
+/* У Almarai курсива нет, браузер наклоняет сам — на тёмном это
+   единственное место страницы, где наклон допустим, и работает он тем
+   же зелёным, что акценты на тёмных секциях. */
+.lg__over-tag em {
+    font-style: italic;
+    color: var(--c-green-on-dark);
+}
 
 
 /* --- Адаптив ---------------------------------------------------------------- */
 @media (min-width: 601px) {
   .lg__form { padding: 40px 32px 56px; }
   .lg__title { font-size: 34px; line-height: 42px; }
+
+  .lg__brand {
+    aspect-ratio: 3 / 2;
+    margin: 0 32px 40px;
+    border-radius: 20px;
+  }
+
+  .lg__over { padding: 34px 30px 26px; }
+  .lg__over-tag { font-size: 23px; line-height: 31px; }
 }
 
 @media (min-width: 901px) {
@@ -132,34 +197,16 @@
     margin-inline: auto 64px;
   }
 
+  /* Полоса разворачивается обратно в портрет во всю высоту колонки */
   .lg__brand {
-    position: relative;
-    display: block;
-    overflow: hidden;
+    aspect-ratio: auto;
     margin: 16px 16px 16px 0;
     border-radius: 22px;
   }
 
-  .lg__shot {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 28%;
-  }
+  .lg__shot { object-position: center 28%; }
 
-  /* Затемнение только снизу, под подпись: верх кадра остаётся чистым. */
-  .lg__over {
-    position: absolute;
-    inset: auto 0 0 0;
-    padding: 36px 36px 34px;
-    background: linear-gradient(180deg,
-              transparent 0%,
-              rgba(26, 23, 20, 0.55) 55%,
-              rgba(26, 23, 20, 0.82) 100%);
-    color: var(--c-on-dark);
-  }
+  .lg__over { padding: 36px 36px 34px; }
 
   .lg__over-brand {
     position: relative;
@@ -176,17 +223,7 @@
     margin-top: 14px;
     font-size: 26px;
     line-height: 34px;
-    font-weight: 800;
     letter-spacing: -0.6px;
-    color: var(--c-on-dark);
-  }
-
-  /* У Almarai курсива нет, браузер наклоняет сам — на тёмном это
-     единственное место страницы, где наклон допустим, и работает он тем
-     же зелёным, что акценты на тёмных секциях. */
-  .lg__over-tag em {
-    font-style: italic;
-    color: var(--c-green-on-dark);
   }
 }
 
