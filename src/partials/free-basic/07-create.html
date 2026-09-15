@@ -33,7 +33,9 @@
       </div>
     </div>
 
-    <div class="fb-panel fb-build reveal" aria-hidden="true">
+    <!-- data-once — тот же крючок, что у шагов в 02: по нему скрипт
+         запускает набор полей, когда панель входит в кадр. -->
+    <div class="fb-panel fb-build reveal" data-once aria-hidden="true">
       <p class="fb-preview__top"><span class="fb-preview__u">Product builder</span> &middot; your own AI tool</p>
 
       <ol class="fb-build__qs">
@@ -42,12 +44,23 @@
              текст в них пришлось бы выдумать, а пять отвеченных строк
              читаются и без слов. -->
         <li class="fb-build__q">
+          <!-- Пять полей опроса. В каждом ответ, и он набирается по буквам,
+               когда панель входит в кадр.
+
+               ОТВЕТЫ ВЗЯТЫ ИЗ СЛОВАРЯ САМОЙ СТРАНИЦЫ: «Golden Visa» —
+               товар с полки в 03, «AED 59» — цена оттуда же. Выдумывать
+               тут нечего, а образец, собранный из настоящих слов
+               страницы, читается как её продолжение.
+
+               Панель целиком aria-hidden: это образец интерфейса, а не
+               содержание. Экранный диктор читает подпись под ней, и её
+               достаточно. -->
           <span class="fb-build__steps" aria-hidden="true">
-            <i class="fb-build__step"></i>
-            <i class="fb-build__step"></i>
-            <i class="fb-build__step"></i>
-            <i class="fb-build__step"></i>
-            <i class="fb-build__step fb-build__step--now"></i>
+            <i class="fb-build__step"><span>Golden Visa</span></i>
+            <i class="fb-build__step"><span>Expats</span></i>
+            <i class="fb-build__step"><span>Checklist</span></i>
+            <i class="fb-build__step"><span>AED 59</span></i>
+            <i class="fb-build__step"><span>Publish today</span></i>
           </span>
           <span class="fb-build__body">
             <span class="fb-build__say">Five questions → one finished product</span>

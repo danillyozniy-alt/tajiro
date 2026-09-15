@@ -331,12 +331,33 @@
 .fb-build__q + .fb-build__q { border-top: 1px solid var(--c-line-soft); }
 
 /* --- Верхняя часть: сам опрос ----------------------------------------------
-   Пять полей: четыре отвеченных, пятое в работе.
+   Пять полей с ответами. В покое они заполнены и зелёные — опрос пройден,
+   панель показывает результат. Это базовое состояние, и без скрипта
+   страница остаётся ровно такой.
 
-   Одна форма на поле — заливка, и всё. Галочка и полоска-ответ внутри
-   пилюли сняты: три знака в объекте высотой 26px — это и был шум, из-за
-   которого панель рябила. Ширины разные: одинаковые читались бы шкалой
-   загрузки, а не ответами разной длины. */
+   Со скриптом поля сначала пустеют (.is-armed), а когда панель входит в
+   кадр (.is-live), ответы набираются по очереди: в поле бежит текст с
+   курсором на конце, дописался — поле зеленеет, очередь уходит
+   следующему. Ровно то, о чём говорит подпись под ними: «Answer a few
+   prompts, get a ready product».
+
+   Как набирается ТЕКСТ, а не полоса: строка лежит в поле целиком, а
+   открывается маской — clip-path режет её справа и отступает ступенями.
+   Ступеней 12 на все поля, по числу знаков в самом длинном; на коротких
+   шаг выходит крупнее, но на глаз это тот же машинописный ритм.
+
+   Маской, а НЕ шириной строки. Ширина меняет раскладку: пустое поле
+   сжималось бы в огрызок, и весь ряд ехал бы вправо по мере набора. Маска
+   раскладку не трогает — поле с первого кадра стоит на своём месте и
+   своей ширины.
+
+   Курсора нет. Он был — чёрточкой на конце набранного, — но в поле высотой
+   26px и при тексте в 11px читался не курсором, а мусором: короткий штрих
+   рядом с буквами того же роста. Набор виден и без него.
+
+   Такт — 0.75s на поле, пять полей укладываются в 3.75s. Набор занимает
+   0.6 из них, остаток — пауза перед следующим: без неё очередь читается
+   бегущей строкой, а не ответами. */
 .fb-build__steps {
     display: flex;
     flex-wrap: wrap;
@@ -345,42 +366,66 @@
 }
 
 .fb-build__step {
-    height: 26px;
-    border-radius: var(--r-pill);
-    background: var(--c-green-mist);
-}
-
-.fb-build__step:nth-child(1) { width: 92px; }
-.fb-build__step:nth-child(2) { width: 68px; }
-.fb-build__step:nth-child(3) { width: 104px; }
-.fb-build__step:nth-child(4) { width: 74px; }
-
-/* Пятое — то, на которое сейчас отвечают: заливка бледнее и курсор внутри.
-   Пунктирная обводка, которая тут стояла, была ещё одной линией подряд. */
-.fb-build__step--now {
     position: relative;
-    width: 116px;
-    background: color-mix(in srgb, var(--c-green) 8%, transparent);
+    display: flex;
+    align-items: center;
+    height: 26px;
+    padding-inline: 11px;
+    border-radius: var(--r-pill);
+    background-color: var(--c-green-mist);
 }
 
-.fb-build__step--now::after {
-    content: "";
-    position: absolute;
-    top: 6px;
-    left: 14px;
-    width: 2px;
-    height: 14px;
-    background: var(--c-green);
-    animation: fb-caret 1.1s steps(1, end) infinite;
+/* Строка ответа. nowrap и overflow: hidden — на них и держится набор:
+   поле обрезает то, что ещё не напечатано. */
+.fb-build__step span {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+  /* Поле размечено тегом <i>, а он курсивный по умолчанию. Пока поля были
+     пустыми, это не имело значения; с текстом наклон срезался обрезкой —
+     у последней буквы верхний правый угол выходил за коробку строки. */
+    font-style: normal;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 26px;
+    letter-spacing: 0.1px;
+    color: var(--c-green-text);
 }
 
-@keyframes fb-caret {
-  0%, 50%      { opacity: 1; }
-  50.01%, 100% { opacity: 0; }
+.fb-build__step:nth-child(1) { --t: 0s; }
+.fb-build__step:nth-child(2) { --t: 0.75s; }
+.fb-build__step:nth-child(3) { --t: 1.5s; }
+.fb-build__step:nth-child(4) { --t: 2.25s; }
+.fb-build__step:nth-child(5) { --t: 3s; }
+
+/* --- Взведённое состояние: поля пустые ------------------------------------- */
+.fb-build.is-armed .fb-build__step {
+    background-color: color-mix(in srgb, var(--c-green) 8%, transparent);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .fb-build__step--now::after { animation: none; }
+.fb-build.is-armed .fb-build__step span {
+    clip-path: inset(0 100% 0 0);
+}
+
+/* --- Набор ------------------------------------------------------------------ */
+.fb-build.is-live .fb-build__step {
+  /* Заливка возвращается через 0.6s после начала своей очереди — ровно
+     когда строка дописана. */
+    animation: fb-build-lit 0.25s linear both;
+    animation-delay: calc(var(--t) + 0.6s);
+}
+
+.fb-build.is-live .fb-build__step span {
+    animation: fb-build-type 0.6s steps(12, end) var(--t) both;
+}
+
+@keyframes fb-build-type {
+  from { clip-path: inset(0 100% 0 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes fb-build-lit {
+  to { background-color: var(--c-green-mist); }
 }
 
 /* --- Нижняя часть: что получилось ------------------------------------------

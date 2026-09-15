@@ -22,7 +22,12 @@
 
 body { background: var(--c-bg); }
 
-.ch__top { margin-bottom: 28px; }
+/* Знак и заголовок по центру — как на чекауте экомзи. Колонка узкая, и
+   выключка влево оставляла обоих висеть у её края. */
+.ch__top {
+    margin-bottom: 28px;
+    text-align: center;
+}
 
 /* Заголовок ступенью ниже секционного: рядом с ним нет ни номера, ни
    надзаголовка, и держать он должен не секцию, а одну колонку. */
@@ -30,6 +35,7 @@ body { background: var(--c-bg); }
     font-size: 26px;
     line-height: 34px;
     letter-spacing: -0.7px;
+    text-align: center;
     text-wrap: balance;
 }
 
@@ -185,9 +191,60 @@ body { background: var(--c-bg); }
 .ch__label--pay { margin-top: 34px; }
 
 /* --- Платёж ------------------------------------------------------------------ */
+/* --- Кнопка Google Pay --------------------------------------------------------
+   Собрана по виду настоящей, а не по нашей кнопочной шкале: чёрный фон,
+   белая подпись и лок-ап «G Pay» — цветная G плюс слово Pay. Наши токены
+   тут не работают, и это осознанно: кнопку способа оплаты узнают в лицо,
+   а перекрашенную в кремово-зелёное не узнают вовсе.
+
+   Скругление 6, как у мелких карточек системы: это единственное, чем она
+   всё же садится на страницу. Высота общая с полями — 52. */
 .ch__wallet {
+    display: flex;
+    align-items: center;
     justify-content: center;
-    border: 1px solid var(--c-line);
+    gap: 10px;
+    width: 100%;
+    height: 52px;
+    padding-inline: 20px;
+    border: 0;
+    border-radius: var(--r-card);
+    background: #000000;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.1px;
+    cursor: pointer;
+    transition: background-color 0.18s ease;
+}
+
+.ch__wallet:hover { background: #1c1c1c; }
+
+.ch__wallet-text { color: #ffffff; }
+
+/* Лок-ап: знак и слово стоят вплотную, как в оригинале */
+.ch__gpay {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Знак чуть выше базовой линии: у круглой G оптический центр выше
+   геометрического, и вровень с текстом она кажется просевшей. */
+.ch__gpay-g {
+    flex: none;
+    margin-top: -1px;
+}
+
+/* Слово Pay — дисплейным: Outfit геометрический и ближе всех к шрифту
+   оригинального лок-апа из того, что вшито в проект. */
+.ch__gpay-word {
+    font-family: var(--f-display);
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.4px;
+    color: #ffffff;
 }
 
 /* Вес выписан явно. У <b> по умолчанию font-weight: bolder — это НЕ «жирный»,
@@ -196,40 +253,95 @@ body { background: var(--c-bg); }
    рядом с настоящими 700 и 800 видна сразу. */
 .ch__wallet b { font-weight: 800; }
 
-.ch__or {
+/* --- Способы оплаты ----------------------------------------------------------
+   Подпись слева, знаки справа — раскладка прототипа. На телефоне ряд
+   переносится, поэтому и подпись, и знаки прижаты к своим краям, а не
+   растянуты по ширине. */
+.ch__pays {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: space-between;
     gap: 10px;
-    margin-top: 18px;
+    margin-top: 20px;
 }
 
-.ch__or-text {
+.ch__pays-label {
     font-size: 13px;
     color: var(--c-text-muted);
 }
 
-.ch__brands {
+/* На телефоне подпись уходит на свою строку, а знаки встают во всю
+   ширину и расходятся по краям: иначе ряд кончался за полсотни пикселей
+   до правого края и висел рваным краем под подписью.
+
+   Шире 601 знаки прижимаются вправо — там они делят строку с подписью. */
+.ch__marks {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
     gap: 6px;
 }
 
-.ch__brand {
-    padding: 4px 9px;
+/* Плашка под знак — ОДНОГО размера для всех, как у платёжных бейджей на
+   настоящих чекаутах. Знаки внутри разной пропорции, и выравнивать их по
+   высоте нельзя: у Visa 3:1, у Mastercard 1.3:1, у AMEX квадрат. По общей
+   высоте словесные знаки распухают, по общей ширине — тают значки.
+
+   Поэтому ровняем по оптическому весу: словесные знаки упираются в ширину
+   плашки, значки — в высоту. Так каждый занимает примерно одну площадь, и
+   ряд читается ровным. */
+.ch__mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 28px;
     border: 1px solid var(--c-line-soft);
     border-radius: 5px;
     background: var(--c-surface);
-    font-size: 11px;
-    font-weight: 700;
-    line-height: 15px;
-    letter-spacing: 0.3px;
-    color: var(--c-text-muted);
 }
 
-/* Поле карты — ЗАГЛУШКА, и выглядеть она обязана заглушкой. Пунктир и
-   метка стоят ровно затем, чтобы никто не принял её за настоящее поле и
-   не начал вводить номер карты. Настоящее поле рисует Stripe. */
+.ch__mark-img {
+    display: block;
+    object-fit: contain;
+}
+
+/* Словесные: Visa, mada, Tabby — держим по ширине */
+.ch__mark-img--word {
+    width: 40px;
+    height: auto;
+    max-height: 16px;
+}
+
+/* Значки: Mastercard — держим по высоте. 20px, а не 18: при общей высоте
+   со словесными знаками он занимал заметно меньшую площадь и в ряду
+   читался мельче соседей. */
+.ch__mark-img--sign {
+    width: auto;
+    height: 20px;
+}
+
+/* Окно в полосе знаков. Полоса экомзи — 306×30, шесть знаков по ~47px;
+   AMEX начинается на 104-м пикселе. Уменьшаем полосу до 20px высоты
+   (коэффициент 20/30) и сдвигаем так, чтобы в окне остался только он:
+   104 × 0.667 = 69.3. Остальные знаки полосы выходят за окно и не видны.
+
+   Так вырезать проще и точнее, чем резать файл: при замене полосы
+   меняются два числа, а не картинка. */
+.ch__mark-crop {
+    display: block;
+    width: 31px;
+    height: 20px;
+    background: url("../../assets/img/checkout/cards.webp") -69.3px 0 / 204px 20px no-repeat;
+}
+
+/* У Tabby знак нарисован currentColor — цвет задаём мы. Тёмный
+   нейтральный, тот же, что у надписи в знаке mada: иначе он один в ряду
+   красился бы по-своему. */
+.ch__mark--tabby { color: #27292d; }
+
 .ch__stripe {
     margin-top: 16px;
     padding: 16px;
@@ -268,8 +380,8 @@ body { background: var(--c-bg); }
 .ch__safe {
     display: flex;
     align-items: flex-start;
-    gap: 8px;
-    margin-top: 16px;
+    gap: 10px;
+    margin-top: 18px;
     font-size: 13px;
     line-height: 20px;
     color: var(--c-text-muted);
@@ -277,7 +389,26 @@ body { background: var(--c-bg); }
 
 .ch__safe b { color: var(--c-text); }
 
-.ch__safe-icon { flex: none; margin-top: 3px; }
+/* Замок по строке, а не по её коробке. Файл 26×26, рисунок занимает в нём
+   почти всё поле, поэтому при высоте 20px (высота строки) он выходил
+   заметно крупнее самих букв: у текста в 13px прописные всего девять
+   пикселей. 14px даёт рисунок примерно в рост прописных.
+
+   Отступ сверху 2px, а не 3 — геометрическая середина строки здесь не
+   работает. Во-первых, у строки сверху и снизу поровну межстрочного
+   интервала, но буквы в ней сидят выше середины коробки: низ занимают
+   выносные, которых в этой фразе почти нет. Во-вторых, у самого замка
+   масса внизу — дужка тонкая, корпус сплошной, — и по геометрии он
+   кажется просевшим. Пиксель вверх снимает оба.
+
+   Центрируем по ПЕРВОЙ строке, а не по всему абзацу: на телефоне он в две
+   строки, и центрирование по нему увело бы замок в середину. */
+.ch__lock {
+    flex: none;
+    height: 14px;
+    width: auto;
+    margin-top: 2px;
+}
 
 .ch__pay {
     justify-content: center;
@@ -286,7 +417,26 @@ body { background: var(--c-bg); }
     font-size: 16px;
 }
 
-.ch__consents { margin-top: 18px; }
+/* Подсказка под кнопкой. Видна, пока согласия не отмечены; скрывает её
+   js/checkout/consent.js атрибутом hidden. */
+.ch__gate {
+    margin-top: 12px;
+    font-size: 13px;
+    line-height: 20px;
+    text-align: center;
+    color: var(--c-gold);
+}
+
+/* Выключенная кнопка: серая и не нажимается. Приём экомзи — там она тоже
+   ждёт согласия и до него не притворяется рабочей. */
+.ch__pay:disabled {
+    background: var(--c-line);
+    color: var(--c-text-muted);
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+.ch__consents { margin-top: 16px; }
 
 /* --- Подвал страницы --------------------------------------------------------- */
 .ch__foot {
@@ -295,20 +445,22 @@ body { background: var(--c-bg); }
     border-top: 1px solid var(--c-line-soft);
 }
 
+/* Подвал по центру: под ним ничего нет, и выключка влево оставляла
+   строки висеть у края колонки. Знак и текст центрируются одним блоком,
+   поэтому иконка едет вместе со строкой, а не стоит отдельно слева. */
+/* Печать SSL — файл экомзи, один в один. Раньше здесь была строка текста
+   с иконкой: печать узнаётся как печать, а набранная словами — нет. */
 .ch__ssl {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    font-size: 12px;
-    line-height: 18px;
-    color: var(--c-text-muted);
+    display: block;
+    height: 38px;
+    width: auto;
+    margin-inline: auto;
 }
-
-.ch__ssl b { color: var(--c-text); }
 
 .ch__copy {
     margin-top: 14px;
     font-size: 12px;
+    text-align: center;
     color: var(--c-text-muted);
 }
 
@@ -319,6 +471,22 @@ body { background: var(--c-bg); }
    «сегодня с вас не спишут ничего», — и стоять должен в потоке чтения. */
 @media (min-width: 601px) {
   .ch { padding: 32px 24px 56px; }
+
+  .ch__marks {
+    width: auto;
+    justify-content: flex-end;
+  }
+
+  /* Обещания в ряд, как у экомзи: три коротких строки столбиком съедали
+     экран перед счётом, а счёт здесь главный довод. */
+  .ch__perks {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .ch__perk + .ch__perk { margin-top: 0; }
+  .ch__perk { font-size: 14px; }
   .ch__title { font-size: 32px; line-height: 40px; letter-spacing: -0.9px; }
   .ch__order { padding: 24px; }
   .ch__today-sum { font-size: 30px; line-height: 34px; }

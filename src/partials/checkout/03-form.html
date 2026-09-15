@@ -1,10 +1,16 @@
 <!-- ==========================================================================
      Оплата · данные, платёж и согласия
 
+     Собрано по чекауту экомзи — тому самому, с которого списан и прототип.
+     Оттуда же взяты ассеты: знак Google Pay, полоса платёжных систем,
+     замок и печать SSL. Рисовать их заново незачем, а приблизительно
+     нарисованный фирменный знак хуже отсутствия знака.
+
      Поля карты — ЗАГЛУШКА, и это видно: на месте настоящего поля стоит
-     плашка с меткой STRIPE ELEMENTS. Так в прототипе, и так правильно —
-     рисовать поддельное поле карты нельзя ни при каких условиях, даже в
-     макете: человек может принять его за настоящее и начать вводить номер.
+     плашка с меткой STRIPE ELEMENTS. Так и в прототипе, и у экомзи — там
+     на этом месте пустые контейнеры, которые заполняет сам Stripe.
+     Рисовать поддельное поле карты нельзя ни при каких условиях: человек
+     может принять его за настоящее и начать вводить номер.
 
      Подключение описано в заметке внизу pages/checkout.html.
      ========================================================================== -->
@@ -38,24 +44,60 @@
 
   <h2 class="ch__label ch__label--pay">Your payment info</h2>
 
-  <button class="btn btn--light btn--block ch__wallet" type="button" data-stub="wallet">
-    Proceed with <b>G&nbsp;Pay</b>
+  <!-- Кнопка кошелька. У экомзи здесь пустой контейнер, в который Stripe
+       сам вставляет родную кнопку Apple Pay или Google Pay и прячет блок
+       целиком, если способ на устройстве недоступен. Здесь заглушка того
+       же вида: чёрная кнопка с фирменным лок-апом.
+
+       Она нарочно НЕ в стиле Tajiro. Кнопку способа оплаты узнают в лицо,
+       и перекрашенная в кремово-зелёное она перестаёт читаться. -->
+  <button class="ch__wallet" type="button" data-stub="wallet">
+    <span class="ch__wallet-text">Proceed with</span>
+    <span class="ch__gpay">
+      <img class="ch__gpay-g" src="assets/img/checkout/gpay.svg" alt="" width="20" height="20">
+      <span class="ch__gpay-word">Pay</span>
+    </span>
   </button>
 
-  <p class="ch__or">
-    <span class="ch__or-text">Or pay with card</span>
-    <span class="ch__brands">
-      <span class="ch__brand">VISA</span>
-      <span class="ch__brand">MC</span>
-      <span class="ch__brand">AMEX</span>
-      <span class="ch__brand">mada</span>
-      <span class="ch__brand">Tabby</span>
-    </span>
-  </p>
+  <!-- Способы оплаты — набор и раскладка прототипа: подпись слева, знаки
+       справа. Discover, Diners и JCB, которые были в полосе экомзи, сняты:
+       в заливе ими не платят.
 
+       Знаки настоящие, каждый от своего владельца:
+         Visa, Mastercard, AMEX — Wikimedia Commons, файлы помечены как не
+                  достигающие порога оригинальности (авторских прав нет,
+                  торговые знаки остаются торговыми)
+         mada   — оттуда же
+         Tabby  — со страницы tabby.ai, их собственный знак в разметке
+
+       У AMEX знак — синий квадрат, внутри которого «AMERICAN EXPRESS» в
+       две строки. На двадцати пикселях эти слова нечитаемы, а отдельно от
+       квадрата знака не существует. Поэтому взят короткий знак «AMEX» из
+       полосы экомзи — тот, что рисуют как раз под мелкий размер. Вырезан
+       не файлом, а фоном: полоса лежит целиком, а видно из неё одно окно
+       (см. .ch__mark-crop).
+
+       У Mastercard полотно обрезано по кругам: в исходном файле под ними
+       стоит слово «mastercard», а на двадцати пикселях высоты оно
+       превращается в грязь. Знак узнают по кругам, читать там нечего.
+
+       Плашки, а не знаки в ряд: пропорции у знаков разные — Visa широкая,
+       AMEX квадратный, — и без общей рамки ряд читается вразнобой. В
+       прототипе на этом месте такие же плашки, только с подписями. -->
+  <div class="ch__pays">
+    <span class="ch__pays-label">Or pay with card</span>
+    <span class="ch__marks">
+      <span class="ch__mark"><img class="ch__mark-img ch__mark-img--word" src="assets/img/checkout/visa.svg" alt="Visa" width="40" height="13" loading="lazy" decoding="async"></span>
+      <span class="ch__mark"><img class="ch__mark-img ch__mark-img--sign" src="assets/img/checkout/mastercard.svg" alt="Mastercard" width="32" height="20" loading="lazy" decoding="async"></span>
+      <span class="ch__mark"><i class="ch__mark-crop" role="img" aria-label="American Express"></i></span>
+      <span class="ch__mark"><img class="ch__mark-img ch__mark-img--word" src="assets/img/checkout/mada.svg" alt="mada" width="40" height="13" loading="lazy" decoding="async"></span>
+      <span class="ch__mark ch__mark--tabby"><img class="ch__mark-img ch__mark-img--word" src="assets/img/checkout/tabby.svg" alt="Tabby" width="40" height="11" loading="lazy" decoding="async"></span>
+    </span>
+  </div>
   <div class="ch__stripe" aria-hidden="true">
     <p class="ch__stub-tag">Stripe Elements</p>
     <p class="ch__fake">Card number</p>
+    <p class="ch__fake">Name on card</p>
     <div class="ch__fake-row">
       <p class="ch__fake">MM / YY</p>
       <p class="ch__fake">CVC</p>
@@ -63,23 +105,30 @@
   </div>
 
   <p class="ch__safe">
-    <img class="ch__safe-icon" src="assets/img/icons/clock-check-bronze.svg" alt="" width="14" height="14">
-    <span><b>Safe &amp; secure</b> checkout — your card is handled by Stripe, never stored by us.</span>
+    <img class="ch__lock" src="assets/img/checkout/lock.svg" alt="" width="14" height="14">
+    <span><b>Safe &amp; secure</b> checkout &mdash; your card is handled by Stripe, never stored by us.</span>
   </p>
 
-  <button class="btn btn--primary btn--block ch__pay" type="submit" data-stub="submit">
+  <!-- Кнопка выключена, пока не отмечены оба согласия, а под ней стоит
+       строка-подсказка, которая исчезает после отметки. Порядок как у
+       экомзи: сначала кнопка, потом подсказка, потом сами флажки — она
+       стоит ровно между тем, что не нажалось, и тем, что для этого нужно.
+       Состоянием заведует js/checkout/consent.js. -->
+  <button class="btn btn--primary btn--block ch__pay" type="submit" id="ch-submit" data-stub="submit" disabled>
     Start my free trial
   </button>
 
+  <p class="ch__gate" id="ch-gate">*Please check the boxes below to start your trial.</p>
+
   <div class="ch__consents">
     <label class="chk" for="ch-terms">
-      <input class="chk__box" id="ch-terms" type="checkbox">
+      <input class="chk__box" id="ch-terms" type="checkbox" data-consent>
       <span class="chk__mark" aria-hidden="true"></span>
       <span>I agree to the <a href="#" data-stub="terms">Terms of Use</a> and <a href="#" data-stub="privacy">Privacy Policy</a>.</span>
     </label>
 
     <label class="chk" for="ch-renew">
-      <input class="chk__box" id="ch-renew" type="checkbox">
+      <input class="chk__box" id="ch-renew" type="checkbox" data-consent>
       <span class="chk__mark" aria-hidden="true"></span>
       <span>I agree to auto-renewal: 14-day free trial, then <span data-price>AED&nbsp;149<span class="ch__dec">.00</span></span>/month (VAT included) from <span data-date>the trial end date</span> until canceled. Cancel instantly from your dashboard or contact support@tajiro.com.</span>
     </label>
@@ -88,9 +137,6 @@
 </form>
 
 <footer class="ch__foot">
-  <p class="ch__ssl">
-    <img class="ch__safe-icon" src="assets/img/icons/verified-badge.svg" alt="" width="15" height="15">
-    <span><b>SSL Secure payment</b><br>Active SSL 256-bit protection</span>
-  </p>
-  <p class="ch__copy">&copy; 2026 Tajiro &middot; Registered UAE company</p>
+  <img class="ch__ssl" src="assets/img/checkout/ssl-badge.svg" alt="SSL secure access" width="173" height="38">
+  <p class="ch__copy">&copy; 2026 Tajiro Technologies Corporation &middot; Cluster C, JLT, Al Thanyah 5, Dubai, UAE</p>
 </footer>
