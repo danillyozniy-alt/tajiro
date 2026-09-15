@@ -30,33 +30,67 @@
       </div>
     </div>
 
-    <div class="fb-shelf reveal-set">
-      <article class="fb-prod">
-        <span class="fb-thumb fb-prod__thumb"><span class="fb-prod__cat">Visa &amp; Residency</span></span>
-        <div class="fb-prod__body">
-          <h3 class="h3 fb-prod__name">Golden Visa Eligibility Check</h3>
-          <p class="fb-prod__desc">See which UAE Golden Visa route fits you, in minutes.</p>
-          <p class="fb-prod__foot"><span class="fb-prod__price" data-usd="30">AED 110</span><span class="fb-prod__rate">★ 4.9</span></p>
-        </div>
-      </article>
+    <!-- Полка. Обложки были зелёными заливками во всю ширину карточки —
+         заглушкой из прототипа. Теперь это снимки, а карточка стала
+         горизонтальной: обложка слева квадратом, текст справа. Во всю
+         ширину снимок в 3:2 поднимал каждую карточку почти на 400 px, и
+         три таких не помещались рядом с текстовой колонкой.
 
-      <article class="fb-prod">
-        <span class="fb-thumb fb-prod__thumb"><span class="fb-prod__cat">Money &amp; Work</span></span>
-        <div class="fb-prod__body">
-          <h3 class="h3 fb-prod__name">End-of-Service Calculator</h3>
-          <p class="fb-prod__desc">Know exactly what gratuity you are owed under UAE law.</p>
-          <p class="fb-prod__foot"><span class="fb-prod__price" data-usd="12">AED 44</span><span class="fb-prod__rate">★ 4.8</span></p>
-        </div>
-      </article>
+         ПОЛКА ЕДЕТ. Три карточки стояли неподвижно, хотя текст рядом
+         обещает десять тысяч товаров: довод был написан, но не показан.
+         Приём тот же, что у каталога в 07 главной, и скрипт под ним общий —
+         js/shared/roll.js. Своего у полки только шаг и число шагов: там
+         строк шесть по 84 px, здесь карточек три по 145.
 
-      <article class="fb-prod">
-        <span class="fb-thumb fb-prod__thumb"><span class="fb-prod__cat">Family &amp; School</span></span>
-        <div class="fb-prod__body">
-          <h3 class="h3 fb-prod__name">School Admission Roadmap</h3>
-          <p class="fb-prod__desc">Applications, curriculum choice and fee planning, step by step.</p>
-          <p class="fb-prod__foot"><span class="fb-prod__price" data-usd="16">AED 59</span><span class="fb-prod__rate">★ 4.9</span></p>
+         Клоны набора делает скрипт, а не разметка: в цельном файле дубли
+         вшили бы те же три снимка повторно.
+
+         СНИМКИ ВРЕМЕННЫЕ. Это кадры товаров главной: предметные сцены без
+         людей, по смыслу близкие, но не заливские. Под каждый товар этой
+         полки в tools/genimg.mjs лежит свой промпт — заменить на
+         products/golden-visa, products/end-of-service и
+         products/school-admission, как только они будут нарисованы. -->
+    <div class="fb-roll reveal" data-roll data-roll-focus="0" data-roll-clones="2">
+      <span class="fb-roll__focus" aria-hidden="true"></span>
+
+      <div class="fb-roll__track" data-roll-track>
+        <div class="fb-shelf" data-roll-list>
+
+          <article class="fb-prod" data-roll-row>
+            <img class="fb-prod__shot" src="assets/img/products/legal-documents.webp" alt=""
+                 width="560" height="385" loading="lazy" decoding="async">
+            <div class="fb-prod__body">
+              <p class="fb-prod__cat">Visa &amp; Residency</p>
+              <h3 class="h3 fb-prod__name">Golden Visa Eligibility Check</h3>
+              <p class="fb-prod__desc">See which UAE Golden Visa route fits you, in minutes.</p>
+              <p class="fb-prod__foot"><span class="fb-prod__price" data-usd="30">AED 110</span><span class="fb-prod__rate">★ 4.9</span></p>
+            </div>
+          </article>
+
+          <article class="fb-prod" data-roll-row>
+            <img class="fb-prod__shot" src="assets/img/products/medical-bill-audit.webp" alt=""
+                 width="560" height="385" loading="lazy" decoding="async">
+            <div class="fb-prod__body">
+              <p class="fb-prod__cat">Money &amp; Work</p>
+              <h3 class="h3 fb-prod__name">End-of-Service Calculator</h3>
+              <p class="fb-prod__desc">Know exactly what gratuity you are owed under UAE law.</p>
+              <p class="fb-prod__foot"><span class="fb-prod__price" data-usd="12">AED 44</span><span class="fb-prod__rate">★ 4.8</span></p>
+            </div>
+          </article>
+
+          <article class="fb-prod" data-roll-row>
+            <img class="fb-prod__shot" src="assets/img/products/career-portfolio.webp" alt=""
+                 width="560" height="385" loading="lazy" decoding="async">
+            <div class="fb-prod__body">
+              <p class="fb-prod__cat">Family &amp; School</p>
+              <h3 class="h3 fb-prod__name">School Admission Roadmap</h3>
+              <p class="fb-prod__desc">Applications, curriculum choice and fee planning, step by step.</p>
+              <p class="fb-prod__foot"><span class="fb-prod__price" data-usd="16">AED 59</span><span class="fb-prod__rate">★ 4.9</span></p>
+            </div>
+          </article>
+
         </div>
-      </article>
+      </div>
     </div>
 
   </div>

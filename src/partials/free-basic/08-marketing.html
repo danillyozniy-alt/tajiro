@@ -1,3 +1,40 @@
+<!-- ==========================================================================
+     05 · Маркетинг
+
+     Было: тёмная плашка с тремя зелёными прямоугольниками и подписями
+     «Minutes», «9:16», «0 cameras». Три числа рассказывали про вертикальное
+     видео, но самого видео на экране не было — про формат говорили словами.
+
+     Стало: тот же телефон, что в 01, с кадром ролика и интерфейсом поверх —
+     рейл, подпись автора, полоса проигрывания. Приём из 03 главной.
+
+     ТЕКСТ ПРЕЖНИЙ, слово в слово. Три подписи переехали из плашки в ряд
+     .fb-mini под чек-лист — туда же, где стоят показатели всех остальных
+     столпов страницы. Строка «AI influencer · @sophia.caldwell · Fashion»
+     переехала из шапки плашки в подпись под роликом и не разбита: это
+     ровно та же строка, просто на своём месте.
+
+     Счётчиков у рейла нет. Иконки стоят без цифр: любые числа лайков
+     пришлось бы выдумать, а выдумывать текст на этой странице нельзя.
+
+     Ролика здесь нет намеренно. На главной в телефоне крутится mp4 на семь
+     мегабайт; тащить его на вторую страницу ради того же кадра — удвоить
+     вес письма. Стоит один кадр, и интерфейс поверх него неподвижен.
+
+     ПРО КАДР. Его здесь пока НЕТ, и это не пропуск. Постер главной
+     (people/ai-team-poster) сюда не подошёл: на нём блондинка у ретро-машины
+     в Гаване. Страница про Залив, и инфлюенсер на ней должен быть оттуда же.
+     Нужный кадр — people/ai-influencer-gulf, промпт под него лежит в
+     tools/genimg.mjs под именем ai-influencer-gulf.
+
+     До тех пор экран показывает свою фактуру — тот же градиент с гирихом,
+     каким были прежние заглушки, — а интерфейс лежит поверх неё. Ссылки на
+     будущий файл здесь нет намеренно: сборка ищет пути к ассетам по всему
+     тексту, включая комментарии, и падает на первом отсутствующем.
+
+     Когда кадр будет нарисован, первой строкой в .fb-phone__screen встаёт
+     <img class="fb-phone__shot"> на него — ровно такой же, как в 01.
+     ========================================================================== -->
 <section class="fb-section fb-section--dark fb-pillar" id="pillar-marketing">
   <div class="container fb-split">
 
@@ -11,38 +48,38 @@
         <li class="fb-check__item"><img class="fb-check__mark" src="assets/img/icons/check-green.svg" alt="" width="16" height="16"> Formatted for Instagram, TikTok and YouTube Shorts</li>
         <li class="fb-check__item"><img class="fb-check__mark" src="assets/img/icons/check-green.svg" alt="" width="16" height="16"> You choose what goes out and when — nothing posts without you</li>
       </ul>
+
+      <ul class="fb-mini">
+        <li class="fb-mini__m"><span class="fb-mini__n">Minutes</span><span class="fb-mini__l">From product to promo</span></li>
+        <li class="fb-mini__m"><span class="fb-mini__n">9:16</span><span class="fb-mini__l">Built for vertical video</span></li>
+        <li class="fb-mini__m"><span class="fb-mini__n fb-mini__n--phrase">0 cameras, 0 crews</span><span class="fb-mini__l">Generated for you, ready to post</span></li>
+      </ul>
+
       <div class="fb-actions fb-pillar__actions">
         <a class="btn btn--primary" href="#" data-stub="checkout">Create your first promo</a>
       </div>
     </div>
 
-    <!-- Секция тёмная, поэтому плашка не стеклянная: белые градиенты стекла
-         на тёмном превращаются в молочное пятно. Плоская тёмная поверхность
-         со светящейся гранью — как на тёмных секциях главной. -->
-    <div class="fb-panel fb-panel--dark fb-preview reveal">
-      <p class="fb-preview__top"><span class="fb-preview__u">AI influencer</span> &middot; @sophia.caldwell &middot; Fashion</p>
-      <div class="fb-preview__grid">
-        <div class="fb-pv">
-          <span class="fb-thumb fb-thumb--tall"></span>
-          <span class="fb-pv__body">
-            <span class="fb-pv__name">Minutes</span>
-            <span class="fb-pv__note">From product to promo</span>
-          </span>
-        </div>
-        <div class="fb-pv">
-          <span class="fb-thumb fb-thumb--tall"></span>
-          <span class="fb-pv__body">
-            <span class="fb-pv__name">9:16</span>
-            <span class="fb-pv__note">Built for vertical video</span>
-          </span>
-        </div>
-        <div class="fb-pv fb-pv--wide">
-          <span class="fb-thumb fb-thumb--slim"></span>
-          <span class="fb-pv__body">
-            <span class="fb-pv__name">0 cameras, 0 crews</span>
-            <span class="fb-pv__note fb-pv__note--accent">Generated for you, ready to post</span>
-          </span>
-        </div>
+    <div class="fb-stage reveal" aria-hidden="true">
+      <div class="fb-stage__inner">
+        <figure class="fb-phone">
+          <div class="fb-phone__screen fb-phone__screen--reel">
+            <div class="fb-reel">
+              <ul class="fb-reel__rail">
+                <li><img src="assets/img/icons/heart-filled.svg" alt="" width="26" height="26"></li>
+                <li><img src="assets/img/icons/comment.svg" alt="" width="26" height="26"></li>
+                <li><img src="assets/img/icons/share.svg" alt="" width="26" height="26"></li>
+              </ul>
+
+              <p class="fb-reel__meta">
+                AI influencer &middot; @sophia.caldwell &middot; Fashion
+                <img src="assets/img/icons/verified-badge.svg" alt="" width="15" height="15">
+              </p>
+
+              <div class="fb-reel__progress"><span></span></div>
+            </div>
+          </div>
+        </figure>
       </div>
     </div>
 

@@ -73,17 +73,13 @@
 
 /* --- Панель аналитики ------------------------------------------------------ */
 
-/* Тёмная шапка панели. Внутри стекла это единственная глухая плоскость —
-   она задаёт панели верх и не даёт ей растечься по песку. */
-.fb-dash__top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 15px 18px;
-    background: var(--c-ink-surface-2);
-}
+/* Верхняя строка приходит из .fb-preview__top в 00-base.css — та же, что у
+   панели конструктора. Здесь только то, чего у конструктора нет: состояние
+   магазина прижато к правому краю. */
+.fb-dash__top { justify-content: space-between; }
 
+/* Знак Tajiro. Цвет тёмный: строка светлая, и прежний --c-on-dark на ней
+   пропадал. Кегль и трекинг прежние. */
 .fb-dash__brand {
     position: relative;
     font-family: var(--f-display);
@@ -91,27 +87,26 @@
     font-weight: 600;
     line-height: 19px;
     letter-spacing: -0.38px;
-    color: var(--c-on-dark);
+    color: var(--c-ink-surface-2);
 }
 
 .fb-dash__live {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 13px;
-    color: var(--c-green-on-dark);
+    color: var(--c-text-muted);
 }
 
 /* Пульс «магазин работает». Тот же приём, что у точки в пилюле: кольцо
-   расходится и гаснет. Цвет зелёный для тёмного фона: --c-green-bright на
-   #1f1d1a тускнеет. */
+   расходится и гаснет. Цвет теперь --c-green-bright, а не осветлённый для
+   тёмного: строка стала светлой, и на ней осветлённый зелёный выцветал. */
 .fb-dash__pulse {
     position: relative;
     flex: none;
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: var(--c-green-on-dark);
+    background: var(--c-green-bright);
 }
 
 .fb-dash__pulse::after {
@@ -119,7 +114,7 @@
     position: absolute;
     inset: -3px;
     border-radius: 50%;
-    border: 2px solid rgba(127, 201, 160, 0.55);
+    border: 2px solid rgba(61, 143, 99, 0.5);
     animation: fb-dash-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
 
@@ -134,27 +129,39 @@
 
 .fb-dash__body { padding: 20px 18px; }
 
+/* Два показателя разделены волосяной линией, а не поставлены в две
+   обведённые плитки. Плитки были в прототипе, и они же противоречат
+   правилу, записанному про ряд .fb-mini в 00-base.css: показатель у Tajiro
+   — голая пара «число плюс подпись капсом», обведённая плашка рядом с ней
+   читается чужим компонентом. Внутри панели правило действует ровно так
+   же, тем более что панель стеклянная: две глухие плитки поверх стекла
+   гасили материал на две трети её высоты. */
 .fb-dash__row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 14px;
+    gap: 18px;
+    margin-bottom: 18px;
 }
 
-/* Плитка показателя. В прототипе подложка была мятной (--mist); здесь
-   кремовая: зелёный в системе живёт в акцентах, а не в заливках. */
 .fb-stat {
     display: flex;
     flex-direction: column;
-    padding: 14px;
-    border-radius: var(--r-card);
-    background: rgba(251, 248, 243, 0.72);
-    border: 1px solid var(--c-line-soft);
 }
 
+/* Вторая колонка отделена линией слева, а не воздухом: без неё два числа
+   в ряд читаются одной строкой «6,760 38». */
+.fb-stat + .fb-stat {
+    padding-left: 18px;
+    border-left: 1px solid var(--c-line-soft);
+}
+
+/* Подпись — прописными в разрядку, теми же значениями, что у .fb-mini__l:
+   это один и тот же ярлык при числе, и набран он должен быть одинаково. */
 .fb-stat__k {
-    font-size: 12px;
-    font-weight: 700;
+    font-size: 10px;
+    line-height: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.55px;
     color: var(--c-text-muted);
 }
 
@@ -162,17 +169,17 @@
    подставляет скрипт цен, поэтому размер держим с запасом: «BHD 692» и
    «AED 6,760» набираются в одну строку. */
 .fb-stat__v {
-    margin-top: 3px;
+    margin-top: 4px;
     font-family: var(--f-display);
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 600;
     line-height: 32px;
     letter-spacing: -0.5px;
-    color: var(--c-text);
+    color: var(--c-ink-surface-2);
 }
 
 .fb-stat__up {
-    margin-top: 2px;
+    margin-top: 3px;
     font-size: 12px;
     font-weight: 700;
     color: var(--c-green-text);
@@ -231,7 +238,8 @@
   .fb-hero { padding-block: 52px 56px; }
   .fb-hero__title { font-size: 52px; line-height: 58px; letter-spacing: -1.4px; }
   .fb-hero__lede { line-height: 29px; }
-  .fb-stat__v { font-size: 26px; }
+  .fb-stat__k { font-size: 11px; line-height: 15px; }
+  .fb-stat__v { font-size: 28px; }
 }
 
 @media (min-width: 901px) {

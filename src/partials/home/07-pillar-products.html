@@ -67,11 +67,11 @@
              Копию набора делает js/07-products.js, а не разметка: в цельном
              файле дубль вшил бы те же шесть картинок повторно и прибавил
              к письму почти мегабайт. Дубль — деталь отрисовки, не контент. -->
-        <div class="s-07__window">
-          <div class="s-07__track">
-            <ul class="s-07__list">
+        <div class="s-07__window" data-roll data-roll-focus="2" data-roll-clones="2">
+          <div class="s-07__track" data-roll-track>
+            <ul class="s-07__list" data-roll-list>
 
-          <li class="s-07__row">
+          <li class="s-07__row" data-roll-row>
             <img class="s-07__thumb" src="assets/img/products/puppy-plan.webp" alt="A puppy with a leash and feeding bowl"
                  width="56" height="56" loading="lazy" decoding="async">
             <div class="s-07__row-main">
@@ -82,7 +82,7 @@
               <span class="s-07__price">$9</span>
             </p>
           </li>
-          <li class="s-07__row">
+          <li class="s-07__row" data-roll-row>
             <img class="s-07__thumb" src="assets/img/products/medical-bill-audit.webp" alt="Medical statements with a magnifying glass and calculator"
                  width="56" height="56" loading="lazy" decoding="async">
             <div class="s-07__row-main">
@@ -93,7 +93,7 @@
               <span class="s-07__price">$14</span>
             </p>
           </li>
-          <li class="s-07__row">
+          <li class="s-07__row" data-roll-row>
             <img class="s-07__thumb" src="assets/img/products/career-portfolio.webp" alt="A leather portfolio, notebook and pen"
                  width="56" height="56" loading="lazy" decoding="async">
             <div class="s-07__row-main">
@@ -104,7 +104,7 @@
               <span class="s-07__price">$12</span>
             </p>
           </li>
-          <li class="s-07__row">
+          <li class="s-07__row" data-roll-row>
             <img class="s-07__thumb" src="assets/img/products/legal-documents.webp" alt="A document folder with brass scales and a fountain pen"
                  width="56" height="56" loading="lazy" decoding="async">
             <div class="s-07__row-main">
@@ -115,7 +115,7 @@
               <span class="s-07__price">$7</span>
             </p>
           </li>
-          <li class="s-07__row">
+          <li class="s-07__row" data-roll-row>
             <img class="s-07__thumb" src="assets/img/products/sleep-system.webp" alt="Folded linen bedding with a brass alarm clock"
                  width="56" height="56" loading="lazy" decoding="async">
             <div class="s-07__row-main">
@@ -126,7 +126,7 @@
               <span class="s-07__price">$19</span>
             </p>
           </li>
-          <li class="s-07__row">
+          <li class="s-07__row" data-roll-row>
             <img class="s-07__thumb" src="assets/img/products/meal-plan.webp" alt="A bento box of fresh vegetables and fruit"
                  width="56" height="56" loading="lazy" decoding="async">
             <div class="s-07__row-main">
@@ -154,42 +154,42 @@
         <!-- Отзывы вынесены из строк и сменяются по кругу — иначе каждая
              строка тащила бы семь блоков информации разом. -->
         <figure class="s-07__proof">
-          <blockquote class="s-07__proof-item">
+          <blockquote class="s-07__proof-item" data-roll-proof>
             <p class="s-07__proof-text">&ldquo;Followed the checklist for a month. The chewing stopped in two weeks.&rdquo;</p>
             <footer class="s-07__proof-by">
               <cite class="s-07__cite">Maha, Dubai</cite>
               <span class="s-07__stars" role="img" aria-label="Rated 5 out of 5">★★★★★</span>
             </footer>
           </blockquote>
-          <blockquote class="s-07__proof-item">
+          <blockquote class="s-07__proof-item" data-roll-proof>
             <p class="s-07__proof-text">&ldquo;Cut $340 a month out of our budget in the first sitting.&rdquo;</p>
             <footer class="s-07__proof-by">
               <cite class="s-07__cite">Faris, Riyadh</cite>
               <span class="s-07__stars" role="img" aria-label="Rated 5 out of 5">★★★★★</span>
             </footer>
           </blockquote>
-          <blockquote class="s-07__proof-item">
+          <blockquote class="s-07__proof-item" data-roll-proof>
             <p class="s-07__proof-text">&ldquo;First week with the planner and I finally finished what I started.&rdquo;</p>
             <footer class="s-07__proof-by">
               <cite class="s-07__cite">Dana, Doha</cite>
               <span class="s-07__stars" role="img" aria-label="Rated 5 out of 5">★★★★★</span>
             </footer>
           </blockquote>
-          <blockquote class="s-07__proof-item">
+          <blockquote class="s-07__proof-item" data-roll-proof>
             <p class="s-07__proof-text">&ldquo;The quiz found the two habits that were wrecking my mornings.&rdquo;</p>
             <footer class="s-07__proof-by">
               <cite class="s-07__cite">Khalid, Sharjah</cite>
               <span class="s-07__stars" role="img" aria-label="Rated 5 out of 5">★★★★★</span>
             </footer>
           </blockquote>
-          <blockquote class="s-07__proof-item">
+          <blockquote class="s-07__proof-item" data-roll-proof>
             <p class="s-07__proof-text">&ldquo;I actually sleep through the night now. Life-changing.&rdquo;</p>
             <footer class="s-07__proof-by">
               <cite class="s-07__cite">Reem, Abu Dhabi</cite>
               <span class="s-07__stars" role="img" aria-label="Rated 5 out of 5">★★★★★</span>
             </footer>
           </blockquote>
-          <blockquote class="s-07__proof-item">
+          <blockquote class="s-07__proof-item" data-roll-proof>
             <p class="s-07__proof-text">&ldquo;Five dinners, one shopping list. Dinner stopped being a battle.&rdquo;</p>
             <footer class="s-07__proof-by">
               <cite class="s-07__cite">Noura, Jeddah</cite>

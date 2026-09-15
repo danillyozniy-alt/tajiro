@@ -24,6 +24,17 @@
 <link rel="stylesheet" href="css/shared/stats.css">
 <link rel="stylesheet" href="css/shared/what-you-get.css">
 <link rel="stylesheet" href="css/free-basic/03-platform.css">
+
+<!--# Столп «Ваш магазин» — НЕ свой. Это секция 06 главной целиком: та же
+     разметка, те же стили, тот же скрипт. Здесь она подключена второй
+     страницей, поэтому файлы и переехали из home/ в shared/ — ровно по
+     правилу, записанному в README.
+
+     Своей копии у страницы больше нет. Пересобирать сцену с телефоном
+     вторым способом бессмысленно: она не совпадёт с оригиналом ни в
+     сиянии, ни в решётке, ни в ленте заказов — и разойдётся с ним при
+     первой же правке главной. -->
+<link rel="stylesheet" href="css/shared/pillar-store.css">
 <link rel="stylesheet" href="css/free-basic/04-pillars.css">
 <link rel="stylesheet" href="css/free-basic/05-all-in-one.css">
 <link rel="stylesheet" href="css/free-basic/06-reviews.css">
@@ -45,7 +56,7 @@
      те же самые, и держать вторую копию незачем. -->
 <!--#include partials/shared/stats.html -->
 <!--#include partials/free-basic/03-platform.html -->
-<!--#include partials/free-basic/04-store.html -->
+<!--#include partials/shared/pillar-store.html -->
 <!--#include partials/free-basic/05-how.html -->
 <!--#include partials/free-basic/06-sell.html -->
 <!--#include partials/free-basic/07-create.html -->
@@ -64,6 +75,14 @@
 <script src="js/shared/header.js"></script>
 <script src="js/shared/footer.js"></script>
 <script src="js/shared/prefs.js"></script>
+
+<!--# Ведёт сцену столпа «Ваш магазин»: рисует решётку гириха, пускает по
+     ней волну и создаёт плашки заказов. Тот же файл, что на главной. -->
+<script src="js/shared/store.js"></script>
+
+<!--# Ведёт едущую полку товаров в 03. Тот же файл, что крутит каталог на
+     главной. -->
+<script src="js/shared/roll.js"></script>
 <script src="js/core/reveal.js"></script>
 
 <script>

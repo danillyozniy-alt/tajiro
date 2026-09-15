@@ -25,19 +25,33 @@
       <p class="meta fb-terms">Free 14-day trial &middot; Nothing to ship &middot; No experience needed</p>
     </div>
 
-    <!-- Панель аналитики. В прототипе была плоской белой карточкой с
-         рамкой; здесь стеклянная плашка на токенах — тот же материал, что
-         у панелей главной. Под секцией для этого лежит гирих: стеклу нужна
-         фактура, иначе материал не читается. -->
+    <!-- Панель аналитики. Стеклянная плашка на токенах — тот же материал,
+         что у панелей главной. Под секцией для этого лежит гирих: стеклу
+         нужна фактура, иначе материал не читается.
+
+         ЧТО УБРАНО И ПОЧЕМУ. Сверху стояла глухая чёрная шапка со знаком
+         Tajiro. Две беды разом:
+
+         · чёрного хрома в системе Tajiro нет. Тёмное здесь — тон целой
+           секции, полосой во всю ширину; чёрная обвязка виджета читалась
+           скриншотом чужой админки, а заодно гасила стекло — под ней не
+           было видно, что панель вообще стеклянная;
+
+         · знак терялся. Дисплейное начертание с двумя точками — тонкая
+           вещь, и на чёрном в 19 пунктах оно читалось хуже, чем на светлом.
+
+         Теперь сверху та же светлая строка, что у панели конструктора в 04,
+         и живёт она в 00-base.css: компонент на двух секциях, а не два
+         похожих. Знак и надпись про состояние магазина прежние. -->
     <div class="fb-panel fb-dash" aria-hidden="true">
-      <div class="fb-dash__top">
-        <p class="fb-dash__brand">
+      <p class="fb-preview__top fb-dash__top">
+        <span class="fb-dash__brand">
           <span aria-hidden="true">Taȷıro</span>
           <span class="fb-logo__dot fb-logo__dot--green" aria-hidden="true"></span>
           <span class="fb-logo__dot fb-logo__dot--sand" aria-hidden="true"></span>
-        </p>
-        <p class="fb-dash__live"><i class="fb-dash__pulse"></i> Store is live</p>
-      </div>
+        </span>
+        <span class="fb-dash__live"><i class="fb-dash__pulse"></i> Store is live</span>
+      </p>
 
       <div class="fb-dash__body">
         <div class="fb-dash__row">
