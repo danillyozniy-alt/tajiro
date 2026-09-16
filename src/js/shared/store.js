@@ -15,8 +15,6 @@
 
   var ctr = document.getElementById('s06-toasts');
   if (!ctr) return;
-
-  var revenueE = document.getElementById('s06-revenue');
   var loadedE  = document.getElementById('s06-loaded');
   var phone    = ctr.closest('.s-06__stage');
   var iconProto = document.getElementById('s06-toast-icon');
@@ -56,8 +54,6 @@
     { name: 'Sharjah',     a: 128 },
     { name: 'Dammam',      a: 164 }
   ];
-
-  var revenue = 2340;
   var loaded  = 100;
 
   /* Свой генератор вместо Math.random: последовательность заказов одинакова
@@ -66,7 +62,9 @@
   function rnd() { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; }
   function pick(a) { return a[Math.floor(rnd() * a.length)]; }
 
-  function money(n) { return '$' + n.toLocaleString('en-US'); }
+  /* Денег в витрине нет. Раньше в плашке заказа стояла сумма («+ $15.00»),
+     и счётчик копил выручку — это обещание дохода, а их со страницы сняли.
+     На месте суммы теперь время заказа, см. stamp() ниже. */
 
   /* Счётчик доезжает до нового значения, а не подменяется: подмена читается
      как опечатка, движение — как приход денег. */
@@ -198,10 +196,9 @@
   function sale() {
     var product = pick(PRODUCTS);
     var city    = pick(CITIES);
-    var amount  = Math.round(9 + rnd() * 50);
 
     ripple(city.a);
-    setTimeout(function () { deliver(product, city.name, amount); }, ARRIVAL);
+    setTimeout(function () { deliver(product, city.name); }, ARRIVAL);
     schedule();
   }
 
@@ -228,6 +225,9 @@
     for (var i = 0; i < live.length; i++) {
       live[i].style.setProperty('--y', (-y) + 'px');
       y += live[i].offsetHeight + GAP;
+      /* Место 0 — самая свежая, она внизу стопки. Всё, что выше, уже не
+         «только что», и показывает свой возраст. */
+      stamp(live[i], i === 0);
     }
   }
 
@@ -240,7 +240,22 @@
     restack();
   }
 
-  function deliver(product, city, amount) {
+  /* ВРЕМЯ ВМЕСТО СУММЫ.
+
+     Свежая плашка всегда «just now»; та, что ушла в стопку выше, показывает
+     свой возраст. Возраст присваивается один раз при создании и дальше не
+     меняется — иначе на глазах у человека «5 min ago» превращалось бы в
+     «6 min ago» за полминуты, и подпись читалась бы неправдой.
+
+     Две-четырнадцать минут: меньше двух не отличить от «только что»,
+     больше пятнадцати — уже не поток заказов, а редкие покупки. */
+  function stamp(toast, fresh) {
+    var slot = toast.querySelector('.s-06__toast-time');
+    if (!slot) return;
+    slot.textContent = fresh ? 'just now' : toast.__age + ' min ago';
+  }
+
+  function deliver(product, city) {
 
     /* --- плашка --- */
     var toast = el('div', 's-06__toast');
@@ -262,14 +277,9 @@
 
     toast.appendChild(icon);
     toast.appendChild(copy);
-    /* Плюс отдельным span-ом: цифры набираются «Tajiro Figures», а в этой
-       подрезанной гарнитуре знак нарисован узким и с высокой перекладиной —
-       на экране он читается перевёрнутым крестом. Шрифт нужен цифрам, не
-       знаку. */
-    var sum = el('span', 's-06__toast-amount');
-    sum.appendChild(el('span', 's-06__toast-sign', '+'));
-    sum.appendChild(document.createTextNode(money(amount) + '.00'));
-    toast.appendChild(sum);
+
+    toast.__age = 2 + Math.round(rnd() * 12);
+    toast.appendChild(el('span', 's-06__toast-time', 'just now'));
 
     ctr.appendChild(toast);
     live.unshift(toast);
@@ -301,11 +311,10 @@
     setTimeout(function () { retire(toast); }, 7400);
 
     /* --- показатели --- */
-    /* Плашка выручки уступила место домену — счётчик остался только
-       у числа товаров. */
-    if (revenueE) countTo(revenueE, revenue, revenue + amount, 420, money);
+    /* Плашка выручки уступила место домену, и счётчик выручки вместе с ней:
+       элемента #s06-revenue в разметке нет с тех пор, как со страницы убрали
+       обещания дохода. Остался счётчик товаров. */
     countTo(loadedE, loaded, loaded + 1, 320, String);
-    revenue += amount;
     loaded += 1;
   }
 
