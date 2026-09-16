@@ -25,66 +25,21 @@
       <p class="meta fb-terms">Free 14-day trial &middot; Nothing to ship &middot; No experience needed</p>
     </div>
 
-    <!-- Панель аналитики. Стеклянная плашка на токенах — тот же материал,
-         что у панелей главной. Под секцией для этого лежит гирих: стеклу
-         нужна фактура, иначе материал не читается.
+    <!-- Фигура вырезана по контуру и лежит прямо на фоне, без плашки и
+         тени: край силуэта и есть её граница. Приём первого экрана
+         главной, кадр другой — там женщина с телефоном в руках, здесь
+         мужчина, телефон опущен. Одинаковые кадры на двух первых экранах
+         читались бы одной страницей, показанной дважды.
 
-         ЧТО УБРАНО И ПОЧЕМУ. Сверху стояла глухая чёрная шапка со знаком
-         Tajiro. Две беды разом:
-
-         · чёрного хрома в системе Tajiro нет. Тёмное здесь — тон целой
-           секции, полосой во всю ширину; чёрная обвязка виджета читалась
-           скриншотом чужой админки, а заодно гасила стекло — под ней не
-           было видно, что панель вообще стеклянная;
-
-         · знак терялся. Дисплейное начертание с двумя точками — тонкая
-           вещь, и на чёрном в 19 пунктах оно читалось хуже, чем на светлом.
-
-         Теперь сверху та же светлая строка, что у панели конструктора в 04,
-         и живёт она в 00-base.css: компонент на двух секциях, а не два
-         похожих. Знак и надпись про состояние магазина прежние. -->
-    <div class="fb-panel fb-dash" aria-hidden="true">
-      <p class="fb-preview__top fb-dash__top">
-        <span class="fb-dash__brand">
-          <span aria-hidden="true">Taȷıro</span>
-          <span class="fb-logo__dot fb-logo__dot--green" aria-hidden="true"></span>
-          <span class="fb-logo__dot fb-logo__dot--sand" aria-hidden="true"></span>
-        </span>
-        <span class="fb-dash__live"><i class="fb-dash__pulse"></i> Store is live</span>
-      </p>
-
-      <div class="fb-dash__body">
-        <div class="fb-dash__row">
-          <div class="fb-stat">
-            <span class="fb-stat__k">This week</span>
-            <span class="fb-stat__v" data-week>AED 6,760</span>
-            <span class="fb-stat__up">▲ 24%</span>
-          </div>
-          <div class="fb-stat">
-            <span class="fb-stat__k">Products sold</span>
-            <span class="fb-stat__v">38</span>
-            <span class="fb-stat__up">▲ 11 this week</span>
-          </div>
-        </div>
-
-        <ul class="fb-dash__list">
-          <li class="fb-dash__li">
-            <span class="fb-dash__name">Golden Visa Eligibility Check<span class="fb-dash__time">6 min ago</span></span>
-            <span class="fb-dash__paid">Paid</span>
-          </li>
-          <li class="fb-dash__li">
-            <span class="fb-dash__name">End-of-Service Calculator<span class="fb-dash__time">28 min ago</span></span>
-            <span class="fb-dash__paid">Paid</span>
-          </li>
-          <li class="fb-dash__li">
-            <span class="fb-dash__name">School Admission Roadmap<span class="fb-dash__time">1 hr ago</span></span>
-            <span class="fb-dash__paid">Paid</span>
-          </li>
-        </ul>
-      </div>
-
-      <p class="fb-dash__note">Illustrative dashboard &middot; figures are sample data</p>
+         ЧТО ЗДЕСЬ БЫЛО. Стеклянная панель аналитики: выручка за неделю,
+         число продаж и три последние покупки. Снята по правке. Цифры
+         оттуда никуда не делись — те же показатели стоят полосой ниже, в
+         02, и там они подписаны, а не показаны скриншотом. -->
+    <div class="fb-hero__figure" aria-hidden="true">
+      <img class="fb-hero__man" src="assets/img/people/fb-hero-man.webp"
+           alt="" width="480" height="843" fetchpriority="high" decoding="async">
     </div>
+
 
   </div>
 </section>

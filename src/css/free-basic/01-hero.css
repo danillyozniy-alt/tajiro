@@ -71,185 +71,99 @@
 }
 
 
-/* --- Панель аналитики ------------------------------------------------------ */
+/* --- Адаптив ---------------------------------------------------------------- */
+/* --- Фоновое движение --------------------------------------------------------
+   Первый экран — единственное место страницы, где фон живёт. Дальше он
+   стоит, и это намеренно: движение на каждой секции читалось бы рябью.
 
-/* Верхняя строка приходит из .fb-preview__top в 00-base.css — та же, что у
-   панели конструктора. Здесь только то, чего у конструктора нет: состояние
-   магазина прижато к правому краю. */
-.fb-dash__top { justify-content: space-between; }
+   Движение медленное настолько, что его не замечают, пока не остановятся
+   взглядом, — и в этом весь смысл. Решётка гириха уезжает по диагонали
+   ровно на один модуль за круг, поэтому стык не виден: узор повторяется
+   каждые 620 точек, на столько же он и смещается. Пятна света дышат
+   отдельным слоем и в своём ритме — совпади они с решёткой, движение
+   стало бы одним общим качанием, и его сразу видно.
 
-/* Знак Tajiro. Цвет тёмный: строка светлая, и прежний --c-on-dark на ней
-   пропадал. Кегль и трекинг прежние. */
-.fb-dash__brand {
-    position: relative;
-    font-family: var(--f-display);
-    font-size: 19px;
-    font-weight: 600;
-    line-height: 19px;
-    letter-spacing: -0.38px;
-    color: var(--c-ink-surface-2);
+   ОБА СЛОЯ ЛЕЖАТ ПОД СОДЕРЖИМЫМ и не ловят курсор: это фактура, а не
+   элемент. При запрете движения оба замирают в своём обычном виде —
+   первый кадр ничем не отличается от остальных. -------------------------- */
+.fb-hero { overflow: hidden; }
+
+.fb-hero::before {
+    animation: fb-hero-drift 140s linear infinite;
 }
 
-.fb-dash__live {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  /* Переноса нет: строка стоит в углу панели рядом с точкой-пульсом, и
-     второй строкой она отрывалась от неё, а сама панель — это снимок
-     интерфейса, где подпись состояния всегда в одну строку. */
-    white-space: nowrap;
-    color: var(--c-text-muted);
+@keyframes fb-hero-drift {
+  from { background-position: 0 0, 0 0, 0 0; }
+  to   { background-position: 0 0, 0 0, 620px 620px; }
 }
 
-/* Пульс «магазин работает». Тот же приём, что у точки в пилюле: кольцо
-   расходится и гаснет. Цвет теперь --c-green-bright, а не осветлённый для
-   тёмного: строка стала светлой, и на ней осветлённый зелёный выцветал. */
-.fb-dash__pulse {
-    position: relative;
-    flex: none;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--c-green-bright);
-}
-
-.fb-dash__pulse::after {
-    content: '';
+.fb-hero::after {
+    content: "";
     position: absolute;
-    inset: -3px;
-    border-radius: 50%;
-    border: 2px solid rgba(61, 143, 99, 0.5);
-    animation: fb-dash-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(40% 36% at 24% 28%, rgba(212, 163, 115, 0.20) 0%, transparent 70%),
+      radial-gradient(36% 32% at 76% 70%, rgba(61, 143, 99, 0.16) 0%, transparent 70%);
+    animation: fb-hero-breathe 22s ease-in-out infinite alternate;
 }
 
-@keyframes fb-dash-ping {
-  0%        { transform: scale(0.5); opacity: 1; }
-  80%, 100% { transform: scale(1.9); opacity: 0; }
+@keyframes fb-hero-breathe {
+  from { opacity: 0.55; transform: scale(1); }
+  to   { opacity: 1;    transform: scale(1.14) translate(1.5%, -2%); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fb-dash__pulse::after { animation: none; }
+  .fb-hero::before,
+  .fb-hero::after { animation: none; }
 }
 
-.fb-dash__body { padding: 20px 18px; }
 
-/* Два показателя разделены волосяной линией, а не поставлены в две
-   обведённые плитки. Плитки были в прототипе, и они же противоречат
-   правилу, записанному про ряд .fb-mini в 00-base.css: показатель у Tajiro
-   — голая пара «число плюс подпись капсом», обведённая плашка рядом с ней
-   читается чужим компонентом. Внутри панели правило действует ровно так
-   же, тем более что панель стеклянная: две глухие плитки поверх стекла
-   гасили материал на две трети её высоты. */
-.fb-dash__row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-    margin-bottom: 18px;
-}
+/* --- Фигура ------------------------------------------------------------------
+   Силуэт стоит на нижней кромке своей полосы — ровно так же, как на первом
+   экране главной. Плашки под ним нет и быть не должно: вырезанный контур
+   на узорном фоне и есть вся композиция, а рамка вернула бы сюда
+   прямоугольник, ради ухода от которого панель и снималась.
 
-.fb-stat {
+   Высота задаётся ФИГУРЕ, а ширина считается сама. Наоборот нельзя: при
+   заданной ширине высота гуляет от пропорции кадра, и силуэт то не
+   достаёт до кромки, то вылезает за неё. -------------------------------- */
+.fb-hero__figure {
+    --fb-fig-h: clamp(300px, 64vw, 400px);
+
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+  /* Силуэт СТОИТ НА КРОМКЕ секции, а не висит над ней. Отрицательное поле
+     ровно в нижний отступ секции: иначе между ногами и краем оставалась
+     полоса песка, и фигура читалась вырезанной наклейкой. Число повторяется
+     на каждой ступени — вместе с отступом секции. */
+    margin-bottom: -48px;
 }
 
-/* Вторая колонка отделена линией слева, а не воздухом: без неё два числа
-   в ряд читаются одной строкой «6,760 38». */
-.fb-stat + .fb-stat {
-    padding-left: 18px;
-    border-left: 1px solid var(--c-line-soft);
-}
-
-/* Подпись — прописными в разрядку, теми же значениями, что у .fb-mini__l:
-   это один и тот же ярлык при числе, и набран он должен быть одинаково. */
-.fb-stat__k {
-    font-size: 10px;
-    line-height: 14px;
-    text-transform: uppercase;
-    letter-spacing: 0.55px;
-    color: var(--c-text-muted);
-}
-
-/* Крупное число — дисплейным, как все показатели страницы. Текст в него
-   подставляет скрипт цен, поэтому размер держим с запасом: «BHD 692» и
-   «AED 6,760» набираются в одну строку. */
-.fb-stat__v {
-    margin-top: 4px;
-    font-family: var(--f-display);
-    font-size: 26px;
-    font-weight: 600;
-    line-height: 32px;
-    letter-spacing: -0.5px;
-    color: var(--c-ink-surface-2);
-}
-
-.fb-stat__up {
-    margin-top: 3px;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--c-green-text);
-}
-
-.fb-dash__list {
-    border-top: 1px solid var(--c-line-soft);
-    padding-top: 6px;
-}
-
-.fb-dash__li {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 9px 0;
-    font-size: 14px;
-}
-
-.fb-dash__name {
+.fb-hero__man {
     display: block;
-    font-weight: 700;
-    color: var(--c-text-strong);
-}
-
-.fb-dash__time {
-    display: block;
-    font-size: 12px;
-    font-weight: 400;
-    color: var(--c-text-muted);
-}
-
-/* Метка оплаты — пилюля на бледной зелёной заливке (--c-green-mist) */
-.fb-dash__paid {
-    flex: none;
-    padding: 3px 10px;
-    border-radius: var(--r-pill);
-    background: var(--c-green-mist);
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--c-green-text);
-}
-
-.fb-dash__note {
-    padding: 10px;
-    border-top: 1px solid var(--c-line-soft);
-    background: rgba(245, 240, 235, 0.6);
-    font-size: 11px;
-    text-align: center;
-    color: var(--c-text-muted);
+    width: auto;
+    height: var(--fb-fig-h);
+    max-width: 100%;
+  /* Кадр обрезан по фигуре вплотную, полей в файле нет — иначе силуэт
+     висел бы над кромкой на прозрачной полосе. */
+    object-fit: contain;
 }
 
 
-/* --- Адаптив ---------------------------------------------------------------- */
 @media (min-width: 601px) {
   .fb-hero { padding-block: 52px 56px; }
+  .fb-hero__figure { margin-bottom: -56px; }
   .fb-hero__title { font-size: 52px; line-height: 58px; letter-spacing: -1.4px; }
   .fb-hero__lede { line-height: 29px; }
-  .fb-stat__k { font-size: 11px; line-height: 15px; }
-  .fb-stat__v { font-size: 28px; }
 }
 
 @media (min-width: 901px) {
   /* Рост полосы тянется за высотой окна — формула главной без изменений */
   .fb-hero {
-    --fb-fig-h: clamp(380px, calc(100vh - 300px), 580px);
+    --fb-fig-h-band: clamp(380px, calc(100vh - 300px), 580px);
 
   /* Флекс, а не просто min-height: полоса выше своего содержимого, и без
      центрирования панель прижималась бы к верху, а на главной снимок
@@ -257,7 +171,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-height: calc(var(--fb-fig-h) + 48px);
+    min-height: calc(var(--fb-fig-h-band) + 48px);
     padding-block: 56px;
   }
 
@@ -270,10 +184,18 @@
 
   .fb-hero__title { font-size: 60px; line-height: 66px; letter-spacing: -1.8px; }
   .fb-hero__lede { font-size: 20px; line-height: 32px; }
+
+  /* Фигура берёт ту же высоту полосы, что считает секция выше: силуэт и
+     текстовая колонка кончаются на одной линии. */
+  .fb-hero__figure {
+    --fb-fig-h: var(--fb-fig-h-band);
+    margin-bottom: -56px;
+  }
 }
 
 @media (min-width: 1281px) {
   .fb-hero { padding-block: 64px; }
+  .fb-hero__figure { margin-bottom: -64px; }
   .fb-hero__title { font-size: 68px; line-height: 74px; letter-spacing: -2px; }
   .fb-hero__lede { font-size: 22px; line-height: 34px; }
 
