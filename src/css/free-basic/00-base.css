@@ -319,7 +319,8 @@
 .fb-mini__m {
     display: flex;
     flex-direction: column;
-  /* По центру доли — как в таком же ряду на главной. Разбор там же,
+  /* По центру доли ТОЛЬКО НА ТЕЛЕФОНЕ — как в таком же ряду на главной.
+     С 601 возвращается левый край, правило в ступени 601. Разбор там же,
      в core/base.css у .s-07__stat. */
     align-items: center;
     text-align: center;
@@ -464,6 +465,12 @@
   .fb-mini__n { font-size: 28px; line-height: 30px; }
   .fb-mini__n[data-range] { font-size: 19px; }
   .fb-mini__l { font-size: 11px; line-height: 15px; min-height: 30px; }
+
+  /* Левый край, общий со всем столпом. Центр остаётся телефону. */
+  .fb-mini__m {
+    align-items: flex-start;
+    text-align: left;
+  }
 }
 
 @media (min-width: 901px) {
