@@ -39,9 +39,9 @@ body { background: var(--c-bg); }
 /* Заголовок ступенью ниже секционного: рядом с ним нет ни номера, ни
    надзаголовка, и держать он должен не секцию, а одну колонку. */
 .ch__title {
-    font-size: 26px;
-    line-height: 34px;
-    letter-spacing: -0.7px;
+    font-size: 28px;
+    line-height: 36px;
+    letter-spacing: -0.75px;
     text-align: center;
     text-wrap: balance;
 }
@@ -51,6 +51,14 @@ body { background: var(--c-bg); }
     color: var(--c-green-text);
 }
 
+/* Кегли на этом экране на ступень крупнее, чем на лендинге: здесь не
+   читают, а проверяют — что списывают, сколько и когда. Мелкая серая
+   строка под названием позиции и приписки под счётом на телефоне
+   разбирались с трудом, а это ровно те строки, из-за которых человек и
+   останавливается. Подписи прописными и пилюля предложения остались как
+   были: они метят разделы, а не несут смысл.
+
+*/
 /* --- Строки с галочками ------------------------------------------------------
    Один компонент на три места: обещание под заголовком, приписки под
    счётом и всё, что читается списком выгод. -------------------------------- */
@@ -60,8 +68,8 @@ body { background: var(--c-bg); }
     display: flex;
     align-items: flex-start;
     gap: 10px;
-    font-size: 15px;
-    line-height: 24px;
+    font-size: 16px;
+    line-height: 25px;
     color: var(--c-text-body);
 }
 
@@ -112,16 +120,16 @@ body { background: var(--c-bg); }
 .ch__line + .ch__line { border-top: 1px solid var(--c-line-soft); }
 
 .ch__line-name {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
-    line-height: 22px;
+    line-height: 23px;
     color: var(--c-text);
 }
 
 .ch__line-note {
     margin-top: 2px;
-    font-size: 13px;
-    line-height: 20px;
+    font-size: 14px;
+    line-height: 21px;
     color: var(--c-text-muted);
 }
 
@@ -132,9 +140,9 @@ body { background: var(--c-bg); }
 .ch__line-val {
     flex: none;
     font-family: var(--f-display);
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
-    line-height: 22px;
+    line-height: 24px;
     letter-spacing: -0.3px;
     color: var(--c-green-text);
     white-space: nowrap;
@@ -158,16 +166,16 @@ body { background: var(--c-bg); }
 }
 
 .ch__today-label {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--c-text);
 }
 
 .ch__today-sum {
     font-family: var(--f-display);
-    font-size: 26px;
+    font-size: 29px;
     font-weight: 600;
-    line-height: 30px;
+    line-height: 33px;
     letter-spacing: -0.6px;
     color: var(--c-green-text);
     white-space: nowrap;
@@ -176,8 +184,8 @@ body { background: var(--c-bg); }
 .ch__after { margin-top: 16px; }
 
 .ch__after .ch__perk {
-    font-size: 13px;
-    line-height: 21px;
+    font-size: 14px;
+    line-height: 22px;
     color: var(--c-text-muted);
 }
 
@@ -463,8 +471,8 @@ body { background: var(--c-bg); }
     border: 1px solid var(--c-line-soft);
     border-radius: var(--r-card);
     background: var(--c-surface);
-    font-size: 15px;
-    line-height: 22px;
+    font-size: 16px;
+    line-height: 23px;
     color: var(--c-text-muted);
 }
 
@@ -486,8 +494,8 @@ body { background: var(--c-bg); }
     align-items: flex-start;
     gap: 10px;
     margin-top: 18px;
-    font-size: 13px;
-    line-height: 20px;
+    font-size: 14px;
+    line-height: 21px;
     color: var(--c-text-muted);
 }
 
@@ -525,8 +533,8 @@ body { background: var(--c-bg); }
    js/checkout/consent.js атрибутом hidden. */
 .ch__gate {
     margin-top: 12px;
-    font-size: 13px;
-    line-height: 20px;
+    font-size: 14px;
+    line-height: 21px;
     text-align: center;
     color: var(--c-gold);
 }
@@ -563,7 +571,7 @@ body { background: var(--c-bg); }
 
 .ch__copy {
     margin-top: 14px;
-    font-size: 12px;
+    font-size: 13px;
     text-align: center;
     color: var(--c-text-muted);
 }
@@ -593,10 +601,10 @@ body { background: var(--c-bg); }
   }
 
   .ch__perk + .ch__perk { margin-top: 0; }
-  .ch__perk { font-size: 14px; }
+  .ch__perk { font-size: 15px; }
   .ch__title { font-size: 32px; line-height: 40px; letter-spacing: -0.9px; }
   .ch__order { padding: 24px; }
-  .ch__today-sum { font-size: 30px; line-height: 34px; }
+  .ch__today-sum { font-size: 32px; line-height: 36px; }
 }
 
 @media (min-width: 901px) {
