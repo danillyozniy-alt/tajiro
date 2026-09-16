@@ -227,18 +227,43 @@
     position: relative;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: 14px;
+  /* Зазор больше прежнего: у карточек края держала рамка, у колонок её
+     нет, и на четырнадцати точках шаги слипались в один текст. */
+    gap: 30px;
+}
+
+/* СТОЛБИКОМ связка нарезана на отрезки: по одному между соседними
+   цифрами. Одной полосой на всю высоту её провести нельзя — последний шаг
+   ниже своей цифры ещё на три строки и ярлык, и полоса уходила бы хвостом
+   в пустоту. Отрезок же кончается ровно в центре следующей цифры: снизу
+   он вылезает за свой шаг на зазор между шагами плюс половину строки
+   цифры.
+
+   Поперёк (с 901) связка снова одна — там шаги стоят рядом и кончаются на
+   одной линии, хвосту взяться неоткуда. */
+.fb-step:not(:last-child)::before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    top: 20px;
+    bottom: -50px;
+    left: 21px;
+    width: 2px;
+    border-radius: 2px;
+    background: color-mix(in srgb, var(--c-green) 32%, transparent);
+    transform-origin: top;
 }
 
 .fb-steps::before {
     content: "";
     position: absolute;
     z-index: 0;
-  /* 41 = поле карточки 24 + половина номера 17: линия идёт ровно через
-     центры номеров. */
-    top: 41px;
-    bottom: 41px;
-    left: 41px;
+    display: none;
+  /* 20 = половина строки цифры: линия идёт ровно через их центры.
+     Плашек больше нет, поля карточки в расчёт не входят. */
+    top: 20px;
+    bottom: 20px;
+    left: 21px;
     width: 2px;
     border-radius: 2px;
   /* Плотнее, чем --c-green-mist: мятная заливка на креме в двухпиксельной
@@ -255,7 +280,18 @@
     translate: 0 12px;
 }
 
-.fb-steps.is-armed::before { transform: scaleY(0); }
+.fb-steps.is-armed::before,
+.fb-steps.is-armed .fb-step::before { transform: scaleY(0); }
+
+/* Отрезок догоняет ту карточку, к которой ведёт: первый прочерчивается,
+   пока едет вторая, второй — пока едет третья. */
+.fb-steps.is-live .fb-step:nth-child(1)::before {
+    animation: fb-steps-line 240ms 60ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+
+.fb-steps.is-live .fb-step:nth-child(2)::before {
+    animation: fb-steps-line 240ms 260ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
 
 /* Появление. Карточка едет 500ms, следующая стартует через 200 — на три
    карточки это 900ms от первой до последней: очередь читается, а хвост не
@@ -288,31 +324,46 @@
   to   { transform: scaleX(1); }
 }
 
+/* Шаг — не карточка, а колонка. Белых плашек здесь больше нет, и это
+   главное решение блока: на креме три низких прямоугольника читались
+   набором плиток, а последовательность в них не прочитывалась вовсе.
+   Убрали рамку, заливку и тень — остались цифра, фраза, пояснение и
+   ярлык. Держит их не коробка, а линия, на которую нанизаны цифры. */
 .fb-step {
-  /* Чтобы карточка легла поверх связки, а не под неё */
     position: relative;
-    padding: 24px;
-    border: 1px solid var(--c-line-soft);
-    border-radius: 14px;
-    background: var(--c-surface);
-    box-shadow: var(--sh-card);
+    z-index: 1;
+  /* Столбиком цифра стоит В СВОЕЙ КОЛОНКЕ, слева от текста, а не над ним.
+     Иначе связка — она идёт сверху вниз через центры цифр — прошла бы
+     прямо по абзацам: плашек, которые её раньше закрывали, больше нет. */
+    padding-left: 58px;
+    border: 0;
+    background: none;
+    box-shadow: none;
 }
 
 /* Номер — зелёная плашка. Радиус 6, а не 9 из прототипа: мелкие плашки в
    системе скруглены на --r-card. */
+/* Цифра крупная и золотая — тем же начертанием и цветом, что номер самой
+   секции сверху. Так в блоке остаётся одна система нумерации: «02» над
+   заголовком и 1-2-3 под ним говорят одним голосом.
+
+   Заливка у цифры НЕ прозрачная, а цветом фона секции: цифра стоит прямо
+   на связке, и заливка прорезает в линии окно ровно по своему размеру.
+   Линия из-за этого читается продетой сквозь цифры, а не проходящей за
+   ними. Прозрачный фон дал бы перечёркнутые цифры. */
 .fb-step__num {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 34px;
-    height: 34px;
-    margin-bottom: 16px;
-    border-radius: var(--r-card);
-    background: var(--c-green);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 42px;
+    text-align: center;
+    background: var(--c-bg);
     font-family: var(--f-display);
-    font-size: 15px;
+    font-size: 34px;
     font-weight: 600;
-    color: var(--c-on-dark);
+    line-height: 40px;
+    letter-spacing: -0.5px;
+    color: var(--c-gold);
 }
 
 .fb-step__title { margin-bottom: 8px; }
@@ -918,9 +969,8 @@
 
   .fb-prod__rate { display: inline; }
 
-  .fb-step { padding: 26px; }
-  /* Поля выросли на 2 — связка едет за центрами номеров */
-  .fb-steps::before { top: 43px; bottom: 43px; left: 43px; }
+  /* Столбиком связка идёт через центры цифр: 20 — половина строки цифры */
+  .fb-steps::before { top: 20px; bottom: 20px; left: 21px; }
 }
 
 @media (min-width: 901px) {
@@ -949,16 +999,38 @@
 
   .fb-how .fb-steps {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
+    gap: 28px;
   }
 
-  /* Связка поворачивается вместе с раскладкой: та же линия через центры
-     номеров, только теперь поперёк, и прочерчивается слева направо. */
+  /* Колонка целиком по центру — вслед за шапкой и кнопкой. Абзац здесь в
+     две строки, а не в пять: центрировать такой можно, рваного края,
+     который мешает читать длинный текст, на двух строках не возникает. */
+  /* В строку цифра снова стоит НАД текстом и по центру колонки: связка
+     здесь идёт поперёк, и отводить цифру вбок незачем. */
+  .fb-how .fb-step {
+    padding-left: 0;
+    text-align: center;
+  }
+
+  .fb-how .fb-step__num {
+    position: static;
+    width: auto;
+    margin-bottom: 14px;
+    padding-inline: 14px;
+  }
+
+  /* Связка: от центра первой цифры до центра третьей. Колонки равные, их
+     три, поэтому центры крайних стоят ровно на шестых долях ширины — 1/6
+     и 5/6. Считать в точках было бы неверно: ширина колонки зависит от
+     окна. */
+  .fb-how .fb-step::before { display: none; }
+
   .fb-how .fb-steps::before {
-    top: 43px;
-    right: 43px;
+    display: block;
+    top: 19px;
+    right: 16.667%;
     bottom: auto;
-    left: 43px;
+    left: 16.667%;
     width: auto;
     height: 2px;
     transform-origin: left;
