@@ -325,6 +325,9 @@ body {
   line-height: 27px;
   letter-spacing: -0.4px;
   color: var(--c-text);
+  /* Строки выравниваются по длине, как у .h1 и .h2 выше: на узкой колонке
+     заголовок шага «Your store goes live» оставлял «live» одно на строке. */
+  text-wrap: balance;
 }
 
 .lead {
