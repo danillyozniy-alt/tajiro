@@ -230,37 +230,26 @@
     gap: 14px;
 }
 
-.fb-steps::before {
-    content: "";
-    position: absolute;
-    z-index: 0;
-  /* 41 = поле карточки 24 + половина номера 17: линия идёт ровно через
-     центры номеров. */
-    top: 41px;
-    bottom: 41px;
-    left: 41px;
-    width: 2px;
-    border-radius: 2px;
-  /* Плотнее, чем --c-green-mist: мятная заливка на креме в двухпиксельной
-     полосе почти не читается, а видно её только в зазорах между
-     карточками — по 14px на всю связку. */
-    background: color-mix(in srgb, var(--c-green) 32%, transparent);
-    transform-origin: top;
-}
+/* СВЯЗКИ МЕЖДУ ШАГАМИ НЕТ.
 
-/* Исходное состояние очереди. Классы ставит js/free-basic/steps.js и
+   Здесь шла вертикальная полоса через центры номеров: она пряталась под
+   карточками и была видна только в зазорах — по 14 точек между соседями.
+   В ряду с 901 её и так снимали, потому что от неё оставались две чёрточки
+   непонятно зачем; столбиком выходило то же самое, только обрывков больше.
+
+   Порядок шагов держат номера в кружках — 1, 2, 3, — и они его держат без
+   посторонней помощи. Вместе с полосой убрана и анимация её прочерчивания.
+
+   Исходное состояние очереди. Классы ставит js/free-basic/steps.js и
    только после проверок — без скрипта ничего не спрятано. */
 .fb-steps.is-armed > .fb-step {
     opacity: 0;
     translate: 0 12px;
 }
 
-.fb-steps.is-armed::before { transform: scaleY(0); }
-
 /* Появление. Карточка едет 500ms, следующая стартует через 200 — на три
    карточки это 900ms от первой до последней: очередь читается, а хвост не
-   успевает надоесть. Связка прочерчивается за 760ms и стартует на 140ms
-   позже первой карточки, чтобы линия догоняла её, а не вела. */
+   успевает надоесть. */
 .fb-steps.is-live > .fb-step {
     animation: fb-step-in 500ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
@@ -268,28 +257,12 @@
 .fb-steps.is-live > .fb-step:nth-child(2) { animation-delay: 200ms; }
 .fb-steps.is-live > .fb-step:nth-child(3) { animation-delay: 400ms; }
 
-.fb-steps.is-live::before {
-    animation: fb-steps-line 760ms 140ms cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
-}
-
 @keyframes fb-step-in {
   from { opacity: 0; translate: 0 12px; }
   to   { opacity: 1; translate: none; }
 }
 
-@keyframes fb-steps-line {
-  from { transform: scaleY(0); }
-  to   { transform: scaleY(1); }
-}
-
-/* То же самое поперёк — для раскладки в строку с 901 */
-@keyframes fb-steps-line-x {
-  from { transform: scaleX(0); }
-  to   { transform: scaleX(1); }
-}
-
 .fb-step {
-  /* Чтобы карточка легла поверх связки, а не под неё */
     position: relative;
     padding: 24px;
     border: 1px solid var(--c-line-soft);
@@ -930,8 +903,6 @@
   .fb-prod__rate { display: inline; }
 
   .fb-step { padding: 26px; }
-  /* Поля выросли на 2 — связка едет за центрами номеров */
-  .fb-steps::before { top: 43px; bottom: 43px; left: 43px; }
 }
 
 @media (min-width: 901px) {
@@ -963,12 +934,6 @@
     gap: 20px;
   }
 
-  /* СВЯЗКИ В РЯДУ НЕТ. Столбиком она работает: карточки идут одна под
-     другой, линия видна в зазорах и держит их последовательностью. В ряду
-     карточки и так стоят по порядку слева направо, а линия видна двумя
-     обрывками по двадцать точек между ними — не связка, а две чёрточки
-     непонятно зачем. Снята. */
-  .fb-how .fb-steps::before { display: none; }
 
 
 
