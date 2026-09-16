@@ -264,6 +264,12 @@
   to   { transform: scaleY(1); }
 }
 
+/* То же самое поперёк — для раскладки в строку с 901 */
+@keyframes fb-steps-line-x {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
 .fb-step {
   /* Чтобы карточка легла поверх связки, а не под неё */
     position: relative;
@@ -901,6 +907,49 @@
 
 @media (min-width: 901px) {
   .fb-split { grid-template-columns: 1fr 1fr; gap: 52px; }
+
+  /* --- 02 «Три шага»: заголовок сверху, шаги в строку --------------------
+     В две колонки этот блок не держался. Справа стопка из трёх карточек в
+     полтора экрана, слева заголовок с кнопкой — и под ними полколонки
+     пустого песка: текста ровно столько, сколько есть, дотягивать его до
+     высоты стопки нечем.
+
+     Развёрнут: заголовок во всю ширину сверху, три шага рядом под ним.
+     Пустоты не осталось, а последовательность читается не хуже — просто
+     теперь она идёт слева направо, как строка, а не сверху вниз.
+
+     Ширина текста ограничена: во всю тысячу с лишним лид расходится в
+     строки, которые глаз не дочитывает до конца. -------------------- */
+  .fb-how .fb-split {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 44px;
+  }
+
+  .fb-how .fb-split__text { max-width: 680px; }
+
+  .fb-how .fb-steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+  }
+
+  /* Связка поворачивается вместе с раскладкой: та же линия через центры
+     номеров, только теперь поперёк, и прочерчивается слева направо. */
+  .fb-how .fb-steps::before {
+    top: 43px;
+    right: 43px;
+    bottom: auto;
+    left: 43px;
+    width: auto;
+    height: 2px;
+    transform-origin: left;
+  }
+
+  .fb-how .fb-steps.is-armed::before { transform: scaleX(0); }
+
+  .fb-how .fb-steps.is-live::before {
+    animation-name: fb-steps-line-x;
+  }
+
 
 
 
