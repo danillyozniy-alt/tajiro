@@ -138,6 +138,35 @@
 
   header.addEventListener('mouseleave', clearDismissed);
 
+  /* ------------------------------------------------- ссылки, которые врут
+     Шапка одна на все страницы, а разделы на страницах разные. Отсюда две
+     поломки, которые в разметке не видны и чинятся только здесь.
+
+     1. ЯКОРЬ В НИКУДА. «Pricing» ведёт на #the-math — раздел есть на
+        главной и нет на фрибейсике: нажал и остался на месте. Такие якоря
+        переадресуем на главную, там раздел заведомо есть.
+
+     2. КНОПКА НА САМУ СЕБЯ. «Start for free» ведёт на free-basic.html, и
+        на самом фрибейсике это ссылка на текущую страницу — нажатие не
+        делает ничего. Там она должна вести дальше по воронке, на оплату.
+
+     Обе правки живут в скрипте, а не в разметке, потому что зависят от
+     того, КАКАЯ страница открыта, а разметка у всех страниц одна. */
+  var here = location.pathname.split('/').pop() || 'index.html';
+
+  Array.prototype.forEach.call(header.querySelectorAll('a[href^="#"]'), function (a) {
+    var id = a.getAttribute('href').slice(1);
+    if (id && !document.getElementById(id)) {
+      a.setAttribute('href', 'index.html#' + id);
+    }
+  });
+
+  Array.prototype.forEach.call(header.querySelectorAll('a[href]'), function (a) {
+    if (a.getAttribute('href') === here) {
+      a.setAttribute('href', 'checkout.html');
+    }
+  });
+
   /* Клик мимо шапки — закрыть */
   document.addEventListener('click', function (e) {
     if (!header.contains(e.target)) closeAllPanels();
