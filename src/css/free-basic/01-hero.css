@@ -144,70 +144,72 @@
                 0 24px 40px -24px rgba(43, 38, 33, 0.30);
 }
 
-/* --- Плашка состояния поверх кадра ------------------------------------------
-   Левый верхний угол — туда взгляд приходит первым после заголовка, и там
-   в кадре ровнее всего фон: за плашкой размытая зелень, а не лицо.
+/* --- Подпись поверх кадра ----------------------------------------------------
+   Тот же приём, что на странице входа: крупная фраза на затемнении, вторая
+   половина курсивом зелёным. Там подпись внизу, здесь сверху — внизу кадра
+   стоит человек с телефоном, и подпись легла бы ему на руки.
 
-   Строки меняются САМИ, кругом по четыре секунды. Меняет их CSS: все
-   четыре лежат в разметке стопкой в одной ячейке сетки, у каждой свой
-   сдвиг в общей анимации. Скрипта нет и не нужно — без стилей видна
-   первая строка, и плашка остаётся осмысленной.
+   Затемнение только под подписью, вверху, и сходит на нет к середине
+   кадра: снимок под ним остаётся снимком, а белый текст держится на любом
+   кадре, даже если в этом месте окажется светлое пятно.
 
-   Ширина плашки НЕ ПРЫГАЕТ на смене строки: стопка в одной ячейке сетки
-   берёт ширину самой длинной из четырёх и держит её всегда. Иначе плашка
-   дёргалась бы на каждой смене, а это уже не жизнь, а поломка.
+   ФРАЗЫ МЕНЯЮТСЯ САМИ, кругом по четыре секунды. Меняет их CSS: все четыре
+   лежат стопкой в одной ячейке сетки, у каждой свой сдвиг в общей
+   анимации. Сетка же держит и высоту блока — по самой высокой из четырёх,
+   иначе затемнение дёргалось бы на каждой смене.
 
-   Подложка тёмная и размывает кадр под собой: текст белый, а под ним
-   живой снимок, и на светлом месте он иначе пропал бы. -------------- */
-.fb-hero__live {
+   Курсив здесь допустим по той же причине, что и на входе: у Almarai
+   своего курсива нет, браузер наклоняет сам, и на тёмном этот наклон
+   работает — как и зелёный, которым он набран. ------------------------- */
+.fb-hero__over {
     position: absolute;
-    top: 14px;
-    left: 14px;
+    inset: 0 0 auto 0;
     z-index: 1;
 
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    padding: 8px 14px 8px 11px;
-    border-radius: var(--r-pill);
-    background: rgba(26, 23, 20, 0.58);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 16px;
-    letter-spacing: 0.2px;
+    display: grid;
+    padding: 20px 22px 44px;
+    background: linear-gradient(180deg,
+              rgba(26, 23, 20, 0.74) 0%,
+              rgba(26, 23, 20, 0.42) 52%,
+              transparent 100%);
     color: var(--c-on-dark);
 }
 
-.fb-hero__live-slot { display: grid; }
-
-.fb-hero__live-slot > span {
+.fb-hero__over-line {
     grid-area: 1 / 1;
-    white-space: nowrap;
+    margin: 0;
+    font-size: 21px;
+    line-height: 28px;
+    font-weight: 800;
+    letter-spacing: -0.4px;
     opacity: 0;
     animation: fb-hero-line 16s linear infinite;
 }
 
-.fb-hero__live-slot > span:nth-child(1) { animation-delay: 0s; }
-.fb-hero__live-slot > span:nth-child(2) { animation-delay: 4s; }
-.fb-hero__live-slot > span:nth-child(3) { animation-delay: 8s; }
-.fb-hero__live-slot > span:nth-child(4) { animation-delay: 12s; }
-
-/* Строка приходит снизу и уходит вверх — движение в одну сторону читается
-   лентой, а не миганием. */
-@keyframes fb-hero-line {
-  0%          { opacity: 0; transform: translateY(5px); }
-  3%,  21%    { opacity: 1; transform: none; }
-  24%, 100%   { opacity: 0; transform: translateY(-5px); }
+/* Вторая половина фразы — со своей строки: две короткие строки читаются
+   быстрее одной длинной, а на узком кадре длинная и не помещалась бы. */
+.fb-hero__over-line em {
+    display: block;
+    font-style: italic;
+    color: var(--c-green-on-dark);
 }
 
-/* При запрете движения смены нет: остаётся первая строка, остальные
-   сняты. Пустая плашка была бы хуже неподвижной. */
+.fb-hero__over-line:nth-child(1) { animation-delay: 0s; }
+.fb-hero__over-line:nth-child(2) { animation-delay: 4s; }
+.fb-hero__over-line:nth-child(3) { animation-delay: 8s; }
+.fb-hero__over-line:nth-child(4) { animation-delay: 12s; }
+
+/* Фраза приходит снизу и уходит вверх — движение в одну сторону читается
+   лентой, а не миганием. */
+@keyframes fb-hero-line {
+  0%          { opacity: 0; transform: translateY(6px); }
+  3%,  21%    { opacity: 1; transform: none; }
+  24%, 100%   { opacity: 0; transform: translateY(-6px); }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .fb-hero__live-slot > span { animation: none; opacity: 0; }
-  .fb-hero__live-slot > span:first-child { opacity: 1; }
+  .fb-hero__over-line { animation: none; opacity: 0; }
+  .fb-hero__over-line:first-child { opacity: 1; }
 }
 
 
