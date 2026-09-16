@@ -837,8 +837,17 @@
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
     column-gap: 12px;
-    padding: 0;
+  /* Поле справа. Без него цена упирается в кромку окна — у окна
+     overflow: hidden, и в валютах длиннее дирхама («OMR 11.5» против
+     «AED 110») хвост срезало. Двух точек отступа строки на это не хватало. */
+    padding: 0 8px 0 0;
 }
+
+/* В СТРОКЕ ЦЕНА НЕ УВЕЛИЧИВАЕТСЯ. Приём карточный: там она росла внутрь
+   плашки и места хватало. Здесь она у самого края окна, и рост на шесть
+   процентов выносил её за кромку — подсвеченная строка теряла хвост
+   цены. */
+.fb-prod.is-focus .fb-prod__price { transform: none; }
 
 /* Цена на ступень мельче карточной: в строке она стоит рядом с
    названием, а не под ним, и на прежнем кегле отнимала у названия столько,
@@ -912,6 +921,8 @@
   .fb-prod__cat { margin-bottom: 6px; }
 
   .fb-prod__price { font-size: 20px; line-height: normal; }
+  .fb-prod__body { padding: 16px; }
+  .fb-prod.is-focus .fb-prod__price { transform: scale(1.06); }
 
   .fb-prod__desc,
   .fb-prod__rate { display: block; }
