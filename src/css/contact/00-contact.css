@@ -96,10 +96,13 @@
     color: var(--c-text-body);
 }
 
-/* Карточки способов связи. Кикер над значением — тот же приём, что у
-   подписей в рядах показателей: служебная строка сверху, содержание под
-   ней. Значками не пользуемся: конверта, трубки и булавки в наборе нет, а
-   три новых картинки ради трёх строк не окупаются. */
+/* Карточки способов связи: значок в скруглённом квадрате слева, подпись и
+   значение справа — как в образце. Три значка нарисованы под эту страницу
+   (mail, chat, pin) в стиле набора: линейные, тем же зелёным и той же
+   толщиной штриха, что у check-green.svg.
+
+   Квадрат 40 на 40 и колонка сетки ровно под него: значок не растягивает
+   строку и не съезжает, когда значение уходит в две строки. */
 .ct__ways {
     display: grid;
     gap: 12px;
@@ -107,15 +110,32 @@
 }
 
 .ct__way {
-    padding: 16px 18px;
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
     border: 1px solid var(--c-line-soft);
     border-radius: 14px;
     background: var(--c-bg-alt);
     box-shadow: var(--sh-card);
 }
 
+.ct__way-chip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    background: var(--c-green-mist);
+}
+
+.ct__way-body { min-width: 0; }
+
 .ct__way-label {
-    margin: 0 0 5px;
+    display: block;
+    margin: 0 0 3px;
     font-size: 11px;
     font-weight: 700;
     line-height: 15px;
@@ -215,7 +235,7 @@
 
   .ct__ways { gap: 14px; }
 
-  .ct__way { padding: 18px 20px; }
+  .ct__way { padding: 16px 18px; gap: 15px; }
 
   .ct__panel { padding: 28px 26px; }
 }
