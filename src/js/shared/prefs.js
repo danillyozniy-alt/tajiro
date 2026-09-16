@@ -81,13 +81,23 @@
   var savedLang = recall(KEY_LANG);
   var lang      = LANG[savedLang] ? savedLang : 'en';
 
-  /* Динары и риал делятся примерно на три: товар за $8 выходит меньше трёх
-     единиц, и без десятой доли все дешёвые ценники схлопывались в «3».
-     У кувейтского динара разрыв ещё больше — тот же товар меньше трёх. */
-  function money(usd, cur) {
-    var x = usd * RATE[market];
-    if (cur === 'BHD' || cur === 'OMR' || cur === 'KWD') return (Math.round(x * 10) / 10).toString();
-    return Math.round(x).toString();
+  /* ЦЕННИКИ ВЕЗДЕ ЦЕЛЫЕ, без дробной части.
+
+     Динар и риал — валюты с ТРЕМЯ знаками после запятой: не 11.3, а 11.300.
+     Раньше здесь стояла одна десятая, и получалось «BHD 11.3» — запись, в
+     которой знаков меньше, чем в самой валюте. В заливе так не пишут.
+
+     Из двух правильных вариантов — 11.300 и 11 — взят второй. Три знака в
+     ценнике товара занимают полстроки и читаются точностью, которой у
+     витрины нет: цены всё равно назначены, а не пересчитаны с точностью до
+     филса. Три знака остались там, где это счёт: в js/checkout/market.js
+     сумма подписки так и выводится, BHD 19.000.
+
+     Цена этого решения: на главной, где товары по $9, $12, $14 и $7,
+     дешёвые ценники в динарах сходятся — 9 и 7 оба дают 3, 14 и 12 оба 5.
+     Развести их можно только другими исходными ценами. */
+  function money(usd) {
+    return Math.round(usd * RATE[market]).toString();
   }
 
   function fill(sel, value) {
@@ -117,7 +127,7 @@
     fill('[data-week]', WEEK[market]);
 
     all('[data-usd]').forEach(function (e) {
-      e.textContent = CUR[market] + ' ' + money(parseFloat(e.getAttribute('data-usd')), CUR[market]);
+      e.textContent = CUR[market] + ' ' + money(parseFloat(e.getAttribute('data-usd')));
     });
 
     remember(KEY_MARKET, market);
