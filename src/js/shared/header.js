@@ -161,7 +161,11 @@
     }
   });
 
-  Array.prototype.forEach.call(header.querySelectorAll('a[href]'), function (a) {
+  /* ТОЛЬКО КНОПКА, а не любая ссылка. В первой версии правило стояло на
+     всех ссылках шапки — и на главной перекинуло на оплату ЗНАК: он ведёт
+     на index.html, то есть на страницу, где человек и стоит. Для знака это
+     нормально и привычно, для кнопки — нет. */
+  Array.prototype.forEach.call(header.querySelectorAll('a.btn[href]'), function (a) {
     if (a.getAttribute('href') === here) {
       a.setAttribute('href', 'checkout.html');
     }
