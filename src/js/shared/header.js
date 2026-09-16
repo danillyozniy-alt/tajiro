@@ -94,6 +94,25 @@
       else openPanel(trigger);
     });
 
+    /* ВЫБРАЛ — ЛИСТ ЗАКРЫЛСЯ. На телефоне панель настроек раскрывается во
+       весь экран и накрывает страницу целиком. Человек жал по ней ради
+       валюты, то есть ради ценников, которые под ней и спрятаны, — а после
+       выбора лист оставался стоять, и цены приходилось открывать вторым
+       нажатием по той же кнопке.
+
+       Закрываем только там, где панель открыло касание. На устройстве с
+       мышью панель держит CSS по :hover, класс ей ничего не диктует: она
+       закроется сама, когда курсор уйдёт. */
+    var panel = panelOf(trigger);
+    if (panel) {
+      panel.addEventListener('click', function (e) {
+        if (hoverQuery && hoverQuery.matches) return;
+        var opt = e.target.closest('[data-market], [data-lang]');
+        if (!opt || !panel.contains(opt)) return;
+        closePanel(trigger);
+      });
+    }
+
     if (!item) return;
 
     /* На hover-устройствах JS не открывает панель, а лишь держит
