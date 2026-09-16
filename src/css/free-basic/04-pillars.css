@@ -927,6 +927,8 @@
 
   .fb-how .fb-split__text { max-width: 680px; }
 
+  .fb-how__actions { margin-top: 8px; }
+
   .fb-how .fb-steps {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 20px;

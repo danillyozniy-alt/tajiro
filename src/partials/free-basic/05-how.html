@@ -26,9 +26,6 @@
       <p class="kicker fb-label">HOW IT WORKS</p>
       <h2 class="h2 fb-head__title">Three steps. <em>That is it.</em></h2>
       <p class="lead fb-head__lead">No technical skills. No experience. No upfront cost. Your store opens ready — domain, checkout and payments already done for you.</p>
-      <div class="fb-actions fb-pillar__actions">
-        <a class="btn btn--primary" href="checkout.html">Start now — it is free</a>
-      </div>
     </div>
 
     <!-- data-once — крючок для js/free-basic/steps.js: он и ставит очередь
@@ -54,6 +51,14 @@
         <span class="fb-step__tag">Instant delivery</span>
       </li>
     </ol>
+
+    <!-- Кнопка под шагами, а не под заголовком. Шаги идут в строку, и
+         кнопка, оставленная наверху, относилась к первому из них, а не ко
+         всем трём. Под ними и по центру — общая для всей тройки, и стоит
+         там, где человек дочитал последовательность до конца. -->
+    <div class="fb-actions fb-actions--center fb-how__actions">
+      <a class="btn btn--primary" href="checkout.html">Start now — it is free</a>
+    </div>
 
   </div>
 </section>
