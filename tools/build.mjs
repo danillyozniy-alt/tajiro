@@ -14,8 +14,7 @@
      send/    то, что отправляют. Каждая страница — один самодостаточный
               файл, всё вшито внутрь:
 
-                Tajiro-home.html             стили, скрипты, шрифты, картинки
-                Tajiro-home-full.html        то же плюс видео
+                Tajiro-home.html             всё внутри: стили, скрипты, шрифты, кадры, ролик
 
               Полный тяжелее втрое, зато работает вообще без сети.
 
@@ -241,9 +240,12 @@ function buildSingle(html, withVideo, sendBase) {
 
   /* --- ассеты: и в разметке, и внутри уже вшитых стилей ------------------ */
   let inlined = 0;
-  /* Видео вшивается только по просьбе: без него файл 3,5 МБ, с ним 12,7 —
-     см. комментарий ниже. */
-  const kinds = withVideo ? 'fonts|img|video' : 'fonts|img';
+  /* Вшивается ВСЁ, включая видео. Раньше здесь был выбор: обычный цельный
+     файл без ролика и «-full» с роликом. Лёгкий делался ради почты — с
+     роликом файл переваливает за 8 МБ, а вложения режут на десяти, у многих
+     на пяти. Им не пользовались: отправляют всегда полный, а лёгкий просто
+     лежал рядом и путал, какой из двух брать. Выбор снят. */
+  const kinds = 'fonts|img|video';
 
   out = out.replace(new RegExp('(?:\\.\\./)*assets/(?:' + kinds + ')/[A-Za-z0-9._/-]+', 'g'), ref => {
     const rel = ref.replace(/^(?:\.\.\/)+/, '');
@@ -253,21 +255,15 @@ function buildSingle(html, withVideo, sendBase) {
     return dataUri(abs);
   });
 
-  /* По умолчанию видео НЕ вшивается: ai-team.mp4 весит 7 МБ, в base64 это
-     ~9,2 МБ поверх остального — файл раздувается с 3,5 МБ до 12,7. В обычном
-     цельном файле остаётся постер, на сайте ролик играет.
-
-     Молчать об этом нельзя: снаружи пропавшее видео выглядит как поломка, а
-     не как решение. Поэтому невшитое всегда перечисляется в отчёте сборки.
-
-     Кому нужен файл, который играет всё и без сети, — node tools/build.mjs
-     --with-video, он кладёт рядом Tajiro-home-full.html. */
+  /* Если что-то всё же осталось ссылкой — это перечисляется в отчёте
+     сборки. Молчать нельзя: снаружи недостающий ассет выглядит поломкой, а
+     не решением. */
   const external = [...new Set(
     (out.match(/(?:\.\.\/)*assets\/[A-Za-z0-9._/-]+/g) || [])
       .map(r => r.replace(/^(?:\.\.\/)+/, ''))
   )];
 
-  const name = withVideo ? sendBase.replace(/\.html$/, '-full.html') : sendBase;
+  const name = sendBase;
 
   fs.mkdirSync(SEND, { recursive: true });
   fs.writeFileSync(path.join(SEND, name), out);
@@ -305,17 +301,12 @@ function buildOnce() {
   for (const page of PAGES) {
     const html = assemble(page.template);
     const linked = buildLinked(html, page.out);
-    const single = buildSingle(html, false, page.send);
+    const single = buildSingle(html, true, page.send);
 
-    /* Полная версия имеет смысл только там, где есть видео: без него она
-       выходит байт в байт как обычная, и в папке появляется выбор, которого
-       на самом деле нет. */
-    const hasVideo = /assets\/video\//.test(html);
-    const full = hasVideo ? buildSingle(html, true, page.send) : null;
-    if (!hasVideo) fs.rmSync(path.join(SEND, page.send.replace(/\.html$/, '-full.html')), { force: true });
-
-    /* Старые цельные файлы из dist убираем: пока они там лежат, в папке две
-       пары одинаковых на вид html, и непонятно, какую брать. */
+    /* Хвосты прошлой схемы: «-full» больше не собирается, и старые копии
+       цельных файлов в dist тоже не нужны. Удаляем на каждой сборке, иначе
+       в папках лежат файлы, которых никто больше не обновляет. */
+    fs.rmSync(path.join(SEND, page.send.replace(/\.html$/, '-full.html')), { force: true });
     for (const stale of [page.send, page.send.replace(/\.html$/, '-full.html')]) {
       fs.rmSync(path.join(DIST, stale), { force: true });
     }
@@ -329,13 +320,7 @@ function buildOnce() {
       line(single)
       + (single.external.length
           ? '\n  ! ссылкой, не вшито: ' + single.external.join(', ')
-          : '')
-      + (full
-          ? '\n' + line(full)
-            + (full.external.length
-                ? '\n  ! ссылкой, не вшито: ' + full.external.join(', ')
-                : '\n    всё внутри — работает без сети')
-          : '')
+          : '\n    всё внутри — работает без сети')
     );
   }
 
