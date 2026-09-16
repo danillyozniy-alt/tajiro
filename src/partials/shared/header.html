@@ -140,7 +140,11 @@
     <div class="site-header__right">
       <a class="nav__login" href="login.html">Log in</a>
 
-      <!-- Язык и валюта — ОДИН элемент в полосе, а не два.
+      <!-- Язык и валюта — ОДИН элемент в полосе, а не два. Стоит В БАРЕ НА
+           ВСЕХ ШИРИНАХ, включая телефон: валюта решает, в каких деньгах
+           человек видит цены, и прятать её в бургер — значит прятать цену.
+           Раньше на телефоне она лежала строкой аккордеона внутри листа;
+           строка снята, копия осталась одна.
 
            Двумя они в неё не влезают: рядом уже стоят «Log in» и кнопка, и
            на 960px строка ломалась пополам. Поэтому в баре висит короткая
@@ -292,47 +296,6 @@
           <a class="nav-acc__trigger nav-acc__trigger--plain" href="#the-math">Pricing</a>
         </li>
 
-        <!-- Язык и валюта на телефоне — обычная строка аккордеона, как
-             Platform и Resources: ниже 901 десктопная полоса скрыта целиком,
-             и без этой строки выбрать их нечем. Кнопки те же, что в панели:
-             скрипт находит их по data-lang и data-market и держит обе
-             копии в одном состоянии. -->
-        <li class="nav-acc__row">
-          <button class="nav-acc__trigger" type="button" id="acc-trigger-prefs"
-                  aria-expanded="false" aria-controls="acc-panel-prefs">
-            <span data-prefs-label>EN &middot; AED</span>
-            <svg class="nav-acc__chev" viewBox="0 0 8.66026 4.5" width="10" height="6" aria-hidden="true" focusable="false">
-              <path d="M0 0H8.66025L4.33013 4.5L0 0Z" fill="currentColor"/>
-            </svg>
-          </button>
-          <div class="nav-acc__panel" id="acc-panel-prefs" role="group" aria-labelledby="acc-trigger-prefs">
-            <div class="nav-acc__clip">
-              <div class="nav-prefs nav-prefs--sheet">
-
-                <div class="nav-prefs__group">
-                  <p class="kicker nav-prefs__kicker">Language</p>
-                  <div class="nav-prefs__opts nav-prefs__opts--lang">
-                    <button class="nav-prefs__opt" type="button" data-lang="en" aria-pressed="true">English</button>
-                    <button class="nav-prefs__opt" type="button" data-lang="ar" lang="ar" aria-pressed="false">العربية</button>
-                  </div>
-                </div>
-
-                <div class="nav-prefs__group">
-                  <p class="kicker nav-prefs__kicker">Currency</p>
-                  <div class="nav-prefs__opts">
-                    <button class="nav-prefs__opt" type="button" data-market="AE" aria-pressed="true">United Arab Emirates<span class="nav-prefs__cur">AED</span></button>
-                    <button class="nav-prefs__opt" type="button" data-market="SA" aria-pressed="false">Saudi Arabia<span class="nav-prefs__cur">SAR</span></button>
-                    <button class="nav-prefs__opt" type="button" data-market="QA" aria-pressed="false">Qatar<span class="nav-prefs__cur">QAR</span></button>
-                    <button class="nav-prefs__opt" type="button" data-market="BH" aria-pressed="false">Bahrain<span class="nav-prefs__cur">BHD</span></button>
-                    <button class="nav-prefs__opt" type="button" data-market="OM" aria-pressed="false">Oman<span class="nav-prefs__cur">OMR</span></button>
-                    <button class="nav-prefs__opt" type="button" data-market="KW" aria-pressed="false">Kuwait<span class="nav-prefs__cur">KWD</span></button>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-        </li>
       </ul>
 
       <a class="nav-sheet__login" href="login.html">Log in</a>

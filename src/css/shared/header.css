@@ -52,15 +52,30 @@ html {   scroll-padding-top: var(--nav-h); }
     display: flex;
     height: var(--nav-h);
     align-items: center;
-    gap: 54px;
+  /* Телефонное поле: в полосе тут стоят знак, переключатель и бургер, и
+     общий зазор нужен только между двумя последними. Десктопные 54 — это
+     расстояние от знака до навигации, оно возвращается с 901. */
+    gap: 14px;
 }
 
+/* Правая часть полосы видна на всех ширинах, но на телефоне в ней остаётся
+   ОДИН элемент — переключатель языка и валюты. «Log in» и кнопка оттуда
+   сняты: они есть в мобильном листе, а переключателя там больше нет и быть
+   не должно — валюта решает, в каких деньгах человек видит цены на всей
+   странице, и прятать её за бургер значит прятать цену. */
 .site-header__right {
-    display: none;
+    display: flex;
     align-items: center;
     margin-left: auto;
     gap: 28px;
 }
+
+.site-header__right > .nav__login,
+.site-header__right > .btn { display: none; }
+
+/* Бургер стоит следом за правой частью, и своё margin-left: auto ему
+   больше не нужно — вправо полосу толкает она. */
+.site-header__right + .nav-burger { margin-left: 0; }
 
 /* Логотип переехал в css/shared/logo.css: он нужен четырём страницам, а
    шапка целиком — двум. То же правило, по которому файлы уходят в shared/,
@@ -580,9 +595,10 @@ body.nav-open {
   :root {
     --nav-h: 96px;
   }
-  .site-header__right {
-    display: flex;
-  }
+  .site-header__inner { gap: 54px; }
+
+  .site-header__right > .nav__login { display: inline-flex; }
+  .site-header__right > .btn { display: inline-flex; }
   .nav {
     display: block;
   }
