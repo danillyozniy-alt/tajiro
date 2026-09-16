@@ -69,7 +69,8 @@ const PAGES = [
   { template: 'pages/index.html',       out: 'index.html',       send: 'Tajiro-home.html' },
   { template: 'pages/free-basic.html',  out: 'free-basic.html',  send: 'Tajiro-free-basic.html' },
   { template: 'pages/login.html',       out: 'login.html',       send: 'Tajiro-login.html' },
-  { template: 'pages/checkout.html',    out: 'checkout.html',    send: 'Tajiro-checkout.html' }
+  { template: 'pages/checkout.html',    out: 'checkout.html',    send: 'Tajiro-checkout.html' },
+  { template: 'pages/contact.html',     out: 'contact.html',     send: 'Tajiro-contact.html' }
 ];
 
 const PORT = Number(process.env.PORT) || 4173;

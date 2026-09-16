@@ -1,0 +1,257 @@
+/* ==========================================================================
+   tajiro — Контакты
+
+   Состав снят с ecomzy.com/contact, оформление наше. Ничего нового в
+   систему не заводится: контейнер, типографика, поля и кнопки взяты
+   готовыми, здесь только раскладка страницы и две её собственные вещи —
+   плашка-кикер первого экрана и карточка способа связи.
+
+   Всё, что ниже, — телефонные значения. Ступени идут строго по
+   возрастанию: правила равной силы, побеждает последнее подошедшее.
+   ========================================================================== */
+
+/* --- Первый экран ---------------------------------------------------------
+   Вертикальные поля секций .section не задаёт — их ставит каждая секция
+   сама, и шкала по проекту одна: 64 на телефоне, 88 с 601, 104 с 901, 120
+   с 1281 (см. shared/what-you-get.css).
+
+   Первому экрану сверху дано меньше: над ним липкая шапка, и полные 64
+   после неё читаются провалом — заголовок уезжает от верхнего края дальше,
+   чем на любой другой странице.
+
+   Снизу у первого экрана поле есть, а у блока контактов сверху нет: иначе
+   между ними складываются два поля подряд и получается разрыв в полторы
+   сотни точек. Отвечает за зазор кто-то один, и это верхний. */
+.ct-hero {
+    padding-block: 40px 56px;
+}
+
+.ct-hero__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    text-align: center;
+}
+
+/* Плашка над заголовком. Собрана из тех же величин, что и «All-in-one
+   platform» на главной: тот же скруглённый пилюлей фон, тот же кегль,
+   та же зелёная точка слева. Отдельным компонентом не выношу — она нужна
+   ровно в двух местах и в каждом со своим фоном секции. */
+.ct-hero__kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 16px;
+    border: 1px solid var(--c-line-soft);
+    border-radius: var(--r-pill);
+    background: var(--c-bg-alt);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: 0.9px;
+    text-transform: uppercase;
+    color: var(--c-text-muted);
+}
+
+.ct-hero__dot {
+    flex: none;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--c-green);
+}
+
+/* Курсив во втором слове — приём первых экранов остальных страниц:
+   «digital products», «for free». Здесь «talk». */
+.ct-hero__title em {
+    font-style: italic;
+    color: var(--c-green-text);
+}
+
+.ct-hero__lede {
+    max-width: 560px;
+    color: var(--c-text-body);
+}
+
+/* --- Способы связи и форма ------------------------------------------------ */
+.ct {
+    padding-block: 0 64px;
+}
+
+.ct__split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+    align-items: start;
+}
+
+.ct__title em {
+    font-style: italic;
+    color: var(--c-green-text);
+}
+
+.ct__lede {
+    margin-top: 14px;
+    color: var(--c-text-body);
+}
+
+/* Карточки способов связи. Кикер над значением — тот же приём, что у
+   подписей в рядах показателей: служебная строка сверху, содержание под
+   ней. Значками не пользуемся: конверта, трубки и булавки в наборе нет, а
+   три новых картинки ради трёх строк не окупаются. */
+.ct__ways {
+    display: grid;
+    gap: 12px;
+    margin-top: 26px;
+}
+
+.ct__way {
+    padding: 16px 18px;
+    border: 1px solid var(--c-line-soft);
+    border-radius: 14px;
+    background: var(--c-bg-alt);
+    box-shadow: var(--sh-card);
+}
+
+.ct__way-label {
+    margin: 0 0 5px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 15px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--c-text-muted);
+}
+
+.ct__way-value {
+    display: block;
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    color: var(--c-text);
+}
+
+/* Почта — ссылка. Поле под палец добавлено отступами с возвратом
+   отрицательным полем: на вид строка стоит там же, а ловится сорока
+   четырьмя точками, как просит Apple. */
+.ct__way-link {
+    padding-block: 10px;
+    margin-block: -10px;
+    color: var(--c-green-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: color-mix(in srgb, var(--c-green) 40%, transparent);
+    transition: text-decoration-color 0.18s ease;
+}
+
+.ct__way-link:hover,
+.ct__way-link:focus-visible {
+    text-decoration-color: var(--c-green);
+}
+
+/* Панель с формой. Белая на кремовом — как плашка счёта на оплате: это
+   единственный блок страницы, с которым человек работает руками, и он
+   должен читаться отдельным предметом. */
+.ct__panel {
+    padding: 24px 20px;
+    border: 1px solid var(--c-line-soft);
+    border-radius: 18px;
+    background: var(--c-surface);
+    box-shadow: var(--sh-card);
+}
+
+.ct__submit {
+    margin-top: 20px;
+}
+
+.ct__note {
+    margin: 12px 0 0;
+    font-size: 13px;
+    line-height: 20px;
+    color: var(--c-text-muted);
+}
+
+.ct__note a,
+.ct__again {
+    color: var(--c-green-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* Кнопка, а не ссылка на решётку. Она ничего не открывает и никуда не
+   ведёт — только возвращает форму, — а ссылка с href="#" без скрипта
+   прыгает наверх и в разметке читается навигацией, которой тут нет.
+   Выглядит по-прежнему ссылкой: собственного вида у кнопки не остаётся.
+
+   Поле под палец: строка в 20 точек, а ловиться должно сорока четырьмя. */
+.ct__again {
+    padding: 12px 0;
+    margin: -12px 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    cursor: pointer;
+}
+
+/* Второе состояние — сообщение принято. Заголовок здесь .h2, как и в
+   форме: это та же панель, сменившая содержимое, а не новый раздел. */
+.ct__sent .ct__lede { margin-top: 12px; }
+
+.ct__echo {
+    font-weight: 700;
+    color: var(--c-text);
+}
+
+/* --- Планшет -------------------------------------------------------------- */
+@media (min-width: 601px) {
+  .ct-hero { padding-block: 56px 72px; }
+  .ct { padding-block: 0 88px; }
+
+  .ct-hero__inner { gap: 22px; }
+
+  .ct__split { gap: 40px; }
+
+  .ct__ways { gap: 14px; }
+
+  .ct__way { padding: 18px 20px; }
+
+  .ct__panel { padding: 28px 26px; }
+}
+
+/* --- Две колонки ----------------------------------------------------------
+   Порог 901: слева текст со способами связи, справа панель с формой.
+
+   Здесь две колонки на этой ширине действительно помещаются, в отличие от
+   блока рекламы на главной — там в правой доле стоит сетка из трёх плиток,
+   и ей нужно от 400 точек, а тут поле ввода, которому хватает и трёхсот.
+   На 901 контейнеру остаётся 773, каждой доле по 366, внутри панели полю
+   достаётся 314 — это больше, чем те же поля получают на телефоне. */
+@media (min-width: 901px) {
+  .ct-hero { padding-block: 64px 80px; }
+  .ct { padding-block: 0 104px; }
+
+  .ct__split {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 48px;
+  }
+
+  .ct__aside { padding-top: 6px; }
+
+  .ct__panel { padding: 32px 30px; }
+}
+
+@media (min-width: 1101px) {
+  /* Текстовой колонке потолок: лид в ней набран .lead, и на всю половину
+     широкого экрана строка уходит за сотню знаков — читать такую строку
+     тяжело. Панель с формой потолка не просит: её ширину держат поля. */
+  .ct__split { gap: 72px; }
+
+  .ct__aside { max-width: 480px; }
+}
+
+@media (min-width: 1281px) {
+  .ct-hero { padding-block: 72px 88px; }
+  .ct { padding-block: 0 120px; }
+}

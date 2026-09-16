@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--#include partials/contact/head.html -->
+
+<!--# Порядок тот же, что на остальных страницах: шрифты и токены, потом
+     общее, потом своё. Страница обычная, не служебная, поэтому берёт
+     полную шапку и полный подвал — как главная и free-basic, а не как
+     вход с оплатой, где стоит только знак. -->
+<link rel="stylesheet" href="css/core/fonts.css">
+<link rel="stylesheet" href="css/core/base.css">
+<link rel="stylesheet" href="css/shared/logo.css">
+<link rel="stylesheet" href="css/shared/header.css">
+<link rel="stylesheet" href="css/shared/forms.css">
+<link rel="stylesheet" href="css/contact/00-contact.css">
+<link rel="stylesheet" href="css/shared/footer.css">
+</head>
+<body>
+
+<!--#include partials/shared/header.html -->
+<main>
+<!--#include partials/contact/01-hero.html -->
+<!--#include partials/contact/02-contact.html -->
+</main>
+<!--#include partials/shared/footer.html -->
+
+<script src="js/shared/header.js"></script>
+<script src="js/shared/prefs.js"></script>
+<script src="js/shared/footer.js"></script>
+<script src="js/contact/state.js"></script>
+
+<!--
+  ЗАМЕТКА РАЗРАБОТЧИКУ — форма обратной связи
+
+  · [data-stub="send-message"] — заглушка, настоящей отправки нет.
+    Подключить так: POST на свой обработчик, защита от ботов (honeypot или
+    капча), письмо в поддержку и автоответ на адрес отправителя.
+  · Пока бэкенда нет, страница честно доводит человека до живого адреса:
+    почта поддержки названа и в карточке слева, и во втором состоянии
+    формы.
+  · Телефона на странице нет намеренно. В образце (ecomzy.com/contact)
+    карточка с номером есть, но у Tajiro номер нигде по сайту не заявлен, а
+    выдумывать телефон компании нельзя. Появится настоящий — добавить
+    четвёртой карточкой в .ct__ways.
+  · Срок ответа «usually within one business day» — обещание, которое даёт
+    бизнес, а не вёрстка. Если поддержка не готова его держать, строку
+    нужно снять: она стоит в двух местах, в .ct__note под кнопкой и во
+    втором состоянии.
+  · Арабская версия (RTL) будет позже, пока только английская.
+-->
+
+</body>
+</html>
