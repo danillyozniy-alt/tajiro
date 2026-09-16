@@ -597,6 +597,9 @@ body.nav-open {
   }
   .site-header__inner { gap: 54px; }
 
+  /* Панель прижата к правому краю: она последняя в строке, и от левого
+     края уехала бы за экран. Ширина по содержимому — списки короткие. */
+
   .site-header__right > .nav__login { display: inline-flex; }
   .site-header__right > .btn { display: inline-flex; }
   .nav {
@@ -675,12 +678,49 @@ body.nav-open {
 
 .nav-prefs__now { font-weight: 700; }
 
-/* Панель прижата к правому краю: она последняя в строке, и от левого края
-   уехала бы за экран. Ширина по содержимому — списки короткие. */
+/* НА ТЕЛЕФОНЕ переключатель открывается ЛИСТОМ, а не выпадашкой — тем же
+   приёмом, что меню бургера рядом. Причина простая: рядом с ним стоит
+   бургер, и два соседних элемента, открывающиеся по-разному, читаются
+   разными по смыслу. Стеклянная плашка на пол-экрана к тому же выглядела
+   случайной: на телефоне ей не над чем висеть.
+
+   Лист занимает всё под баром, заливка и материал у него те же, что у
+   меню: кремовый фон без стекла, без тени и без скруглений. Разметка
+   прежняя — меняются только правила.
+
+   С 901 всё возвращается к выпадашке: там она висит над содержимым рядом
+   с такими же панелями «Платформы» и «Ресурсов», и лист был бы неуместен. */
+  /* Точка отсчёта — САМА ШАПКА, а не пункт: лист должен идти во всю ширину
+     экрана, а пункт узкий. Тем же приёмом подвешена мега-панель, там об
+     этом сказано у .nav__item--mega.
+
+     fixed здесь не работает: у шапки есть backdrop-filter, а он делает её
+     системой координат для fixed-потомков — лист схлопывался в ноль
+     высоты. Поэтому absolute от шапки и высота числом. */
+.nav__item--prefs { position: static; }
+
 .nav-panel--prefs {
-    left: auto;
+    position: absolute;
+    z-index: 100;
+    top: 100%;
     right: 0;
-    width: 268px;
+    left: 0;
+    width: auto;
+    height: calc(100dvh - var(--nav-h));
+    border: 0;
+    border-radius: 0;
+    background-image: none;
+    background-color: var(--c-bg-alt);
+    box-shadow: none;
+  /* Лист приезжает сверху, как меню: та же длительность и тот же сдвиг. */
+    transform: translateY(-8px);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+}
+
+/* Поля листа — как у меню бургера, а не панельные восемнадцать. */
+.nav-panel--prefs .nav-prefs {
+    gap: 26px;
+    padding: 26px 22px;
 }
 
 .nav-prefs {
@@ -775,3 +815,36 @@ body.nav-open {
 
 .nav-prefs--sheet .nav-prefs__opt { font-size: 16px; line-height: 24px; }
 .nav-prefs--sheet .nav-prefs__cur { font-size: 14px; }
+
+
+/* ==========================================================================
+   С 901 переключатель снова выпадашка
+
+   Правила стоят В КОНЦЕ ФАЙЛА, а не в общем блоке 901 выше. Причина та же,
+   что у ступеней в других файлах: телефонные правила .nav-panel--prefs
+   объявлены НИЖЕ того блока, и при равной силе побеждало бы последнее —
+   лист остался бы и на десктопе. Здесь он перебивается порядком.
+   ========================================================================== */
+@media (min-width: 901px) {
+  .nav__item--prefs { position: relative; }
+
+  .nav-panel--prefs {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    left: auto;
+    width: 268px;
+    height: auto;
+    border: 1.5px solid transparent;
+    border-radius: var(--r-card);
+    background-image: var(--glass-bg-solid), var(--glass-edge);
+    background-color: transparent;
+    box-shadow: var(--glass-shadow-float);
+    transform: translateY(-6px);
+    transition: opacity 0.18s ease, transform 0.18s ease;
+  }
+
+  .nav-panel--prefs.is-open { transform: none; }
+
+  .nav-panel--prefs .nav-prefs { gap: 18px; padding: 18px; }
+}
