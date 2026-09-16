@@ -136,7 +136,15 @@
    Пятно мягче и уходит вниз — рамка стоит на фоне, а не висит над ним. -- */
 .fb-hero__shot {
     position: relative;
-    aspect-ratio: 4 / 5;
+  /* НА ТЕЛЕФОНЕ РАМКА ВЫШЕ, чем пропорция кадра. Кадр снят 4:5, и в этой
+     пропорции рамка занимала 41% первого экрана против 48% у фигуры на
+     главной — рядом с ней экран читался коротким, хотя по числам был
+     длиннее. 7:10 выравнивает долю; кадру это не вредит, лишнее срезается
+     сверху и снизу, а человек в нём стоит по центру.
+
+     С 601 возвращается 4:5 — там рамка стоит в колонке рядом с текстом, и
+     вытягивать её незачем. */
+    aspect-ratio: 7 / 10;
     overflow: hidden;
     margin: 0;
     border-radius: 20px;
@@ -165,6 +173,7 @@
 
 @media (min-width: 601px) {
   .fb-hero { padding-block: 52px 56px; }
+  .fb-hero__shot { aspect-ratio: 4 / 5; }
 
   .fb-hero__title { font-size: 52px; line-height: 58px; letter-spacing: -1.4px; }
   .fb-hero__lede { line-height: 29px; }
@@ -182,7 +191,12 @@
     flex-direction: column;
     justify-content: center;
     min-height: calc(var(--fb-fig-h-band) + 48px);
-    padding-block: 56px;
+  /* Поле ровно в половину той же прибавки, что в min-height. Было 56, и
+     полоса вырастала до 708 при 629 у первого экрана главной: рамка висела
+     с широкими полями сверху и снизу, и экран читался пустым, хотя по
+     числам был выше. Теперь высота сходится с главной, а рамка почти
+     достаёт до кромок секции — как там достаёт фигура. */
+    padding-block: 24px;
   }
 
   /* Колонки НЕ равные, как на главной: текст берёт больше. При половине на
@@ -203,7 +217,6 @@
 }
 
 @media (min-width: 1281px) {
-  .fb-hero { padding-block: 64px; }
 
   .fb-hero__title { font-size: 68px; line-height: 74px; letter-spacing: -2px; }
   .fb-hero__lede { font-size: 22px; line-height: 34px; }
