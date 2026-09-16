@@ -23,21 +23,14 @@
   var still = window.matchMedia &&
               window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* Товары — из каталога, который секция и продаёт */
-  var PRODUCTS = [
-    'New Puppy Checklist',
-    'Medical Bill Audit Kit',
-    'Focus Planner',
-    'Budget Reset Planner',
-    'Sleep Better Guide',
-    'Meal Prep Checklist',
-    'Morning Routine Quiz',
-    'Focus Planner'
-  ];
 
-  /* У каждого города своя сторона, и она за ним закреплена: волна приходит
-     оттуда же, что и город в уведомлении. Случайное направление выглядело
-     несвязанным ни с чем — а связь тут и есть весь смысл.
+  /* У каждого города своя сторона, и она за ним закреплена: волна всегда
+     приходит с одной и той же стороны для одного и того же города.
+     Случайное направление выглядело несвязанным ни с чем.
+
+     Сам город на экране больше не показывается — в плашке теперь нейтральное
+     уведомление, — но список остался: он задаёт стороны, с которых приходят
+     волны, и держит их разными.
 
      Углы разведены по кругу, а не взяты по настоящим азимутам: почти все
      эти города лежат от Залива на запад, и по азимутам волна всегда шла бы
@@ -62,9 +55,25 @@
   function rnd() { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; }
   function pick(a) { return a[Math.floor(rnd() * a.length)]; }
 
-  /* Денег в витрине нет. Раньше в плашке заказа стояла сумма («+ $15.00»),
-     и счётчик копил выручку — это обещание дохода, а их со страницы сняли.
-     На месте суммы теперь время заказа, см. stamp() ниже. */
+  /* ПЛАШКА НЕ ОБЪЯВЛЯЕТ ПРОДАЖУ.
+
+     Сначала в ней стояла сумма («+ $15.00»), потом «New order from Dubai».
+     И то и другое — утверждение о результате: сколько заработано и сколько
+     продано. Обещания дохода со страницы сняли, а заказ — то же обещание,
+     просто в штуках.
+
+     Осталось то, что обещанием не является: телефон показывает, что в
+     магазине идёт жизнь. Два отправителя по очереди — сам магазин и
+     покупатель, — время вместо суммы, и ни одного числа о результате.
+
+     Города здесь больше не показываются, но выбираться не перестали: от
+     города идёт волна по карте (ripple), и связь «волна пришла — телефон
+     звякнул» держится именно на нём. */
+  var NOTES = [
+    { from: 'Your store',  text: 'New notification' },
+    { from: 'Your client', text: 'New message' }
+  ];
+  var noteI = 0;
 
   /* Счётчик доезжает до нового значения, а не подменяется: подмена читается
      как опечатка, движение — как приход денег. */
@@ -194,11 +203,12 @@
   var ARRIVAL = 600;
 
   function sale() {
-    var product = pick(PRODUCTS);
-    var city    = pick(CITIES);
+    var city = pick(CITIES);
+    var note = NOTES[noteI % NOTES.length];
+    noteI += 1;
 
     ripple(city.a);
-    setTimeout(function () { deliver(product, city.name); }, ARRIVAL);
+    setTimeout(function () { deliver(note); }, ARRIVAL);
     schedule();
   }
 
@@ -255,7 +265,7 @@
     slot.textContent = fresh ? 'just now' : toast.__age + ' min ago';
   }
 
-  function deliver(product, city) {
+  function deliver(note) {
 
     /* --- плашка --- */
     var toast = el('div', 's-06__toast');
@@ -272,8 +282,8 @@
     }
 
     var copy = el('span', 's-06__toast-copy');
-    copy.appendChild(el('span', 's-06__toast-title', 'New order from ' + city));
-    copy.appendChild(el('span', 's-06__toast-sub', product));
+    copy.appendChild(el('span', 's-06__toast-title', note.from));
+    copy.appendChild(el('span', 's-06__toast-sub', note.text));
 
     toast.appendChild(icon);
     toast.appendChild(copy);
