@@ -59,7 +59,8 @@
      чтобы меню не мигало, когда курсор мазнул мимо по дороге к панели. */
   var CLOSE_DELAY = 140;
   var closeTimer = null;
-  var canHover = !window.matchMedia || window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var hoverQuery = window.matchMedia ? window.matchMedia('(hover: hover) and (pointer: fine)') : null;
+  var canHover = !hoverQuery || hoverQuery.matches;
 
   function cancelClose() {
     if (closeTimer) {
@@ -76,15 +77,22 @@
   triggers.forEach(function (trigger) {
     var item = trigger.closest('.nav__item');
 
-    /* Раскрытие по наведению живёт в CSS (:hover / :focus-within).
-       Здесь только тач-устройства, где hover недоступен. */
-    if (!canHover) {
-      trigger.addEventListener('click', function () {
-        cancelClose();
-        if (trigger.getAttribute('aria-expanded') === 'true') closePanel(trigger);
-        else openPanel(trigger);
-      });
-    }
+    /* Раскрытие по наведению живёт в CSS (:hover / :focus-within). Здесь
+       обрабатывается касание — там, где наведения нет.
+
+       ОБРАБОТЧИК ВЕШАЕТСЯ ВСЕГДА, а проверка «есть ли наведение» делается
+       В МОМЕНТ КАСАНИЯ. Раньше она делалась один раз при загрузке, и если
+       устройство в тот момент отвечало, что наведение у него есть, —
+       а так отвечают планшеты с подключённой мышью, часть Android-браузеров
+       и десктоп в режиме телефона, — обработчик не вешался вовсе. Тогда
+       нажатие не делало РОВНО НИЧЕГО: CSS ждёт наведения, которого пальцем
+       не бывает, а скрипта нет. */
+    trigger.addEventListener('click', function () {
+      if (hoverQuery && hoverQuery.matches) return;   /* панель открыл hover */
+      cancelClose();
+      if (trigger.getAttribute('aria-expanded') === 'true') closePanel(trigger);
+      else openPanel(trigger);
+    });
 
     if (!item) return;
 
