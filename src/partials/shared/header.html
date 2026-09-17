@@ -124,7 +124,11 @@
               </ul>
             </div>
 
+            <!-- Две страницы про компанию стоят в подвале панели, а не в
+                 списке слева: список — про то, что читать, а эти две про то,
+                 куда написать и кто мы. -->
             <div class="nav-panel__foot nav-panel__foot--end">
+              <a class="nav-panel__link" href="about.html">About us<span class="nav-panel__arrow" aria-hidden="true">→</span></a>
               <a class="nav-panel__link" href="contact.html">Contact us<span class="nav-panel__arrow" aria-hidden="true">→</span></a>
             </div>
           </div>
@@ -286,6 +290,18 @@
               <li><a class="nav-item nav-item--tight" href="#social-proof">
                 <span class="nav-item__title">Success Stories</span>
                 <span class="nav-item__desc">Merchants already trading, with their numbers</span>
+              </a></li>
+              <!-- «О нас» и «Контакты» есть в десктопной панели, в подвале
+                   справа. У мобильного листа своего подвала нет, и без этих
+                   двух строк на телефоне на обе страницы можно было попасть
+                   только через подвал сайта — то есть прокрутив её до конца. -->
+              <li><a class="nav-item nav-item--tight" href="about.html">
+                <span class="nav-item__title">About us</span>
+                <span class="nav-item__desc">What Tajiro is and who stands behind it</span>
+              </a></li>
+              <li><a class="nav-item nav-item--tight" href="contact.html">
+                <span class="nav-item__title">Contact us</span>
+                <span class="nav-item__desc">Write to the support team, get a personal reply</span>
               </a></li>
             </ul>
             </div>

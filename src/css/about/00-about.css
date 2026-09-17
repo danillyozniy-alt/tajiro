@@ -100,15 +100,30 @@
 }
 
 /* Надзаголовок с чёрточкой — общая пара .kicker + .rule, как у секций
-   доверия и менеджера. Чёрточка укорочена до 24: полные 120 из базы
-   рассчитаны на линейку ПОД текстом, а здесь она идёт перед ним. */
-.ab-story__kicker {
+   доверия и менеджера. Собран одним правилом на обе секции страницы:
+   второй раз те же четыре строки писать незачем.
+
+   Кегль и разрядка перебиты явно. База даёт .kicker 12px с разрядкой 1.6 —
+   это надзаголовок БЕЗ чёрточки. Все надзаголовки с чёрточкой в проекте
+   идут 13/1.3 (shared/trust-security.css, home/10b-growth-manager.css), и
+   разрядки 1.6 рядом с линейкой нет нигде.
+
+   Чёрточка укорочена до 24: полные 120 из базы рассчитаны на линейку ПОД
+   текстом, а здесь она идёт перед ним. flex: none — чтобы флекс не сжал
+   двухпиксельную полоску в ноль. */
+.ab-story__kicker,
+.ab-people__head .kicker {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    font-size: 13px;
+    line-height: 18px;
+    letter-spacing: 1.3px;
 }
 
-.ab-story__kicker .rule {
+.ab-story__kicker .rule,
+.ab-people__head .rule {
+    flex: none;
     width: 24px;
     border-radius: 2px;
 }
@@ -159,7 +174,7 @@
 }
 
 .ab-do__lede {
-    margin-top: 10px;
+    margin-top: 14px;
     color: var(--c-text-body);
 }
 
@@ -214,13 +229,20 @@
     background: var(--c-bg-plain);
 }
 
+/* Карточка белая, а не кремовая. Секция здесь белёсая (--c-bg-plain
+   #fbfaf9), и кремовая плашка --c-bg-alt #fbf8f3 на ней отличалась бы от
+   фона на 0/2/6 по каналам — то есть не читалась бы плашкой вовсе.
+   Кремовые плашки в проекте лежат на кремовом фоне, где разница видна.
+
+   Поля и скругление — как у карточки-цитаты на главной (.s-10b__quote):
+   24 на телефоне, 32 с 601, радиус 18. Это одна и та же вещь на сайте. */
 .ab-word__card {
     position: relative;
     margin: 0;
-    padding: 24px 20px 26px;
+    padding: 24px;
     border: 1px solid var(--c-line-soft);
     border-radius: 18px;
-    background: var(--c-bg-alt);
+    background: var(--c-surface);
     box-shadow: var(--sh-card);
 }
 
@@ -248,28 +270,30 @@
     margin: 0;
     font-size: 19px;
     line-height: 30px;
-    letter-spacing: -0.2px;
+    letter-spacing: -0.3px;
     color: var(--c-text);
     text-wrap: pretty;
 }
 
+/* Подпись под цитатой — значения цитаты главной до единицы: отступ 18,
+   имя 17 полужирным, вторая строка 15 приглушённым. */
 .ab-word__by {
     display: flex;
     flex-direction: column;
     gap: 2px;
-    margin-top: 20px;
+    margin-top: 18px;
 }
 
 .ab-word__by-name {
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 700;
-    line-height: 22px;
+    line-height: 24px;
     color: var(--c-text);
 }
 
 .ab-word__by-role {
-    font-size: 13px;
-    line-height: 20px;
+    font-size: 15px;
+    line-height: 22px;
     color: var(--c-text-muted);
 }
 
@@ -284,17 +308,6 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 14px;
-}
-
-.ab-people__head .kicker {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.ab-people__head .rule {
-    width: 24px;
-    border-radius: 2px;
 }
 
 .ab-people__lede {
@@ -322,13 +335,46 @@
     border-radius: var(--r-card);
 }
 
-/* --- Планшет -------------------------------------------------------------- */
+/* --- Полоса показателей ---------------------------------------------------
+   Общая .s-02 стоит на главной и на free-basic ПЕРВОЙ после первого
+   экрана, и поля у неё нарочно неровные: сверху 36, снизу 56. Причина
+   записана в shared/stats.css — верх секции выглядывает из-под первого
+   экрана, и при равных полях из-за сгиба торчало бы пустое поле.
+
+   Здесь она стоит серединой страницы, где выглядывать неоткуда, и
+   неровные поля дают разный воздух над полосой и под ней: 100 сверху
+   против 120 снизу на телефоне, 164 против 216 на 901. Все остальные
+   стыки страницы ровные. Возвращаем полосе общий шаг страницы.
+
+   Селектором взят сосед, а не класс на body: полоса на этой странице
+   ровно одна и стоит ровно за словами компании. Появится вторая — станет
+   видно сразу, что правило её не берёт. */
+.ab-word + .s-02 {
+    padding-block: 64px;
+}
+
+/* --- Адаптив: снизу вверх ---------------------------------------------------
+   Всё выше — телефонные значения. Здесь они дорастают до широкого экрана.
+   Блоки идут строго по возрастанию порога: правила равной силы, побеждает
+   последнее подошедшее. Пороги смещены на пиксел (601 вместо 600): при
+   max-width граница входила в узкий диапазон, при min-width должна войти
+   в широкий.
+
+   ШКАЛА ВЕРТИКАЛЬНЫХ ПОЛЕЙ СЕКЦИЙ — 64 / 80 / 96 / 120. Ровно та, что
+   держат восемь файлов секций проекта: how-it-works, the-math,
+   growth-manager, marketplace-ads, social-proof, trust-security,
+   footer-cta, free-basic. Шкалу 64/88/104/120 держит один файл,
+   shared/what-you-get.css, — и на него же ссылался комментарий страницы
+   контактов, из-за чего обе новые страницы сперва встали по меньшинству.
+   Теперь обе идут с большинством, и стык любой новой секции со старой
+   даёт тот же шаг, что и все остальные стыки сайта.
+   -------------------------------------------------------------------------- */
 @media (min-width: 601px) {
-  .ab-hero { padding-block: 56px 88px; }
-  .ab-story { padding-block: 88px; }
-  .ab-do { padding-block: 88px; }
-  .ab-word { padding-block: 88px; }
-  .ab-people { padding-block: 88px; }
+  .ab-hero { padding-block: 56px 80px; }
+  .ab-story { padding-block: 80px; }
+  .ab-do { padding-block: 80px; }
+  .ab-word { padding-block: 80px; }
+  .ab-people { padding-block: 80px; }
 
   .ab-hero__inner { gap: 22px; }
 
@@ -338,15 +384,16 @@
   .ab-do__card { padding: 16px 18px; gap: 15px; }
   .ab-do__text { font-size: 16px; line-height: 25px; }
 
-  .ab-word__card { padding: 30px 28px 32px; }
+  .ab-word__card { padding: 32px; }
   .ab-word__mark { font-size: 76px; line-height: 40px; }
-  .ab-word__quote p { font-size: 22px; line-height: 34px; }
 
   .ab-people__shots {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
     margin-top: 32px;
   }
+
+  .ab-word + .s-02 { padding-block: 80px; }
 }
 
 /* --- Две колонки ----------------------------------------------------------
@@ -357,11 +404,11 @@
    текст карточки рассыпался на четыре строки, а снимок истории мельчал до
    значка. */
 @media (min-width: 901px) {
-  .ab-hero { padding-block: 64px 104px; }
-  .ab-story { padding-block: 104px; }
-  .ab-do { padding-block: 104px; }
-  .ab-word { padding-block: 104px; }
-  .ab-people { padding-block: 104px; }
+  .ab-hero { padding-block: 64px 96px; }
+  .ab-story { padding-block: 96px; }
+  .ab-do { padding-block: 96px; }
+  .ab-word { padding-block: 96px; }
+  .ab-people { padding-block: 96px; }
 
   .ab-story__inner {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -393,14 +440,20 @@
     gap: 16px;
   }
 
-  .ab-word__card { padding: 40px 40px 42px; }
-  .ab-word__quote p { font-size: 26px; line-height: 40px; }
+  /* Кегль цитаты растёт только здесь. До 901 он равен цитате главной —
+     19/30, — и на планшете две цитаты сайта совпадают. С 901 страница
+     отдаёт цитате всю ширину контейнера, и на 19 строка уходит за сотню
+     знаков. */
+  .ab-word__card { padding: 40px; }
+  .ab-word__quote p { font-size: 22px; line-height: 34px; }
 
   /* Текстовой шапке потолок: лид набран .lead, и на всю ширину контейнера
      строка уходит за сотню знаков. Заголовку потолок не нужен — он в две
      слова. */
   .ab-people__lede { max-width: 640px; }
   .ab-people__shots { gap: 16px; }
+
+  .ab-word + .s-02 { padding-block: 96px; }
 }
 
 @media (min-width: 1101px) {
@@ -415,4 +468,6 @@
   .ab-people { padding-block: 120px; }
 
   .ab-story__inner { gap: 80px; }
+
+  .ab-word + .s-02 { padding-block: 120px; }
 }

@@ -13,10 +13,14 @@
        товары и покупателей, которые действительно не в одной стране, а не
        про офисы.
 
-     Снимок — тот же, что в четвёртой секции главной: владелец магазина за
-     работой дома. Своего кадра «про компанию» у сайта нет, а выдавать
-     стоковый офис за свою команду нельзя. Здесь кадр честно иллюстрирует
-     того, для кого всё сделано.
+     Снимок — тот же, что в четвёртой секции главной: владелица магазина
+     проверяет его из кафе у моря. Своего кадра «про компанию» у сайта нет,
+     а выдавать стоковый офис за свою команду нельзя. Здесь кадр честно
+     иллюстрирует того, для кого всё сделано, и заодно то, о чём абзац
+     рядом: дело, которое не привязано к складу и к столу.
+
+     На главной у этого же файла подпись «working on their store at home» —
+     она неверна, кадр снят не дома. Исправлена там же.
      ========================================================================== -->
 <section class="section ab-story">
   <div class="container ab-story__inner">
@@ -34,10 +38,13 @@
       <p class="ab-story__p">We are an ecommerce platform built exclusively for solopreneurs. We provide everything you need to launch, run, and grow a successful online venture: a ready-made store, digital products to sell, and automated marketing tools &ndash; all working together on autopilot.</p>
     </div>
 
+    <!-- Без loading="lazy": секция вторая сверху, и на телефоне кадр
+         попадает в первый же экран прокрутки. Тот же файл на главной тоже
+         грузится сразу, и там он стоит ниже. -->
     <figure class="ab-story__figure reveal">
       <img class="ab-story__shot" src="assets/img/people/how-it-works.webp"
            alt="A Tajiro store owner checking her store from a café by the sea"
-           width="1100" height="1122" loading="lazy" decoding="async">
+           width="1100" height="1122" decoding="async">
     </figure>
 
   </div>
