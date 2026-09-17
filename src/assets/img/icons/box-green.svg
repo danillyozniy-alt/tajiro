@@ -1,0 +1,7 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Короб товара. Верхняя грань прорисована: без неё короб читается
+       просто прямоугольником. -->
+  <path d="M10 2.6 17 6.2v7.6L10 17.4 3 13.8V6.2L10 2.6Z"
+        stroke="#3D8F63" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M3 6.2 10 9.9l7-3.7M10 9.9v7.5" stroke="#3D8F63" stroke-width="1.5" stroke-linejoin="round"/>
+</svg>

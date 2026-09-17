@@ -38,33 +38,10 @@
     text-align: center;
 }
 
-/* Плашка над заголовком. Собрана из тех же величин, что и «All-in-one
-   platform» на главной: тот же скруглённый пилюлей фон, тот же кегль,
-   та же зелёная точка слева. Отдельным компонентом не выношу — она нужна
-   ровно в двух местах и в каждом со своим фоном секции. */
-.ct-hero__kicker {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-    padding: 7px 16px;
-    border: 1px solid var(--c-line-soft);
-    border-radius: var(--r-pill);
-    background: var(--c-bg-alt);
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 16px;
-    letter-spacing: 0.9px;
-    text-transform: uppercase;
-    color: var(--c-text-muted);
-}
-
-.ct-hero__dot {
-    flex: none;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--c-green);
-}
+/* Плашка над заголовком переехала в core/base.css как .eyebrow--quiet:
+   ровно та же нужна на странице «о нас», а третьей копии подряд быть не
+   должно. Значения не менялись ни на единицу — сверено замером до и
+   после. Здесь остался только курсив в заголовке. */
 
 /* Курсив во втором слове — приём первых экранов остальных страниц:
    «digital products», «for free». Здесь «talk». */
@@ -73,8 +50,12 @@
     color: var(--c-green-text);
 }
 
+/* Потолок строки — тот же, что у первого экрана страницы «о нас»
+   (css/about/00-about.css). Стояло 560, и на широком экране два соседних
+   первых экрана расходились шириной лида при полном совпадении всего
+   остального. 620 при кегле 20 — около шестидесяти знаков в строке. */
 .ct-hero__lede {
-    max-width: 560px;
+    max-width: 620px;
     color: var(--c-text-body);
 }
 

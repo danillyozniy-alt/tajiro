@@ -1,0 +1,5 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Сводка: рамка окна и три столбца внутри. -->
+  <rect x="2.6" y="3.4" width="14.8" height="13.2" rx="2.2" stroke="#3D8F63" stroke-width="1.5"/>
+  <path d="M6.6 13.2v-2.6M10 13.2V7.6M13.4 13.2v-4" stroke="#3D8F63" stroke-width="1.5" stroke-linecap="round"/>
+</svg>

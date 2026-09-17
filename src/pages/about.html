@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--#include partials/about/head.html -->
+
+<!--# Порядок тот же, что на остальных страницах: шрифты и токены, потом
+     общее, потом своё, подвал последним. Страница обычная, не служебная,
+     поэтому берёт полную шапку и полный подвал.
+
+     reveal подключён: на странице есть длинные ряды карточек и снимков,
+     они появляются так же, как на главной. На контактах его нет — там
+     под первым экраном сразу форма, и прятать её до прокрутки нельзя. -->
+<link rel="stylesheet" href="css/core/fonts.css">
+<link rel="stylesheet" href="css/core/base.css">
+<link rel="stylesheet" href="css/shared/logo.css">
+<link rel="stylesheet" href="css/shared/header.css">
+<link rel="stylesheet" href="css/core/reveal.css">
+<link rel="stylesheet" href="css/about/00-about.css">
+<link rel="stylesheet" href="css/shared/stats.css">
+<link rel="stylesheet" href="css/shared/trust-security.css">
+<link rel="stylesheet" href="css/shared/footer-cta.css">
+<link rel="stylesheet" href="css/shared/footer.css">
+</head>
+<body>
+
+<!--#include partials/shared/header.html -->
+<main>
+<!--#include partials/about/01-hero.html -->
+<!--#include partials/about/02-story.html -->
+<!--#include partials/about/03-what-we-do.html -->
+<!--#include partials/about/04-belief.html -->
+<!--#include partials/shared/stats.html -->
+<!--#include partials/about/05-trust.html -->
+<!--#include partials/about/06-people.html -->
+<!--#include partials/about/07-final.html -->
+</main>
+<!--#include partials/shared/footer.html -->
+
+<script src="js/shared/header.js"></script>
+<script src="js/shared/prefs.js"></script>
+<script src="js/shared/footer.js"></script>
+<script src="js/core/reveal.js"></script>
+
+<!--
+  ЗАМЕТКА РАЗРАБОТЧИКУ — страница «о нас»
+
+  · Состав снят с ecomzy.com/about. Три блока образца сюда НЕ перенесены,
+    и каждый раз по одной причине — такого факта у Tajiro нет:
+      – «AS FEATURED IN» с логотипами изданий: публикаций нет. На главной
+        заготовка под прессу закрыта комментарием по той же причине.
+      – Показатели «12,400 магазинов создано / 680K товаров продано / 38
+        стран»: ни одного из этих чисел сайт не знает. На их месте стоит
+        общая полоса показателей сайта — те цифры, что уже проверены и у
+        двух из них есть сноска на источник.
+      – Портрет и имя основателя под цитатой: руководитель нигде на сайте
+        не назван, фотографии нет. Слова подписаны компанией.
+  · Появятся настоящие публикации, цифры или человек с согласием на
+    публикацию — места под них размечены, добавлять туда.
+  · Ссылка «About» в подвале ведёт сюда.
+  · Арабская версия (RTL) будет позже, пока только английская.
+-->
+
+</body>
+</html>

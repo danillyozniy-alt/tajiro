@@ -1,0 +1,418 @@
+/* ==========================================================================
+   tajiro — О нас
+
+   Состав снят с ecomzy.com/about, оформление наше. Ничего нового в систему
+   не заводится: контейнер, типографика, кнопки, карточки и плашка-кикер
+   взяты готовыми, здесь только раскладка страницы и три её собственные
+   вещи — карточка «что мы делаем», карточка со словами компании и ряд
+   снимков.
+
+   ТОН СЕКЦИЙ. По правилу из core/base.css соседних светлых секций одного
+   тона не бывает: крем и белёсый идут через одну. Раскладка страницы:
+
+      первый экран   крем     (заливки нет, берёт фон body)
+      наша история   белёсый
+      что мы делаем  крем
+      наши слова     белёсый
+      показатели     крем     (общая .s-02, заливки не имеет)
+      доверие        ТЁМНАЯ   (общая .s-12)
+      команда        белёсый
+      призыв         ТЁМНАЯ   (общая .s-13)
+      подвал         ТЁМНАЯ
+
+   Из-за этого правила «команда» и «доверие» переставлены местами против
+   образца: у него команда стоит перед доверием, и тогда светлая команда
+   оказывалась между кремовыми показателями и светлым же соседом, а две
+   тёмные — доверие и призыв — вставали подряд. Порядок блоков по смыслу
+   от перестановки не страдает.
+
+   Всё, что ниже, — телефонные значения. Ступени идут строго по
+   возрастанию: правила равной силы, побеждает последнее подошедшее.
+   ========================================================================== */
+
+/* --- Первый экран ---------------------------------------------------------
+   Собран по образцу страницы контактов, а не по образцу ecomzy: у них он
+   тёмный, у нас кремовый. Решение принято на контактах, здесь повторено —
+   две внутренние страницы должны открываться одинаково.
+
+   Сверху дано меньше полной ступени: над ним липкая шапка, и полные 64
+   после неё читаются провалом. Снизу ступень полная — ниже начинается
+   секция со своей заливкой, и граница между ними должна дышать. */
+.ab-hero {
+    padding-block: 40px 64px;
+}
+
+.ab-hero__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    text-align: center;
+}
+
+/* Потолок строки. 620 — одно число на обе внутренние страницы: при кегле
+   лида в 20 это около шестидесяти знаков в строке, то есть внутри
+   привычной полосы чтения. Разные потолки на соседних страницах дали бы
+   два разных первых экрана там, где всё остальное у них совпадает до
+   единицы. Второе такое же правило стоит в css/contact/00-contact.css. */
+.ab-hero__lede {
+    max-width: 620px;
+    color: var(--c-text-body);
+}
+
+/* Кнопка на телефоне во всю ширину — это общее правило из core/base.css.
+   Здесь ей задан только верхний отступ сверх зазора колонки: кнопка
+   тяжелее строки текста, и равный зазор прижимал её к лиду. */
+.ab-hero__cta {
+    margin-top: 4px;
+}
+
+/* Строка условий под кнопкой. Значок по ПЕРВОЙ строке, а не по середине
+   абзаца: на узком экране строка ложится в две, и центрирование по всему
+   абзацу увело бы значок между ними. */
+.ab-hero__note {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+    margin: 0;
+    font-size: 13px;
+    line-height: 20px;
+    color: var(--c-text-muted);
+}
+
+.ab-hero__note-icon {
+    flex: none;
+    margin-top: 3px;
+}
+
+/* --- Наша история --------------------------------------------------------- */
+.ab-story {
+    padding-block: 64px;
+    background: var(--c-bg-plain);
+}
+
+.ab-story__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    align-items: center;
+}
+
+/* Надзаголовок с чёрточкой — общая пара .kicker + .rule, как у секций
+   доверия и менеджера. Чёрточка укорочена до 24: полные 120 из базы
+   рассчитаны на линейку ПОД текстом, а здесь она идёт перед ним. */
+.ab-story__kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ab-story__kicker .rule {
+    width: 24px;
+    border-radius: 2px;
+}
+
+.ab-story__title {
+    margin-top: 14px;
+}
+
+.ab-story__p {
+    margin-top: 16px;
+    color: var(--c-text-body);
+  /* pretty, а не balance: balance стоит на заголовках, он выравнивает
+     строки по длине и на абзаце в четыре строки даёт рваный правый край.
+     pretty правит только хвост — не оставляет одно слово в последней
+     строке, а остальное не трогает. */
+    text-wrap: pretty;
+}
+
+.ab-story__figure {
+    margin: 0;
+}
+
+.ab-story__shot {
+    width: 100%;
+    height: auto;
+  /* Кадр 1100×1122, почти квадрат. На телефоне в своей высоте он съедает
+     экран целиком, поэтому срезан до 4:3. Лицо сидит в верхней трети,
+     центральная обрезка его не задевает. */
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--r-card);
+}
+
+/* --- Что мы делаем -------------------------------------------------------- */
+.ab-do {
+    padding-block: 64px;
+}
+
+/* Шапка блока: заголовок, лид и кнопка столбиком. На телефоне кнопка во
+   всю ширину колонки (общее правило из core/base.css), с 601 — по
+   содержимому слева. В ряд с заголовком она встаёт только с 901; разбор
+   порога — в ступени 901 ниже. */
+.ab-do__head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.ab-do__lede {
+    margin-top: 10px;
+    color: var(--c-text-body);
+}
+
+/* Карточки. Геометрия взята у карточек способов связи со страницы
+   контактов, до точки: колонка под значок 40, зазор 14, поля 14/16,
+   скругление 14, кромка --c-line-soft, тень --sh-card. Это две соседние
+   внутренние страницы, и одинаковый по смыслу блок должен быть на них
+   одинаковым, а не «примерно таким же».
+
+   Колонка сетки ровно под квадрат значка: значок не растягивает строку и
+   не съезжает вниз, когда текст уходит в три строки. */
+.ab-do__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    margin-top: 26px;
+}
+
+.ab-do__card {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    border: 1px solid var(--c-line-soft);
+    border-radius: 14px;
+    background: var(--c-bg-alt);
+    box-shadow: var(--sh-card);
+}
+
+.ab-do__chip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 11px;
+    background: var(--c-green-mist);
+}
+
+.ab-do__text {
+    min-width: 0;
+    font-size: 15px;
+    line-height: 23px;
+    color: var(--c-text-body);
+    text-wrap: pretty;
+}
+
+/* --- Слова компании ------------------------------------------------------- */
+.ab-word {
+    padding-block: 64px;
+    background: var(--c-bg-plain);
+}
+
+.ab-word__card {
+    position: relative;
+    margin: 0;
+    padding: 24px 20px 26px;
+    border: 1px solid var(--c-line-soft);
+    border-radius: 18px;
+    background: var(--c-bg-alt);
+    box-shadow: var(--sh-card);
+}
+
+/* Кавычка. Крупная, песочная, дисплейным — как номера секций. Своей
+   высоты ей не дано: междустрочие ужато до половины кегля, иначе над
+   цитатой встаёт пустая строка в полсотни точек. */
+.ab-word__mark {
+    display: block;
+    font-family: var(--f-display);
+    font-size: 64px;
+    font-weight: 600;
+    line-height: 34px;
+    color: var(--c-sand);
+}
+
+.ab-word__quote {
+    margin: 14px 0 0;
+}
+
+/* КУРСИВА ЗДЕСЬ НЕТ. У Almarai нет курсивного начертания, браузер подделал
+   бы его наклоном, и на пяти строках подряд это видно как брак. По своду
+   стиля роль курсива в цитате берёт кегль: строка крупнее обычного текста
+   на две ступени и темнее лида. */
+.ab-word__quote p {
+    margin: 0;
+    font-size: 19px;
+    line-height: 30px;
+    letter-spacing: -0.2px;
+    color: var(--c-text);
+    text-wrap: pretty;
+}
+
+.ab-word__by {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: 20px;
+}
+
+.ab-word__by-name {
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 22px;
+    color: var(--c-text);
+}
+
+.ab-word__by-role {
+    font-size: 13px;
+    line-height: 20px;
+    color: var(--c-text-muted);
+}
+
+/* --- Команда -------------------------------------------------------------- */
+.ab-people {
+    padding-block: 64px;
+    background: var(--c-bg-plain);
+}
+
+.ab-people__head {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.ab-people__head .kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ab-people__head .rule {
+    width: 24px;
+    border-radius: 2px;
+}
+
+.ab-people__lede {
+    color: var(--c-text-body);
+    text-wrap: pretty;
+}
+
+.ab-people__shots {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    margin-top: 26px;
+}
+
+/* Кадры разного исходного формата: 1184×864 и 1400×608. Приводим обоих к
+   16:10 обрезкой по центру — лица в обоих кадрах стоят посередине, и
+   срезаются только поля. Без приведения ряд на планшете вставал ступенькой
+   в двести точек. */
+.ab-people__shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    border-radius: var(--r-card);
+}
+
+/* --- Планшет -------------------------------------------------------------- */
+@media (min-width: 601px) {
+  .ab-hero { padding-block: 56px 88px; }
+  .ab-story { padding-block: 88px; }
+  .ab-do { padding-block: 88px; }
+  .ab-word { padding-block: 88px; }
+  .ab-people { padding-block: 88px; }
+
+  .ab-hero__inner { gap: 22px; }
+
+  .ab-story__inner { gap: 36px; }
+
+  .ab-do__grid { gap: 14px; margin-top: 32px; }
+  .ab-do__card { padding: 16px 18px; gap: 15px; }
+  .ab-do__text { font-size: 16px; line-height: 25px; }
+
+  .ab-word__card { padding: 30px 28px 32px; }
+  .ab-word__mark { font-size: 76px; line-height: 40px; }
+  .ab-word__quote p { font-size: 22px; line-height: 34px; }
+
+  .ab-people__shots {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    margin-top: 32px;
+  }
+}
+
+/* --- Две колонки ----------------------------------------------------------
+   Порог 901: с него контейнеру остаётся 773, каждой доле по 354 при зазоре
+   64. Абзацу истории это даёт около шестидесяти знаков в строке, карточке
+   «что мы делаем» — 290 точек под текст, то есть две строки вместо трёх.
+   На 601–900 обе раскладки пробовались и обе ломались: доля выходила 253,
+   текст карточки рассыпался на четыре строки, а снимок истории мельчал до
+   значка. */
+@media (min-width: 901px) {
+  .ab-hero { padding-block: 64px 104px; }
+  .ab-story { padding-block: 104px; }
+  .ab-do { padding-block: 104px; }
+  .ab-word { padding-block: 104px; }
+  .ab-people { padding-block: 104px; }
+
+  .ab-story__inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 64px;
+  }
+
+  /* В своей высоте: рядом стоит колонка текста, и квадратный кадр держит
+     её ровно. Обрезка 4:3 нужна была только телефону. */
+  .ab-story__shot { aspect-ratio: auto; }
+
+  /* Кнопка уходит вправо и встаёт на одну линию с заголовком — как у
+     образца. Порог 901, а не 601: на 601 контейнеру остаётся 521, кнопка
+     берёт 265 и зазор 32, тексту достаётся 224 — лид рассыпался на четыре
+     строки рядом с кнопкой в одну. Здесь контейнер 773, тексту остаётся
+     476, и лид ложится в две. Ниже порога кнопка стоит под лидом: до 601
+     во всю ширину колонки (общее правило), с 601 по содержимому слева. */
+  .ab-do__head {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
+
+  .ab-do__head-text { flex: 1 1 auto; min-width: 0; }
+  .ab-do__cta { flex: none; }
+
+  .ab-do__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .ab-word__card { padding: 40px 40px 42px; }
+  .ab-word__quote p { font-size: 26px; line-height: 40px; }
+
+  /* Текстовой шапке потолок: лид набран .lead, и на всю ширину контейнера
+     строка уходит за сотню знаков. Заголовку потолок не нужен — он в две
+     слова. */
+  .ab-people__lede { max-width: 640px; }
+  .ab-people__shots { gap: 16px; }
+}
+
+@media (min-width: 1101px) {
+  .ab-do__text { font-size: 17px; line-height: 27px; }
+}
+
+@media (min-width: 1281px) {
+  .ab-hero { padding-block: 72px 120px; }
+  .ab-story { padding-block: 120px; }
+  .ab-do { padding-block: 120px; }
+  .ab-word { padding-block: 120px; }
+  .ab-people { padding-block: 120px; }
+
+  .ab-story__inner { gap: 80px; }
+}

@@ -413,6 +413,37 @@ body {
   .eyebrow__dot::after { animation: none; }
 }
 
+/* --- Тихая пилюля ----------------------------------------------------------
+   Тот же компонент, приглушённый: кегль мельче, прописными в разрядку,
+   кромка тонкая, точка не пульсирует.
+
+   Живая пилюля метит то, что происходит прямо сейчас («All-in-one
+   platform», менеджер на связи) — пульс там несёт смысл. Над заголовком
+   внутренней страницы происходить нечему: это просто ярлык раздела, и
+   мигающая точка рядом с ним читается уведомлением, которого нет.
+
+   Стояла копией внутри страницы контактов. Понадобилась на второй такой
+   странице — значит, место ей здесь, а не в третьем файле подряд. */
+.eyebrow--quiet {
+  gap: 9px;
+  padding: 7px 16px;
+  border-color: var(--c-line-soft);
+  background: var(--c-bg-alt);
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+}
+
+.eyebrow--quiet .eyebrow__dot {
+  width: 6px;
+  height: 6px;
+  background: var(--c-green);
+  animation: none;
+}
+
+.eyebrow--quiet .eyebrow__dot::after { content: none; }
+
 /* Кнопки */
 .btn {
   display: inline-flex;

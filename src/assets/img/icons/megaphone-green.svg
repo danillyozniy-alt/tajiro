@@ -1,0 +1,6 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Рупор: продвижение. Ручка внизу слева, звук вправо. -->
+  <path d="M4.2 8.1v3.8a1.5 1.5 0 0 0 1.5 1.5h1.1l8.4 3.4V4.2L7.3 8.1H4.2Z"
+        stroke="#3D8F63" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M6.8 13.4v2.8a1.2 1.2 0 0 0 2.4 0v-1.8" stroke="#3D8F63" stroke-width="1.5" stroke-linejoin="round"/>
+</svg>
