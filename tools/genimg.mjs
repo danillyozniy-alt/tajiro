@@ -141,6 +141,99 @@ const SHOTS = {
       clean desk beside a tidy contract folder and a phone face down, bright daylight
       through a balcony door, a green plant softly out of focus behind.`,
   },
+
+  /* Команда на странице «о нас» (partials/about/06-people.html). Расстановка
+     как у ecomzy.com/about: высокий кадр слева, два широких справа. Сцены —
+     как у образца: совещание у экрана, штурм у доски, работа в опенспейсе.
+     На КАЖДОМ кадре свои люди. Лица видны — кадры со спинами отклонены.
+
+     ОБЩИЙ РЕГИСТР LOOK ВЫШЕ СЮДА НЕ ПРИПИСЫВАТЬ. Для команды он даёт
+     глянцевый сток — тёплый свет, модели, размытый фон, — и по таким кадрам
+     сразу видно нейросеть: вся первая серия отклонена ровно за это. Здесь
+     нужен снимок на телефон, сделанный коллегой в настоящем офисе: обычная
+     переговорка с потолочными панелями и проводами, бутылки воды, смешанный
+     свет ламп и окна, шум, без цветокоррекции, кадр чуть не по центру; люди
+     разного возраста и сложения, не позируют, не все улыбаются, никто не
+     смотрит в камеру. В негатив: stock photo, staged, posed, perfect skin,
+     studio lighting, cinematic, golden hour, heavy bokeh, glossy, HDR.
+
+     КАК НАРИСОВАНЫ (17.09.2026, коннектор Nano Banana, не этот скрипт).
+     team-meeting и team-whiteboard — nano_banana_2, team-openspace —
+     nano_banana_pro. Логотипы: на мониторах team-openspace сняты правкой в
+     модели; логотипы Apple на ноутбуках и значок на поло правкой не
+     снимались (модель их оставляла или портила кадр) и закрашены локально
+     фильтром ffmpeg delogo по координатам. Промпты ниже — те, что ушли в
+     модель. */
+  'team-meeting': {
+    out: 'people/team-meeting',
+    ar: '4:5',
+    size: '2K',
+    prompt: `Unposed vertical smartphone photo taken by a colleague during an
+      ordinary weekly meeting at a mid-size tech company office in Business Bay,
+      Dubai. NOT a stock photo, NOT professional photography. An ordinary meeting
+      room: grey carpet tiles, suspended ceiling with square LED panels, a glass wall
+      with a frosted stripe, a wall-mounted TV showing a sales dashboard with charts
+      (numbers unreadable), a long laminate table with laptops, chargers and tangled
+      cables, notebooks, a couple of plastic water bottles, a phone face down, a
+      jacket hanging on a chair back. Five people of different ages and body types in
+      everyday office clothes with natural creases: a heavier-set Gulf Arab man in his
+      forties standing by the screen explaining something mid-sentence, a young Indian
+      man typing on his laptop, a Filipina woman in her thirties taking notes, a bald
+      European man leaning back with arms crossed looking at the screen, a young Arab
+      woman glancing at her phone. Nobody looks at the camera, not everyone is
+      smiling. Mixed lighting — cool overhead office lights plus daylight from a
+      window on the side, slightly uneven exposure, window a bit blown out.
+      Phone-camera look: everything mostly in focus, slight digital noise, no colour
+      grading, auto white balance, framing slightly off-centre with the edge of a
+      chair cutting into the frame. Natural skin with imperfections. No readable
+      text, no logos.`,
+  },
+
+  'team-whiteboard': {
+    out: 'people/team-whiteboard',
+    ar: '3:2',
+    size: '2K',
+    prompt: `Unposed horizontal smartphone photo taken by a colleague during a quick
+      planning session at a mid-size tech company office in Dubai. NOT a stock photo,
+      NOT professional photography. Three people at a slightly worn whiteboard with
+      faint ghost marks of old erased drawings, covered with messy marker sketches of
+      website page layouts, arrows and a few sticky notes, some notes falling off at
+      the corners (all handwriting unreadable). A Pakistani man in his thirties in a
+      plain polo shirt is drawing and talking mid-sentence, a Filipina woman in a
+      cardigan holds a stack of sticky notes and looks at the board thinking, a young
+      European man with glasses in a hoodie sits on the edge of a desk looking at his
+      laptop. Ordinary office around them: suspended ceiling with LED panels, a
+      radiator-style AC vent, office chairs pushed in different directions, a backpack
+      on the floor, cables along the wall, a printer in the corner. Mixed lighting —
+      cool fluorescent overhead light plus some daylight, slightly uneven. Phone-camera
+      look: everything mostly in focus, slight digital noise, no colour grading, auto
+      white balance, framing slightly tilted and off-centre. Natural expressions, not
+      everyone smiling, nobody looks at the camera. Natural skin with imperfections.
+      No logos.`,
+  },
+
+  'team-openspace': {
+    out: 'people/team-openspace',
+    ar: '3:2',
+    size: '2K',
+    prompt: `Unposed horizontal smartphone photo taken across a row of desks in an
+      ordinary open-plan office of a mid-size tech company in Dubai on a normal
+      workday. NOT a stock photo, NOT professional photography. Faces visible, nobody
+      with their back to the camera. In the foreground two colleagues sit side by
+      side behind their monitors (we see the plain backs of the monitors): an Emirati
+      woman in her late twenties in a simple long-sleeve top points at her screen
+      while talking, an Indian man in his thirties in a checked shirt leans over to
+      look, frowning a little in concentration. Around them real desk clutter: a
+      keyboard, a mouse on a worn mouse pad, headphones, a phone charger cable, a
+      plastic water bottle, a notebook with a pen, a small cactus, a lanyard with an
+      ID card. Behind them, other colleagues at desks facing the camera: one on a call
+      with earphones, one typing, one stretching. Suspended ceiling with LED panels,
+      grey carpet tiles, cable trays, windows with blinds half down. Mixed lighting —
+      cool overhead office lights plus daylight through the blinds, slightly uneven
+      exposure. Phone-camera look: everything mostly in focus, slight digital noise,
+      no colour grading, auto white balance, framing slightly off-centre. Natural
+      skin with imperfections. No readable text, no logos.`,
+  },
 };
 
 

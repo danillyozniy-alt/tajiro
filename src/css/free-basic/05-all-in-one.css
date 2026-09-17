@@ -82,3 +82,16 @@
 @media (min-width: 601px) {
   .fb-incl { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 36px; }
 }
+
+/* Не больше двух строк на телефоне: «Everything you need. All in one
+   place.» при 30 на 320 шёл в три. Кегль растёт с колонкой (экран минус
+   поля 40) и упирается в 30. max-width — исключение из min-width: правило
+   двух классов без порога перебило бы ступени .fb-head__title в
+   00-base.css. */
+@media (max-width: 600px) {
+  .fb-included .fb-head__title {
+    font-size: min(30px, calc((100vw - 40px) * 0.097));
+    line-height: 1.267;
+    letter-spacing: -0.023em;
+  }
+}

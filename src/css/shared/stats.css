@@ -186,8 +186,21 @@
     text-align: center;
 }
 
-.s-02__note .s-02__ref { margin-left: 10px; }
+/* Каждая сноска — своим куском. На телефоне каждая с новой строки: одной
+   строкой хвост первой («2023.») уходил в начало второй и читался как
+   «2023. ² Payment…». В одну строку обе встают с 901: на 601–900 они
+   вместе (~540) не входили в колонку и рвались на «fees / apply.». */
+.s-02__note-item {
+    display: block;
+    text-wrap: balance;
+}
+
 .s-02__note .s-02__ref:first-child { margin-left: 0; }
+
+@media (min-width: 901px) {
+  .s-02__note-item { display: inline; }
+  .s-02__note-item + .s-02__note-item { margin-left: 10px; }
+}
 
 /* Верхний индекс не должен растягивать строку показателя */
 .s-02__ref {

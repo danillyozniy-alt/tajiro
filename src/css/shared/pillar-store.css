@@ -71,9 +71,14 @@
 }
 
 .s-06__title {
-    font-size: 30px;
-    line-height: 38px;
-    letter-spacing: -0.7px;
+  /* НЕ БОЛЬШЕ ДВУХ СТРОК на телефоне (правило сайта). До 393 было три строки.
+     Кегль растёт с колонкой (ширина экрана минус поля 40) и упирается в
+     прежний; 0.080 — отношение кегля к колонке, при котором заголовок ровно
+     встаёт в две строки, с запасом 3 %. Проверено в эмуляции телефона на
+     320–600 (17.09.2026). Интерлиньяж и разрядка — долями кегля. */
+    font-size: min(30px, calc((100vw - 40px) * 0.080));
+    line-height: 1.27;
+    letter-spacing: -0.023em;
     color: var(--s06-ink);
 }
 
@@ -906,10 +911,13 @@
     font-size: 80px;
     letter-spacing: -3px;
   }
+  /* «A professional storefront. / Ready in minutes.» в колонке 460 при 48
+     ложился в три строки на всех ширинах 901–1280. Колонку не расширить:
+     справа телефон с плашками. Две строки держатся с 38.5 — здесь 37. */
   .s-06__title {
-    font-size: 48px;
-    line-height: 54px;
-    letter-spacing: -1.2px;
+    font-size: 37px;
+    line-height: 44px;
+    letter-spacing: -1px;
   }
   .s-06__visual {
     min-height: 640px;
@@ -926,14 +934,19 @@
   .s-06__text {
     width: 520px;
   }
+  /* Заголовку — вся ширина колонки (было 480): две строки при 42. При
+     прежних 56 в любой колонке этой сетки выходило три. */
+  .s-06__block {
+    max-width: 520px;
+  }
   .s-06__numeral {
     font-size: 96px;
     letter-spacing: -3.8px;
   }
   .s-06__title {
-    font-size: 56px;
-    line-height: 62px;
-    letter-spacing: -1.5px;
+    font-size: 42px;
+    line-height: 48px;
+    letter-spacing: -1.2px;
   }
   /* СЦЕНА СДВИНУТА ВПРАВО, чтобы свес карточки не лез в заголовок.
 
@@ -981,7 +994,12 @@
 .s-06__float-body .s-06__float-note {
     display: block;
     color: var(--s06-muted);
+  /* Две ровные строки, а не «Encrypted, built / in». */
+    text-wrap: balance;
 }
+
+/* Адрес не рвём по дефису: было «aura- / ritual.com». */
+.s-06__float-value { white-space: nowrap; }
 
 
 /* Знак плюса. Цифровая гарнитура тут ни при чём — у неё диапазон только

@@ -1,36 +1,50 @@
 <!-- ==========================================================================
      О нас — зачем мы это начали
 
-     У образца на этом месте цитата основателя: его портрет слева, крупная
-     кавычка, курсивная цитата, имя и должность.
+     Состав как у образца (ecomzy.com/about): карточка, слева портрет
+     основателя во всю высоту карточки, справа крупная кавычка, цитата,
+     имя и должность. На телефоне и планшете портрет встаёт сверху во всю
+     ширину, текст под ним.
 
-     ИМЕНИ И ПОРТРЕТА ЗДЕСЬ НЕТ, и это не упущение. У Tajiro руководитель
-     нигде по сайту не назван, фотографии его нет, а подставить чужое лицо
-     с выдуманным именем под прямую речь нельзя: это ровно тот вид
-     подделки, из-за которого блок «в прессе» на главной закрыт
-     комментарием. Слова остаются словами компании — так они и подписаны.
-     Появится настоящий человек с согласием на публикацию — добавить сюда
-     портрет, имя и должность, разметка под это уже разложена.
+     Цитата, имя и должность — из макета Tajiro_About.html: Ilia Dolgikh,
+     CEO and Founder. Выделения жирным внутри цитаты у макета — это
+     оформление, его не брали.
 
-     Курсива тоже нет. У Almarai нет курсивного начертания, браузер
-     подделал бы его наклоном, и на пяти строках подряд это видно. По
-     своду стиля роль курсива в цитате берёт кегль (TAJIRO-STYLE.md, § 2).
+     Портрет — тот же снимок, что на странице «о нас» экомзи
+     (pages/about/images/Ilya.webp): у исходника по краям зашиты скругления,
+     поэтому он обрезан на 24 точки с каждой стороны, и углы карточки
+     скругляет уже сама карточка.
+
+     Курсива нет. У Almarai нет курсивного начертания, браузер подделал бы
+     его наклоном, и на пяти строках подряд это видно. По своду стиля роль
+     курсива в цитате берёт кегль (TAJIRO-STYLE.md, § 2).
+
+     Карточка — div, а цитата с подписью — figure внутри неё: figcaption
+     обязан быть прямым потомком figure, а портрет к подписи не относится.
      ========================================================================== -->
 <section class="section ab-word">
   <div class="container">
-    <figure class="ab-word__card reveal">
+    <div class="ab-word__card reveal">
 
-      <span class="ab-word__mark" aria-hidden="true">&ldquo;</span>
+      <div class="ab-word__photo">
+        <img src="assets/img/people/founder-ilia.webp"
+             alt="Ilia Dolgikh, CEO and Founder of Tajiro"
+             width="672" height="720" loading="lazy" decoding="async">
+      </div>
 
-      <blockquote class="ab-word__quote">
-        <p>We started Tajiro because we saw too many talented people held back by complexity. They had the drive, but the tools were too hard, too expensive, or too time-consuming. We built Tajiro to be the opposite: a system that does the heavy lifting so solopreneurs can focus on what matters &ndash; building a life they love.</p>
-      </blockquote>
+      <figure class="ab-word__body">
+        <span class="ab-word__mark" aria-hidden="true">&ldquo;</span>
 
-      <figcaption class="ab-word__by">
-        <span class="ab-word__by-name">The Tajiro team</span>
-        <span class="ab-word__by-role">Dubai, UAE</span>
-      </figcaption>
+        <blockquote class="ab-word__quote">
+          <p>We built Tajiro because too many people here have the drive to build something of their own, but the tools were too hard, too expensive, or too far from their reality. We made the opposite: a platform that does the heavy lifting, so anyone in the Gulf&nbsp;can&nbsp;start.</p>
+        </blockquote>
 
-    </figure>
+        <figcaption class="ab-word__by">
+          <span class="ab-word__by-name">Ilia Dolgikh</span>
+          <span class="ab-word__by-role">CEO and Founder of Tajiro</span>
+        </figcaption>
+      </figure>
+
+    </div>
   </div>
 </section>

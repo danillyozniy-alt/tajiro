@@ -111,6 +111,9 @@
 .s-12__lead {
     max-width: 640px;
     color: var(--s12-soft);
+  /* Лид по центру — ровными строками: на 320–430 хвостом оставалось
+     «for it.» или «it.». */
+    text-wrap: balance;
 }
 
 /* --- Сетка доверия -------------------------------------------------------- */
@@ -162,6 +165,11 @@
     line-height: 23px;
     color: var(--s12-faint);
 }
+
+/* Составные слова через дефис не рвём: в колонке ~210 на телефоне
+   выходило «Money- / Back» и «PCI- / compliant». Не U+2011 — в Almarai
+   его может не быть. */
+.s-12__nowrap { white-space: nowrap; }
 
 /* Изразец вместо плоской иконки — тот же приём, что в секции 11: там
    керамическая плитка уже заменила линейный значок, и блок доверия должен
@@ -467,12 +475,18 @@
     line-height: 23px;
     letter-spacing: -0.18px;
     color: var(--s12-ink);
+  /* pretty, а не balance из .h3: с неразрывным «Money-Back» balance делил
+     заголовок на телефоне как «30-Day» / «Money-Back Guarantee». */
+    text-wrap: pretty;
 }
 
 .s-12__trust-text {
     font-size: 14px;
     line-height: 23px;
     color: var(--s12-faint);
+  /* pretty: на разных ширинах последней строкой оставалось одно слово —
+     «invoice.», «servers.», «fees.». */
+    text-wrap: pretty;
 }
 
 .s-12__trust-icon {

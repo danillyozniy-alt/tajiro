@@ -32,6 +32,15 @@ p, figure, blockquote, dl, dd, ul, ol {
   margin: 0;
 }
 
+/* Абзацы и пункты списков не кончаются строкой в одно слово. Проверка всех
+   страниц на 38 ширинах (320–2560, 17.09.2026) нашла такие хвосты десятками
+   — «anytime», «link.», «fees.». pretty правит только последние строки и
+   остального переноса не трогает. Селекторы — элементы, поэтому любое
+   правило класса (balance у лидов и заголовков) их перебивает. */
+p, li, dd, dt, figcaption, blockquote {
+  text-wrap: pretty;
+}
+
 ul[class], ol[class] { list-style: none; padding: 0; }
 
 img, svg, video { display: block; max-width: 100%; }

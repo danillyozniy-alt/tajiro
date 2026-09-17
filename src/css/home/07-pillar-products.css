@@ -545,10 +545,13 @@
     font-size: 80px;
     letter-spacing: -3px;
   }
+  /* На 901–1023 колонка 338–397, и «Be part of a $200-billion industry.»
+     при 48 ложился в три строки. Кегль идёт за колонкой (≈ 0.48 × экран
+     − 94) и с ~1024 упирается в 48. */
   .s-07 .s-07__title {
-    font-size: 48px;
-    line-height: 56px;
-    letter-spacing: -1.2px;
+    font-size: min(48px, calc(5.77vw - 11.4px));
+    line-height: 1.167;
+    letter-spacing: -0.025em;
   }
   .s-07__lead {
     max-width: 480px;

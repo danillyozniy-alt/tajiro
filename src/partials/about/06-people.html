@@ -1,25 +1,31 @@
 <!-- ==========================================================================
      О нас — люди
 
-     У образца здесь блок «наша команда»: надзаголовок, заголовок, лид про
-     удалённую команду в пяти странах и три офисных снимка.
+     Расстановка как у образца (ecomzy.com/about, «Our Team»): шапка по
+     центру, под ней три кадра — высокий слева, два широких справа друг над
+     другом. На телефоне все три в столбик.
 
-     ПРО ПЯТЬ СТРАН И ПРО ОФИСЫ У НАС НИЧЕГО НЕТ — ни на сайте, ни в
-     документах. Поэтому блок оставлен на своём месте по составу, но
-     говорит о том, что сайт уже обещает и чем может ответить: о личном
-     менеджере роста. Это обещание стоит на главной (секция 10b) и в
-     разделе «всё включено».
+     Тексты — из макета Tajiro_About.html: команда работает из офиса в
+     Дубае.
 
-     Кадры — те самые люди, а не стоковый опенспейс. Второй, call-manager,
-     стоит на главной в том же блоке про менеджера. Первый, manager-faisal,
-     до сих пор лежал в репозитории неподключённым: снят под ту же секцию,
-     тот же человек, тот же стол — но на страницу так и не попал. Имени в
-     подпись не ставим: на главной менеджера зовут Faisal, здесь же кадр
-     иллюстрирует роль, а не конкретного человека.
+     Кадры нарисованы через Nano Banana (17.09.2026), промпты — в
+     tools/genimg.mjs: team-meeting (высокий, 4:5), team-whiteboard и
+     team-openspace (широкие, 3:2). Сцены — как у образца: совещание у
+     экрана, штурм у доски, работа в опенспейсе, — на каждом кадре свои
+     люди.
 
-     Снимков два, а не три. Третьего настоящего кадра с нашими людьми нет,
-     а добивать ряд снимком покупателя — это уже подмена: блок называется
-     «нас», а показывал бы клиента.
+     КАДРЫ ДОЛЖНЫ ВЫГЛЯДЕТЬ КАК СНИМКИ НА ТЕЛЕФОН ИЗ НАСТОЯЩЕГО ОФИСА, а не
+     как сток. Обычный офис с потолочными панелями, проводами и бутылками
+     воды на столах, смешанный свет, люди не позируют и не все улыбаются.
+     Глянцевые «редакционные» кадры с тёплым светом отклонены: по ним было
+     видно нейросеть. Логотипы на технике убраны после генерации.
+
+     Рамки режут кадр по месту (object-fit: cover), а фактура под ними
+     видна, только пока снимок не загрузился.
+
+     Прежние два снимка менеджера роста (manager-faisal, call-manager) с
+     этого блока сняты: кадры здесь заказаны новые, под команду. На главной
+     call-manager стоит, как стоял.
      ========================================================================== -->
 <section class="section ab-people">
   <div class="container ab-people__inner">
@@ -30,19 +36,24 @@
         OUR TEAM
       </p>
       <h2 class="h2 ab-people__title">Built by people who <em>care</em></h2>
-      <p class="lead ab-people__lede">Every store comes with a Growth Manager &ndash; a real person who knows the platform, knows your store and picks up when you call. Behind them is the team that builds it.</p>
+      <p class="lead ab-people__lede">Our team works together from our office in Dubai, united by one mission: make it possible for anyone in the Gulf to build a business of their own.</p>
     </header>
 
     <ul class="ab-people__shots reveal-set">
-      <li class="ab-people__shot">
-        <img src="assets/img/people/manager-faisal.webp"
-             alt="A Tajiro Growth Manager at his desk"
-             width="1184" height="864" loading="lazy" decoding="async">
+      <li class="ab-people__shot ab-people__shot--tall">
+        <img src="assets/img/people/team-meeting.webp"
+             alt="A weekly team meeting in the Tajiro office in Dubai"
+             width="896" height="1152" loading="lazy" decoding="async">
       </li>
       <li class="ab-people__shot">
-        <img src="assets/img/people/call-manager.webp"
-             alt="A Tajiro Growth Manager on a video call from his desk"
-             width="1400" height="608" loading="lazy" decoding="async">
+        <img src="assets/img/people/team-whiteboard.webp"
+             alt="Tajiro colleagues planning store pages at a whiteboard"
+             width="1248" height="832" loading="lazy" decoding="async">
+      </li>
+      <li class="ab-people__shot">
+        <img src="assets/img/people/team-openspace.webp"
+             alt="Tajiro colleagues working at their desks in the open-plan office"
+             width="1248" height="832" loading="lazy" decoding="async">
       </li>
     </ul>
 

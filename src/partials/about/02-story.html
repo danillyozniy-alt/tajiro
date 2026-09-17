@@ -5,22 +5,15 @@
      абзаца, справа снимок. На телефоне одна колонка, снимок уходит вниз:
      человек сперва читает, зачем всё это, и только потом смотрит картинку.
 
-     ТЕКСТЫ С ОБРАЗЦА, с двумя правками по фактам.
-     · «We are the FIRST ecommerce platform built exclusively for
-       solopreneurs» — превосходную степень сняли. У образца она про себя,
-       у нас была бы неправдой, и проверить её нельзя.
-     · «global platform» в заголовке оставлено как у образца: это про
-       товары и покупателей, которые действительно не в одной стране, а не
-       про офисы.
+     Тексты — из макета Tajiro_About.html, дословно.
 
-     Снимок — тот же, что в четвёртой секции главной: владелица магазина
-     проверяет его из кафе у моря. Своего кадра «про компанию» у сайта нет,
-     а выдавать стоковый офис за свою команду нельзя. Здесь кадр честно
-     иллюстрирует того, для кого всё сделано, и заодно то, о чём абзац
-     рядом: дело, которое не привязано к складу и к столу.
-
-     На главной у этого же файла подпись «working on their store at home» —
-     она неверна, кадр снят не дома. Исправлена там же.
+     Снимок — тот же, что в этом блоке у образца (ecomzy.com/about,
+     pages/about/images/story-1.webp): сотрудница за столом в офисе.
+     Файл — весь исходник в пропорции 2:3 (1000×1500). Режет его рамка:
+     на телефоне кадр стоит целиком, вертикальным, как у образца; на
+     планшете 4:3, рядом с текстом — почти квадрат. Разбор в
+     css/about/00-about.css у .ab-story__shot. Прежний кадр (владелица
+     магазина в кафе у моря, how-it-works) остался на главной.
      ========================================================================== -->
 <section class="section ab-story">
   <div class="container ab-story__inner">
@@ -31,20 +24,19 @@
         OUR STORY
       </p>
 
-      <h2 class="h2 ab-story__title">From idea to <em>global platform</em></h2>
+      <h2 class="h2 ab-story__title">Built for the <em>Gulf</em></h2>
 
-      <p class="ab-story__p">Tajiro was built with one belief: starting an online business shouldn&rsquo;t require a warehouse, technical skills, or a big budget. It should be simple, automated, and designed to give you back your most valuable resource &ndash; time.</p>
+      <p class="ab-story__p">Tajiro was built on one belief: starting an online business here should not require a warehouse, technical skills, or a big budget. It should be simple, ready from day one, and designed for the people who actually live and work in&nbsp;the&nbsp;Gulf.</p>
 
-      <p class="ab-story__p">We are an ecommerce platform built exclusively for solopreneurs. We provide everything you need to launch, run, and grow a successful online venture: a ready-made store, digital products to sell, and automated marketing tools &ndash; all working together on autopilot.</p>
+      <p class="ab-story__p">So we made a platform where the hard part is already done. <span class="ab-story__nobr">A ready-made</span> store, digital products to sell, and marketing that runs for you&nbsp;&ndash; working together so you can focus on building something of&nbsp;your&nbsp;own.</p>
     </div>
 
     <!-- Без loading="lazy": секция вторая сверху, и на телефоне кадр
-         попадает в первый же экран прокрутки. Тот же файл на главной тоже
-         грузится сразу, и там он стоит ниже. -->
+         попадает в первый же экран прокрутки. -->
     <figure class="ab-story__figure reveal">
-      <img class="ab-story__shot" src="assets/img/people/how-it-works.webp"
-           alt="A Tajiro store owner checking her store from a café by the sea"
-           width="1100" height="1122" decoding="async">
+      <img class="ab-story__shot" src="assets/img/people/story-office.webp"
+           alt="A team member smiling at her desk in the office"
+           width="1000" height="1500" decoding="async">
     </figure>
 
   </div>
