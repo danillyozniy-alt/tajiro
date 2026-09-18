@@ -80,6 +80,148 @@
     cursor: pointer;
 }
 
+/* --- Раскрытый список -----------------------------------------------------
+   Закрытое поле своё целиком, а раскрытый список до недавних пор рисовала
+   система: серое меню Windows, окно выбора на телефоне, и CSS туда почти не
+   доставал. Настраиваемый селект — appearance: base-select, Chrome и Edge
+   с 135-й версии — отдаёт список в CSS и при этом остаётся обычным
+   <select>: клавиатура, скринридер, отправка формы и js/checkout/market.js
+   работают как раньше, разметку трогать не пришлось.
+
+   Где его нет — Safari, Firefox, любой браузер на iPhone, — блок целиком
+   пропускается, и там остаётся системный список, как было.
+
+   Материал списка — тот же, что у панелей шапки: глухое стекло, кромка
+   градиентом в прозрачной границе и «плавающая» тень, см. .nav-panel в
+   header.css. Выбранный пункт — как вариант валюты в шапке: зелёный тинт,
+   зелёный текст в полный вес. */
+@supports (appearance: base-select) {
+    .fld__select,
+    .fld__select::picker(select) {
+        appearance: base-select;
+    }
+
+  /* Стрелка переезжает из фона в ::picker-icon: фон повернуть нельзя, а
+     значок можно — у открытого списка она смотрит остриём вверх. Встаёт он
+     туда же, где лежала фоновая стрелка, — в правое поле, в 16px от кромки.
+     В строку его не ставим: правое поле страницы подгоняют под фоновую
+     стрелку сами (см. .ch .fld__select в 00-checkout.css), и значок в строке
+     уехал бы вслед за полем к середине. */
+    .fld__select {
+        position: relative;
+        display: flex;
+        align-items: center;
+        background-image: none;
+    }
+
+    .fld__select::picker-icon {
+        content: "";
+        position: absolute;
+        inset-block: 0;
+        right: 16px;
+        width: 8px;
+        height: 5px;
+        margin-block: auto;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 5'%3E%3Cpath d='M0.536 0.625H7.464L4 4.375L0.536 0.625Z' fill='%236b645a'/%3E%3C/svg%3E") no-repeat center / 8px 5px;
+        transition: rotate 0.18s ease;
+    }
+
+    .fld__select:open::picker-icon { rotate: 180deg; }
+
+  /* Пока список открыт, фокус стоит на пункте внутри него, и :focus у
+     самого поля гаснет. Кольцо держим по :open — иначе поле теряло бы
+     подсветку ровно тогда, когда с ним работают. */
+    .fld__select:open {
+        border-color: var(--c-green);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--c-green) 16%, transparent);
+    }
+
+  /* Сам список. Ширина и место — браузерные: не уже поля и под ним, а если
+     внизу тесно — над ним. Поэтому зазор задан с обеих сторон: он нужен и
+     при развороте вверх. */
+    .fld__select::picker(select) {
+        margin-block: 6px;
+        padding: 6px;
+        border: 1.5px solid transparent;
+        border-radius: var(--r-card);
+        background-color: transparent;
+        background-image: var(--glass-bg-solid), var(--glass-edge);
+        background-origin: padding-box, padding-box, border-box;
+        background-clip: padding-box, padding-box, border-box;
+        box-shadow: var(--glass-shadow-float);
+
+        opacity: 0;
+        transform: translateY(-6px);
+      /* display и overlay переключаются скачком, но в конце перехода: без
+         allow-discrete список пропадал бы сразу, не доиграв уход. */
+        transition:
+            opacity 0.18s ease,
+            transform 0.18s ease,
+            display 0.18s allow-discrete,
+            overlay 0.18s allow-discrete;
+    }
+
+    .fld__select:open::picker(select) {
+        opacity: 1;
+        transform: none;
+    }
+
+    @starting-style {
+        .fld__select:open::picker(select) {
+            opacity: 0;
+            transform: translateY(-6px);
+        }
+    }
+
+  /* Пункт. Высота 44 — цель касания пальцем. Кегль и левый край текста —
+     как в поле (кромка 1.5 + отступ списка 6 + пункта 10 ≈ 1 + 16 у поля):
+     выбранное переезжает из списка в поле, не прыгая ни в размере, ни
+     вбок. */
+    .fld__select option {
+        gap: 12px;
+        padding: 10px;
+        border-radius: var(--r-btn);
+        font-size: 16px;
+        line-height: 24px;
+        color: var(--c-text-strong);
+        cursor: pointer;
+        transition: background-color 0.18s ease, color 0.18s ease;
+    }
+
+    .fld__select option:hover {
+        background: color-mix(in srgb, var(--c-text) 4%, transparent);
+    }
+
+  /* Фокус с клавиатуры — общей золотой обводкой из base.css, только внутрь
+     пункта: снаружи её срезал бы край прокручиваемого списка. */
+    .fld__select option:focus-visible { outline-offset: -2px; }
+
+    .fld__select option:checked {
+        background: color-mix(in srgb, var(--c-green) 10%, transparent);
+        color: var(--c-green-text);
+        font-weight: 700;
+    }
+
+  /* Галочка у выбранного — справа, та же, что в списке преимуществ наверху
+     страницы: цвет не остаётся единственным признаком выбора. */
+    .fld__select option::checkmark {
+        order: 1;
+        content: "";
+        width: 16px;
+        height: 16px;
+        margin-inline-start: auto;
+        background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M13.333 4 6 11.333 2.667 8' stroke='%233d8f63' stroke-width='1.667' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") no-repeat center / 16px 16px;
+    }
+
+  /* Движение по просьбе системы гасит base.css — правилом на *, ::before и
+     ::after. Список и стрелка — отдельные псевдоэлементы и под него не
+     попадают, поэтому здесь их гасим сами. */
+    @media (prefers-reduced-motion: reduce) {
+        .fld__select::picker-icon,
+        .fld__select::picker(select) { transition: none; }
+    }
+}
+
 /* Ряд «код страны + телефон»: узкий селект и поле на остаток. */
 .fld__row {
     display: grid;
